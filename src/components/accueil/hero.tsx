@@ -4,7 +4,7 @@ const Hero = () => {
     return (
         <>
             <section className="relative z-0 px-[150px] bg-red-2 h-screen w-screen flex items-center justify-between overflow-hidden max-2xl:px-[100px] max-xl:h-[70vh] max-xl:px-[60px] max-[896px]:hidden">
-                <div className="border border-stone-300 flex flex-col items-start justify-start gap-4">
+                <div className="flex flex-col items-start justify-start gap-4">
                     <h1 className="hero-h1 font-bold text-center text-gris-12 max-xl:text-3xl">Lorem Ipsum</h1>
                     <p className="hero-p text-left text-gris-12 w-[600px] max-2xl:w-[400px] max-xl:text-lg">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod.
@@ -39,9 +39,23 @@ const Hero = () => {
                     <Image src={"/shuriken.svg"} fill alt="shuriken"/>
                 </div>
             </section>
-            <section className="px-4 relative top-20 w-screen hidden items-center justify-center max-[896px]:flex">
+            <section className="pt-20 px-4 relative top-0 w-screen hidden items-center justify-center max-[896px]:flex">
                 <div className="rounded-3xl relative w-full aspect-video flex items-center justify-between">
-                    <Image src={"/hero-bg.jpg"} fill alt="hero-bg" className="rounded-3xl"/>
+                    <Image src={"/hero-bg.jpg"} fill alt="hero-bg" className="object-cover rounded-3xl"/>
+                </div>
+                <div className="p-4 w-[90%] aspect-video rounded-3xl absolute flex items-center justify-between">
+                    <div className="w-1/2 flex flex-col items-start justify-center gap-4">
+                        <p className="hero-mobile-h1 font-bold text-left text-gris-12 max-xl:text-lg">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod.
+                        </p>
+                        <button className="bg-red-8 rounded-full font-bold text-gris-12 hero-mobile-btn py-2 px-4 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
+                        max-lg:text-sm">
+                            Commencer
+                        </button>
+                    </div>
+                    <div className="relative w-2/5 h-full flex items-center justify-center">
+                        <Image src={"/pencil.png"} fill alt="pencil"/>
+                    </div>
                 </div>
             </section>
         </>
