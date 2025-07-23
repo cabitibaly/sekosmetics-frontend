@@ -35,7 +35,9 @@
   --breakpoint-xxs: 20rem;
   --breakpoint-1080: 1080px;
   --breakpoint-720: 720px;
-  --aspect-retro: 9 / 16;
+  --breakpoint-896: 896px;
+  --aspect-tiktok: 9 / 16;
+  --aspect-retro: 4 / 3; 
 }
 
 html {
@@ -46,6 +48,10 @@ body {
   overflow-x: hidden;   
 }
 
+section {
+  overflow-x: hidden;
+}
+
 .hero-h1 {
   font-size: 5vw;
 }
@@ -54,9 +60,29 @@ body {
   font-size: 1.8vw;
 }
 
-.hero-mobile-bg {
-  background-image: url("/public/hero-bg.jpg");
+.hero-mobile-h1 {
+  font-size: 3.1vw;
+}
+
+.hero-mobile-btn {
+  font-size: 2.8vw;
+}
+
+.span-font-size {
+  font-size: 3.7vw;
+}
+
+.link-voir-plus {
+  font-size: 2.4vw;
+}
+
+.marque-text {
+  font-size: 2.2vw;
+}
+
+.footer {
+  background-image: url("../../public/footer-bg.jpg");
+  background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
 }

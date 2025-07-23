@@ -32,7 +32,7 @@ const MobileNavbar = () => {
                 <div onClick={() => handleSidebarToglle()} className="size-10 flex items-center justify-center cursor-pointer">
                     <Image src={"/sidebar.svg"} width={40} height={40} alt="sidebar-btn"/>
                 </div>
-                <Link href={"/"} className="text-gris-12 text-2xl font-bold max-xl:text-lg">Sekocosmetics</Link>
+                <Link href={"/"} className="text-gris-12 text-2xl font-bold max-xl:text-lg">Sekosmetics</Link>
                 <div className="size-10 flex items-center justify-center cursor-pointer">
                     <Image src={"/notification.svg"} width={40} height={40} alt="notification-btn"/>
                 </div>
@@ -40,7 +40,7 @@ const MobileNavbar = () => {
             <div onClick={() => handleSidebarToglle()} className={`fixed z-50 h-screen w-screen bg-gris-12/60 transition-transform ease-in-out duration-300 hidden items-start justify-start max-[896px]:flex ${isClicked ? "translate-x-0" : "-translate-x-full"}`}>
                 <div className="bg-red-1 w-1/2 h-full flex flex-col items-start justify-start gap-4 p-4 max-sm:w-2/3 max-xs:w-full">
                     <div className="w-full flex items-center justify-between">
-                        <Link href={"/"} className="text-gris-12 text-2xl font-bold max-xl:text-lg">Sekocosmetics</Link>
+                        <Link href={"/"} className="text-gris-12 text-2xl font-bold max-xl:text-lg">Sekosmetics</Link>
                         <X onClick={() => handleSidebarToglle()} strokeWidth={1.5} className="cursor-pointer text-gris-8 size-6" />
                     </div>  
                     <div className="w-full flex flex-col items-start justify-between">
@@ -52,12 +52,12 @@ const MobileNavbar = () => {
                     </div>                
                 </div>
             </div>
-            <div className="fixed left-1/2 -translate-1/2 bottom-4 w-[91.96%] py-3 px-8 rounded-full border border-red-3 bg-red-1 hidden items-center justify-between gap-16 max-[896px]:flex max-xs:px-4">
+            <div className="fixed left-1/2 z-40 -translate-1/2 bottom-4 w-[91.96%] py-3 px-8 rounded-full border border-red-3 bg-red-1 hidden items-center justify-between gap-16 max-[896px]:flex max-xs:px-4">
                 <div className="flex items-center justify-between w-[30%]">
-                    <Link href={"/"} className="size-8 flex items-center justify-center cursor-pointer max-xs:size-4">
+                    <Link href={"/"} className="size-8 flex items-center justify-center cursor-pointer max-xs:size-6">
                         <Image src={"/home_active.svg"} width={30} height={40} alt="notification-btn"/>
                     </Link>
-                    <Link href={"/recherche"} className="size-8 flex items-center justify-center cursor-pointer max-xs:size-4">
+                    <Link href={"/recherche"} className="size-8 flex items-center justify-center cursor-pointer max-xs:size-6">
                         <Image src={"/search.svg"} width={30} height={40} alt="notification-btn"/>
                     </Link>
                 </div>                    
@@ -65,10 +65,10 @@ const MobileNavbar = () => {
                     <Image src={"/cart.svg"} width={24} height={40} alt="notification-btn"/>
                 </Link>
                 <div className="flex items-center justify-between w-[30%]">
-                    <Link href={"/favoris"} className="size-8 flex items-center justify-center cursor-pointer max-xs:size-4">
+                    <Link href={"/favoris"} className="size-8 flex items-center justify-center cursor-pointer max-xs:size-6">
                         <Image src={"/heart.svg"} width={30} height={40} alt="notification-btn"/>
                     </Link>
-                    <Link href={"/compte"} className="size-8 flex items-center justify-center cursor-pointer max-xs:size-4">
+                    <Link href={"/compte"} className="size-8 flex items-center justify-center cursor-pointer max-xs:size-6">
                         <Image src={"/user.svg"} width={30} height={40} alt="notification-btn"/>
                     </Link>
                 </div>                    
