@@ -3,7 +3,7 @@ import Image from "next/image"
 const Hero = () => {
     return (
         <>
-            <section className="relative z-0 px-[150px] bg-red-2 h-screen w-screen flex items-center justify-between overflow-hidden max-2xl:px-[100px] max-xl:h-[70vh] max-xl:px-[60px] max-[896px]:hidden">
+            <section className="overflow-x-hidden relative z-0 px-[150px] bg-red-2 h-screen w-screen flex items-center justify-between overflow-hidden max-2xl:px-[100px] max-xl:h-[70vh] max-xl:px-[60px] max-[896px]:hidden">
                 <div className="flex flex-col items-start justify-start gap-4">
                     <h1 className="hero-h1 font-bold text-center text-gris-12 max-xl:text-3xl">Lorem Ipsum</h1>
                     <p className="hero-p text-left text-gris-12 w-[600px] max-2xl:w-[400px] max-xl:text-lg">

@@ -5,6 +5,7 @@ import CategorieSection from "@/components/accueil/categorieSection";
 import NouvelArrivage from "@/components/accueil/nouvelArrivage";
 import Bestseller from "@/components/accueil/bestseller";
 import Recommandation from "@/components/accueil/recommendation";
+import Footer from "@/components/accueil/footer";
 
 
 export default function Accueil() {
@@ -17,6 +18,7 @@ export default function Accueil() {
       <NouvelArrivage />
       <Bestseller />
       <Recommandation />
+      <Footer />
     </>
   );
 }
