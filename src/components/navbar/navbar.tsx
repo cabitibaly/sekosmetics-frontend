@@ -1,11 +1,11 @@
 import MobileNavbar from './mobileNavbar'
 import NavbarDesktop from './navabrDesktop'
 
-const Navbar = () => {
+const Navbar = ({isSidebarVisible = true}: {isSidebarVisible?: boolean}) => {
     return (
         <>
             <NavbarDesktop />
-            <MobileNavbar />
+            <MobileNavbar {...{isSidebarVisible}} />
         </>
     )
 }
