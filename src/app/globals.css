@@ -97,3 +97,10 @@ section {
   background-size: cover;
   background-position: center;
 }
+
+.marque-hero {
+  background: linear-gradient(rgba(30, 31, 36, 0.4), rgba(30, 31, 36, 0.4)), url("../../public/marque-bg.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
