@@ -3,8 +3,6 @@ import MarqueDetailBody from "@/components/marque/marqueDetail/marqueDetailBody"
 import MarqueDetailHero from "@/components/marque/marqueDetail/marqueDetailHero";
 import Navbar from "@/components/navbar/navbar";
 import Topbar from "@/components/navbar/topbar";
-
-
 interface Props {
     params: {
         id: string
