@@ -14,46 +14,55 @@ const MarqueSection = () => {
                     id={1}
                     intitule={"Zaron"}
                     image={"/Zaron.webp"}
+                    inCarrousel={true}
                 />
                 <MarqueCard 
                     id={2}
                     intitule={"Blossom Makeup"}
                     image={"/image-5.jpg"}
+                    inCarrousel={true}
                 />
                 <MarqueCard 
                     id={3}
                     intitule={"Face facts"}
                     image={"/image.jpg"}
+                    inCarrousel={true}
                 />
                 <MarqueCard 
                     id={4}
                     intitule={"Vee beauty"}
                     image={"/image-1.jpg"}
+                    inCarrousel={true}
                 />
                 <MarqueCard 
                     id={5}
                     intitule={"Adventure Makeup"}
                     image={"/image-2.jpg"}
+                    inCarrousel={true}
                 />
                 <MarqueCard 
                     id={6}
                     intitule={"Metics"}
                     image={"/image-3.jpg"}
+                    inCarrousel={true}
                 />
                 <MarqueCard 
                     id={4}
                     intitule={"Vee beauty"}
                     image={"/image-1.jpg"}
+                    inCarrousel={true}
                 />
                 <MarqueCard 
                     id={5}
                     intitule={"Adventure Makeup"}
                     image={"/image-2.jpg"}
+                    inCarrousel={true}
                 />
                 <MarqueCard 
                     id={6}
                     intitule={"Metics"}
                     image={"/image-3.jpg"}
+                    inCarrousel={true}
                 />
             </div>
         </section>

@@ -16,6 +16,7 @@ const Footer = () => {
                     <div className='w-1/4 flex flex-col items-start justify-center gap-4 max-xl:w-1/3'>
                         <span className='text-left text-gris-12 text-2xl font-bold underline uppercase max-lg:text-lg'>Navigation</span>
                         <div className='w-full flex flex-col items-start justify-center gap-2'>
+                            <Link href={"/"} className="text-gris-10 text-lg font-bold transition duration-200 ease-in hover:text-red-8 max-lg:text-base">Accueil</Link>
                             <Link href={"/news"} className="text-gris-10 text-lg font-bold transition duration-200 ease-in hover:text-red-8 max-lg:text-base">News</Link>
                             <Link href={"/marques"} className="text-gris-10 text-lg font-bold transition duration-200 ease-in hover:text-red-8 max-lg:text-base">Marques</Link>
                             <Link href={"/categories"} className="text-gris-10 text-lg font-bold transition duration-200 ease-in hover:text-red-8 max-lg:text-base">Catégories</Link>
