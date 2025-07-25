@@ -1,5 +1,6 @@
 "use client";
 
+import { usePanier } from "@/hooks/usePanier";
 import { useHideOnScroll } from "@/utils/useHideOnScroll";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,6 +10,7 @@ const NavbarDesktop = () => {
     const [dernierePosition, setDernierePosition] = useState<number>(0);
     const [visible, setVisible] = useState<boolean>(true);
     useHideOnScroll({ dernierePosition, setDernierePosition, setVisible});
+    const {estVide} = usePanier();    
 
     return (
         <>
@@ -24,10 +26,13 @@ const NavbarDesktop = () => {
                     <Link href={"/search"}>
                         <Image src={"/search.svg"} width={18} height={20} alt={"search"} className="object-cover" />                    
                     </Link>
-                    <Link href={"/search"}>
+                    <Link href={"/panier"} className="relative">
                         <Image src={"/bag.svg"} width={18} height={20} alt={"search"} className="object-cover" />
+                        <div className={`absolute z-50 top-0 -right-[2px] size-2 bg-red-8 rounded-full ${estVide ? "hidden" : ""}`}>
+
+                        </div>
                     </Link>
-                    <Link href={"/search"}>
+                    <Link href={"/compte"}>
                         <Image src={"/user.svg"} width={18} height={20} alt={"search"} className="object-cover " />
                     </Link>
                 </div>

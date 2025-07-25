@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Comfortaa } from "next/font/google";
 import "./globals.css";
+import { PanierProvider } from "@/contexts/panierContext";
 
 const comfortaa = Comfortaa({
   subsets: ["latin"],
@@ -22,7 +23,9 @@ export default function RootLayout({
       <body
         className={`${comfortaa.className}`}
       >
-        {children}
+        <PanierProvider>
+          {children}
+        </PanierProvider>
       </body>
     </html>
   );
