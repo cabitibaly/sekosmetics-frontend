@@ -3,12 +3,12 @@
 import BottomTabs from './bottomTabs';
 import Sidebar from './sidebar';
 
-const MobileNavbar = ({isSidebarVisible = true}: {isSidebarVisible?: boolean}) => {    
+const MobileNavbar = ({isSidebarVisible = true, inArticle = false}: {isSidebarVisible?: boolean, inArticle?: boolean}) => {
 
     return (
         <>            
             {isSidebarVisible && <Sidebar />}
-            <BottomTabs />
+            <BottomTabs inArticle={inArticle} />
         </>
     )
 }
