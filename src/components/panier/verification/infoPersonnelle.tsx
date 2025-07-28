@@ -1,7 +1,7 @@
 
 const InfoPersonnelle = () => {
     return (
-        <form onSubmit={e => e.preventDefault()} className="w-full flex flex-col items-center justify-start gap-4">
+        <form onSubmit={e => e.preventDefault()} className="w-full min-h-[65vh] flex flex-col items-center justify-start gap-4 max-896:min-h-auto">
             <div className="w-full flex flex-col items-start justify-center gap-4">
                 <span className="text-2xl text-gris-12 font-normal max-896:text-lg">Information Personnelle</span>
                 <div className="w-full flex items-center">   

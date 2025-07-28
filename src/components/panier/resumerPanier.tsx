@@ -5,9 +5,10 @@ import Link from "next/link"
 
 interface Props {
     isBtn?: boolean
+    isConfirmation?: boolean
 }
 
-const ResumerPanier = ({ isBtn = true }: Props) => {
+const ResumerPanier = ({ isBtn = true, isConfirmation = false }: Props) => {
     const { panier } = usePanier()
     const sousTotal: number = panier.reduce((acc, curr) => acc + curr.prixTotal, 0)
     const nbArticcle: number = panier.reduce((acc, curr) => acc + curr.quantiteLigne, 0)
@@ -24,7 +25,7 @@ const ResumerPanier = ({ isBtn = true }: Props) => {
                         </div>
                 }
             </div>
-            <div className="self-end border-t border-red-6 pt-4 w-full flex flex-col items-end justify-start gap-4">
+            <div className={`self-end border-t border-red-6 pt-4 w-full flex flex-col items-end justify-start gap-4 ${isConfirmation ? "hidden" : ""}`}>
                 <div className="w-1/2 flex items-center justify-between max-sm:w-full">
                     <span className="text-left text-xl text-gris-12 font-semibold max-896:text-base max-xs:text-sm">Nombre d&apos;articles</span>
                     <span className="text-left text-xl text-red-8 font-bold max-896:text-base max-xs:text-sm">{nbArticcle}</span>
