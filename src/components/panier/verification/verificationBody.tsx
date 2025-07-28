@@ -1,13 +1,35 @@
 "use client"
 import { useState } from "react"
+import ResumerPanier from "../resumerPanier"
+import VerificationTopBar from "./verificationTopBar"
+import InfoPersonnelle from "./infoPersonnelle"
+import AdresseLivraison from "./adresseLivraison"
 
 const VerificationBody = () => {
     const [tab, setTab] = useState<number>(1)
 
     return (
-        <section className='overflow-x-hidden px-[150px] pt-32 py-6 w-screen h-screen flex items-start justify-center gap-4 max-896:py-20  max-896:!px-4'>
-            <div className="border border-red-4 p-1 w-2/3 flex flex-col items-center justify-start gap-4 max-xl:w-4/5 max-lg:w-full">
-                <div className="w-full flex items-center justify-between gap-8 max-md:gap-4">
+        <section className='overflow-x-hidden px-[150px] pt-32 py-6 w-screen min-h-screen flex flex-col items-center justify-start gap-8 max-896:py-20  max-896:!px-4'>
+            <div className="w-2/3 flex flex-col items-center justify-start gap-4 max-xl:w-4/5 max-lg:w-full">
+                <div className={`z-50 absolute top-0 left-0 w-full bg-red-2 ${tab === 1 ? "hidden" : ""}`}>
+                    <VerificationTopBar 
+                        title={tab === 1 ? "Info. Personnelle" : tab === 2 ? "Adresse Livraison" :tab === 3 ? "Mode paiement" :"Confirmation"}
+                        setTab={setTab} 
+                        tab={tab} 
+                    />                
+                </div>
+                <div className="w-[91.96%] hidden items-center justify-between max-896:flex max-896:absolute max-896:left-1/2 max-896:-translate-1/2 max-896:bottom-2">
+                    <button disabled={tab === 4} onClick={() => setTab(tab + 1)} className={`rounded-full font-bold bg-red-8 items-center justify-center text-gris-12 text-lg py-1 px-4 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
+                        max-lg:text-sm max-896:w-full ${tab === 4 ? "hidden" : "flex"}`}>
+                        Suivant
+                    </button>
+                    <button className={`w-[91.96%] rounded-full font-bold bg-red-8 items-center justify-center text-gris-12 text-lg py-1 px-4 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
+                        max-lg:text-sm ${tab === 4 ? "flex" : "hidden"}`}>
+                        Terminer
+                    </button>
+                </div>
+                
+                <div className="w-full flex items-center justify-between gap-8 max-896:hidden">
                     <div className={"flex flex-col gap-1"}>
                         <span className={`text-sm text-red-8 max-md:text-xs`}>info. Personnelle</span>
                         <div className={`w-full bg-red-4 p-[3px] rounded-full`} />
@@ -24,10 +46,13 @@ const VerificationBody = () => {
                         <span className={`text-sm  transition-all duration-200 ease-in max-md:text-xs ${tab >= 4 ? "text-red-8" : "text-gris-6"}`}>Confirmation</span>
                         <div className={`w-full bg-red-4 p-[3px] rounded-full  transition-all duration-200 ease-in ${tab >= 4 ? "visible" : "invisible"}`} />
                     </div>
-                </div>
+                </div>                
+                
+                {tab === 1 && <InfoPersonnelle />}
+                {tab === 2 && <AdresseLivraison />}
 
-                <div className="w-full flex items-center justify-between">
-                    <button disabled={tab === 1} onClick={() => setTab(tab - 1)} className={"cursor-pointer text-lg text-red-8 underline max-lg:text-sm"}>
+                <div className="w-full flex items-center justify-between max-896:hidden">
+                    <button disabled={tab === 1} onClick={() => setTab(tab - 1)} className={"cursor-pointer text-lg text-red-8 underline max-lg:text-sm max-896:hidden"}>
                         Précédent
                     </button>
                     <button disabled={tab === 4} onClick={() => setTab(tab + 1)} className={`rounded-full font-bold bg-red-8 items-center justify-center text-gris-12 text-lg py-1 px-4 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
@@ -39,7 +64,13 @@ const VerificationBody = () => {
                         Terminer
                     </button>
                 </div>
-            </div>            
+            </div>                        
+            
+            <hr className="border border-dashed border-gris-6 w-2/3 max-xl:w-4/5 max-lg:w-full" />
+            <div className="w-2/3 flex flex-col items-start justify-center gap-4 max-xl:w-4/5 max-lg:w-full">
+                <h1 className="text-4xl text-gris-12 font-bold max-896:hidden">Résumé du Panier</h1>
+                <ResumerPanier isBtn={false} />
+            </div>         
         </section>
     )
 }

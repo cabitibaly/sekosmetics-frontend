@@ -7,7 +7,7 @@ const Verification = () => {
     return (
         <>
             <Navbar isSidebarVisible={false} inArticle={true} />
-            <Topbar href="/panier" title="Verification" />
+            <Topbar href="/panier" title="Info. Personnelle" />
             <VerificationBody />
         </>
     )
