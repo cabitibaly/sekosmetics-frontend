@@ -1,8 +1,10 @@
 "use client"
 import Image from "next/image"
-import VarianteCard from "./varianteCard"
+import VarianteCard from "../cards/varianteCard"
 import { Minus, Plus } from "lucide-react"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import { usePanier } from "@/hooks/usePanier"
+import { articles } from "@/data/articles"
 
 interface Props {
     id: string,
@@ -10,8 +12,39 @@ interface Props {
 
 const ArticleHeader = ({id}: Props) => {
     const [quantite, setQuantite] = useState<number>(1)
+    const { ajouterLigne, supprimerLigne, modifierQuantiteLigne, articleExiste } = usePanier()
+    const article = articles.find(a => a.id === Number(id))
+    const articleDansPanier = articleExiste(Number(id))
 
-    console.log(id)
+    useEffect(() => {
+        if(articleDansPanier) {
+            setQuantite(articleDansPanier.quantiteLigne)
+        }
+    }, [articleDansPanier])
+
+    const ajouterAuPanier = () => {        
+
+        if (article) {
+            ajouterLigne({
+                quantiteLigne: quantite,
+                prixUnitaire: article.prix,
+                prixTotal: article.prix * quantite,
+                articleId: article.id,
+                image: article.image
+            })
+
+            setQuantite(1)
+        }
+    }
+
+    const diminuerQuantite = () => {
+        if(quantite > 1) {
+            setQuantite(quantite - 1)
+            modifierQuantiteLigne(Number(id), quantite - 1)
+        } else {
+            supprimerLigne(Number(id))
+        }
+    }
 
     return (
         <div className="overflow-x-hidden relative pt-24 pb-10 px-[150px] w-screen flex flex-col items-center justify-start max-2xl:px-[100px] max-xl:px-[60px] max-896:!px-4 max-896:!pt-2 max-896:!pb-4 max-md:gap-6">
@@ -20,7 +53,7 @@ const ArticleHeader = ({id}: Props) => {
                 <div className="w-full h-full flex items-center justify-between gap-4 max-xl:hidden">
                     <div className="w-[15%] h-full flex flex-col items-center justify-start gap-4 aspect-tiktok">
                         <div className="relative w-full aspect-square rounded-2xl">
-                            <Image src={"/image-17.jpg"} fill alt="article" className="object-cover rounded-2xl" />
+                            <Image src={article?.image as string} fill alt="article" className="object-cover rounded-2xl" />
                         </div>
                         <div className="relative w-full aspect-square rounded-2xl">
                             <Image src={"/image-19.jpg"} fill alt="article" className="object-cover rounded-2xl" />
@@ -39,7 +72,7 @@ const ArticleHeader = ({id}: Props) => {
 
                 <div className="w-full h-full hidden justify-between gap-4 p-0.5 rounded-2xl carousel carousel-center items-start max-xl:flex max-lg:h-[33%]">                   
                     <div className="relative w-full h-full aspect-square rounded-2xl carousel-item max-lg:w-1/2 max-md:w-3/5 max-xs:w-full">
-                        <Image src={"/image-17.jpg"} fill alt="article" className="object-cover rounded-2xl" />
+                        <Image src={article?.image as string} fill alt="article" className="object-cover rounded-2xl" />
                     </div>
                     <div className="relative w-full h-full aspect-square rounded-2xl carousel-item max-lg:w-1/2 max-md:w-3/5 max-xs:w-full">
                         <Image src={"/image-19.jpg"} fill alt="article" className="object-cover rounded-2xl" />
@@ -55,9 +88,9 @@ const ArticleHeader = ({id}: Props) => {
                 <div className="w-full h-full flex flex-col items-start justify-start gap-3 max-lg:flex-col-reverse">
                     <div className="w-full flex flex-col items-start justify-center gap-3 max-md:gap-2">
                         <div className="w-full text-gris-12 text-2xl font-bold text-left line-clamp-2 max-lg:line-clamp-none max-md:text-xl">
-                            Beauty by ad fond de teint
+                            {article?.nom}
                         </div>
-                        <span className="text-red-8 text-2xl text-left font-bold max-md:text-xl">10 000 FCFA</span>
+                        <span className="text-red-8 text-2xl text-left font-bold max-md:text-xl">{article?.prix.toLocaleString()} FCFA</span>
                     </div>                        
                     <div className="w-full flex flex-col items-start justify-center gap-3 max-md:gap-2">
                         <span className="text-xl text-gris-12 font-semibold max-md:text-base">Couleur</span>
@@ -82,7 +115,7 @@ const ArticleHeader = ({id}: Props) => {
                             />                                                                                                                                      
                         </div>
                     </div>
-                    <button className="bg-red-8 w-full rounded-full font-bold text-gris-12 text-2xl py-3 px-4 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
+                    <button onClick={() => ajouterAuPanier()} className="bg-red-8 w-full rounded-full font-bold text-gris-12 text-2xl py-3 px-4 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
                         max-lg:text-sm max-lg:hidden">
                         Ajouter au panier
                     </button>
@@ -95,7 +128,7 @@ const ArticleHeader = ({id}: Props) => {
 
             <div className="fixed left-1/2 z-40 -translate-1/2 bottom-2 w-[91.96%] p-2 rounded-full border-[1.5px] border-red-6 bg-red-1 hidden items-center justify-between gap-4 max-lg:flex">
                 <div className="border border-red-4 p-2 w-1/3 rounded-full flex items-center justify-between">
-                    <button disabled={quantite === 1} onClick={() => setQuantite(quantite -1)} className="cursor-pointer">
+                    <button onClick={() => diminuerQuantite()} className="cursor-pointer">
                         <Minus strokeWidth={1.25} className="stroke-red-6 size-6 transition duration-300 ease-in-out hover:stroke-[2] hover:stroke-red-8" />
                     </button>
                     <span className="text-red-8 text-lg font-bold">{quantite}</span>
@@ -103,7 +136,7 @@ const ArticleHeader = ({id}: Props) => {
                         <Plus strokeWidth={1.25} className="stroke-red-6 size-6 transition duration-300 ease-in-out hover:stroke-[2] hover:stroke-red-8" />
                     </button>
                 </div>
-                <button className="bg-red-8 w-2/3 rounded-full font-bold text-gris-12 text-2xl py-3 px-4 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
+                <button onClick={() => ajouterAuPanier()} className="bg-red-8 w-2/3 rounded-full font-bold text-gris-12 text-2xl py-3 px-4 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
                     max-lg:text-sm">
                     Ajouter au panier
                 </button>

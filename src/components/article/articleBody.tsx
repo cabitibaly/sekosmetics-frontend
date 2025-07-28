@@ -1,10 +1,9 @@
 "use client"
 import { useState } from "react"
-import CommentaireCard from "./commentaireCard"
+import CommentaireCard from "../cards/commentaireCard"
 
 const ArticleBody = () => {
-    const [tab, setTab] = useState<string>("1")
-    console.log(tab)
+    const [tab, setTab] = useState<string>("1")    
 
     return (
         <div className="overflow-x-hidden px-[150px] py-6 w-screen flex flex-col items-center justify-start gap-4 max-2xl:px-[100px] max-xl:px-[60px] max-xl:py-2 max-896:!px-4 max-896:!pb-38">
