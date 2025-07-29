@@ -1,4 +1,5 @@
 import Image from "next/image"
+import Link from "next/link"
 
 const Hero = () => {
     return (
@@ -9,10 +10,10 @@ const Hero = () => {
                     <p className="hero-p text-left text-gris-12 w-[600px] max-2xl:w-[400px] max-xl:text-lg">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod.
                     </p>
-                    <button className="bg-red-8 rounded-full font-bold text-gris-12 text-lg py-2 px-4 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
+                    <Link href={"/creation-kit"} className="bg-red-8 rounded-full font-bold text-gris-12 text-lg py-2 px-4 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
                     max-lg:text-sm">
                         Je crée mon kit
-                    </button>
+                    </Link>
                 </div>
                 <div className="z-10 absolute bottom-0 right-[150px] flex items-center justify-center aspect-retro w-1/3 h-4/5 max-2xl:w-2/5 max-2xl:right-[100px] max-xl:h-3/4 max-xl:right-[60px]">
                     <Image src={"/hero-img.png"} fill alt="hero-img"/>
@@ -48,10 +49,10 @@ const Hero = () => {
                         <p className="hero-mobile-h1 font-bold text-left text-gris-12 max-xl:text-lg">
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod.
                         </p>
-                        <button className="bg-red-8 rounded-full font-bold text-gris-12 hero-mobile-btn py-2 px-4 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
+                        <Link href={"/creation-kit"} className="bg-red-8 rounded-full font-bold text-gris-12 hero-mobile-btn py-2 px-4 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
                         max-lg:text-sm">
                             Commencer
-                        </button>
+                        </Link>
                     </div>
                     <div className="relative w-2/5 h-full flex items-center justify-center">
                         <Image src={"/pencil.png"} fill alt="pencil"/>

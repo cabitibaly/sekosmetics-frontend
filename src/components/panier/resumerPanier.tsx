@@ -20,7 +20,7 @@ const ResumerPanier = ({ isBtn = true, isConfirmation = false }: Props) => {
                     panier.length > 0 ? 
                         panier.map(item => <PanierCard key={item.articleId} id={item.articleId} />)
                     :
-                        <div className="border border-red-4 w-full h-40 flex items-center justify-center gap-4">
+                        <div className="w-full h-40 flex items-center justify-center gap-4">
                             <div className="line-clamp-2 text-lg text-gris-12 font-bold ">Aucun article</div>
                         </div>
                 }
