@@ -28,25 +28,7 @@ const AdresseLivraison = () => {
                 quartier={"Makan Traoré"}
                 estParDefaut={estParDefaut}
                 setEstParDefaut={setEstParDefaut}
-            />        
-            <AdresseCard
-                id={2}
-                pays={"Côte d'Ivoire"}
-                ville={"Abidjan"}
-                commune={"Adjamé"}
-                quartier={"Makan Traoré"}
-                estParDefaut={estParDefaut}
-                setEstParDefaut={setEstParDefaut}
-            />        
-            <AdresseCard
-                id={2}
-                pays={"Côte d'Ivoire"}
-                ville={"Abidjan"}
-                commune={"Adjamé"}
-                quartier={"Makan Traoré"}
-                estParDefaut={estParDefaut}
-                setEstParDefaut={setEstParDefaut}
-            />        
+            />       
         </div>
     )
 }

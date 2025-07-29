@@ -15,6 +15,7 @@ export const usePanier = () => {
         viderPanier: context.viderPanier,
         estVide: context.estVide,
         articleExiste: context.articleExiste,
-        modifierQuantiteLigne: context.modifierQuantiteLigne
+        modifierQuantiteLigne: context.modifierQuantiteLigne,
+        ajouterLignesKit: context.ajouterLignesKit
     }
 }

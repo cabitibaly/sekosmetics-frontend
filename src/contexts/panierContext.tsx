@@ -1,7 +1,6 @@
 "use client"
-
 import { LigneCommande } from "@/types/ligneCommande"
-import { useState, createContext, useContext, useEffect, ReactNode } from "react"
+import { useState, createContext, useEffect, ReactNode } from "react"
 
 type PanierContextType = {
     panier: LigneCommande[],
@@ -11,6 +10,7 @@ type PanierContextType = {
     estVide: boolean,
     articleExiste: (id: number) => LigneCommande | undefined,
     modifierQuantiteLigne: (id: number, quantite: number) => void
+    ajouterLignesKit: (lignes: LigneCommande[]) => void
 }
 
 
@@ -45,6 +45,30 @@ export const PanierProvider = ({ children }: { children: ReactNode }) => {
         })
     }
 
+    const ajouterLignesKit = (lignes: LigneCommande[]) => {
+        setPanier(prev => {
+            const mapPanier = new Map<number, LigneCommande>();
+            
+            for (const ligne of prev) {
+                mapPanier.set(ligne.articleId, { ...ligne });
+            }
+            
+            for (const ligne of lignes) {
+                if (mapPanier.has(ligne.articleId)) {
+                    const existante = mapPanier.get(ligne.articleId)!;
+                    existante.quantiteLigne += ligne.quantiteLigne;
+                    existante.prixTotal += ligne.prixTotal;
+                    mapPanier.set(ligne.articleId, existante);
+                } else {
+                    mapPanier.set(ligne.articleId, { ...ligne });
+                }
+            }
+
+            return Array.from(mapPanier.values());
+        });
+    };
+
+
     const supprimerLigne = (id: number) => {
         setPanier(prev => prev.filter(item => item.articleId !== id))
     }
@@ -66,7 +90,16 @@ export const PanierProvider = ({ children }: { children: ReactNode }) => {
     const estVide = panier.length === 0
 
     return (
-        <PanierContext.Provider value={{panier, ajouterLigne, supprimerLigne, viderPanier, estVide, articleExiste, modifierQuantiteLigne}}>
+        <PanierContext.Provider value={{
+            panier, 
+            ajouterLigne, 
+            supprimerLigne, 
+            viderPanier, 
+            estVide, 
+            articleExiste, 
+            modifierQuantiteLigne,
+            ajouterLignesKit
+        }}>
             {children}
         </PanierContext.Provider>
     )
