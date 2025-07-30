@@ -6,7 +6,7 @@ const CompteNavbar = () => {
     const pathName = usePathname().split('/')[2]  
 
     return (
-        <div className='border border-red-3 p-4 rounded-3xl bg-red-1 w-2/5 flex flex-col items-start justify-start gap-3 max-xl:gap-1 max-896:hidden'>
+        <div className='border border-red-3 p-4 rounded-3xl bg-red-1 w-2/5 flex flex-col items-start justify-start gap-4 max-xl:gap-1 max-896:hidden'>
             <Link 
                 href={"/compte/modifier-compte"} 
                 className={`px-4 py-2 rounded-full flex items-center justify-center text-xl font-bold transition duration-300 ease-in-out hover:bg-red-8 hover:text-gris-12
