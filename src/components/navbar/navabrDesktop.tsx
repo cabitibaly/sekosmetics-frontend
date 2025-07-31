@@ -32,7 +32,7 @@ const NavbarDesktop = () => {
 
                         </div>
                     </Link>
-                    <Link href={"/compte"}>
+                    <Link href={"/compte/modifier-compte"}>
                         <Image src={"/user.svg"} width={18} height={20} alt={"search"} className="object-cover " />
                     </Link>
                 </div>

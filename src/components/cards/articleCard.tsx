@@ -1,15 +1,21 @@
+"use client"
 import { ArticleCardType } from "@/types/articleCardType"
 import Image from "next/image"
 import Link from "next/link"
+import HeartActive from "../../../public/svg/heartActive"
+import HeartIcon from "../../../public/svg/heartIcon"
+import { useState } from "react"
 
 const ArticleCard = ({id, nom, image, prix, notaion, estFavori = false}: ArticleCardType) => {
+    const [isFavori, setIsFavori] = useState<boolean>(estFavori)
+
     return (
-        <Link href={`/article/${id}`} className="border border-red-4 relative rounded-3xl flex flex-col items-start justify-center">
+        <Link href={`/article/${id}`} className="border border-red-4 relative rounded-3xl h-full flex flex-col items-start justify-center">
             <div className="w-full aspect-square relative rounded-3xl flex items-center justify-center">
                 <Image src={image} fill alt='Beauty planet' className='rounded-3xl' />
             </div>
-            <div className="p-2.5 py-4 w-full h-full flex flex-col items-start justify-center gap-1">
-                <p className="line-clamp-2 text-base text-gris-12 font-semibold text-left max-896:text-sm max-sm:text-xs">
+            <div className="p-2.5 py-4 w-full h-full flex flex-col items-start justify-center gap-1 max-[360px]:items-center">
+                <p className="line-clamp-2 text-base text-gris-12 font-semibold text-left max-896:text-sm max-sm:text-xs max-[360px]:text-center">
                     {nom}
                 </p>
                 <div className="w-full flex items-center justify-between max-[360px]:flex-col max-[360px]:gap-2">
@@ -22,11 +28,17 @@ const ArticleCard = ({id, nom, image, prix, notaion, estFavori = false}: Article
                     </div>
                 </div>
             </div>
-            <div className="z-10 absolute top-3 right-4 size-6 flex items-center justify-center cursor-pointer max-md:size-4">
+            <div 
+                onClick={(e) => {
+                    e.stopPropagation(); 
+                    e.preventDefault();
+                    setIsFavori(!isFavori)
+                }} 
+                className="z-10 absolute top-1 right-2 rounded-full bg-gris-3 size-10 flex items-center justify-center cursor-pointer transition duration-200 ease-in-out hover:scale-95 max-md:size-4">
                 {
-                    estFavori ?
-                    <Image src={"/heart_active.svg"} fill alt="heart"/> :
-                    <Image src={"/heart.svg"} fill alt="heart"/>
+                    isFavori ?
+                    <HeartActive color="#FF7993" className="size-6" /> :
+                    <HeartIcon className="size-6" />                    
                 }
             </div>
         </Link>
