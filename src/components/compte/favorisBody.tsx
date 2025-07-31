@@ -20,7 +20,33 @@ const FavorisBody = () => {
                             <FilterIcon className="stroke-gris-12 size-5" />
                         </button>
                     </div>
-                    <div className="overflow-auto w-full grid grid-cols-3 items-center justify-start gap-4 max-[1380px]:grid-cols-2 max-896:!grid-cols-4 max-sm:!grid-cols-3 max-xs:!grid-cols-2">
+                    <div className="overflow-auto w-full grid grid-cols-3 items-center justify-start gap-4 max-[1380px]:grid-cols-2 max-896:!pb-32 max-896:!grid-cols-4 max-sm:!grid-cols-3 max-xs:!grid-cols-2">
+                        {
+                            articles.map((article) => (
+                                <ArticleCard 
+                                    key={article.id}
+                                    id={article.id}
+                                    nom={article.nom}
+                                    image={article.image}
+                                    prix={article.prix}
+                                    notaion={article.notaion}
+                                    estFavori={article.estFavori}
+                                />
+                            ))
+                        }
+                        {
+                            articles.map((article) => (
+                                <ArticleCard 
+                                    key={article.id}
+                                    id={article.id}
+                                    nom={article.nom}
+                                    image={article.image}
+                                    prix={article.prix}
+                                    notaion={article.notaion}
+                                    estFavori={article.estFavori}
+                                />
+                            ))
+                        }
                         {
                             articles.map((article) => (
                                 <ArticleCard 
