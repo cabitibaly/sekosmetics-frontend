@@ -20,7 +20,7 @@ const BottomTabs = ({ inArticle = false }: Props) => {
                 <Image src={"/cart.svg"} width={24} height={40} alt="notification-btn"/>
             </Link>
             <div className="flex items-center justify-between w-[30%]">
-                <Link href={"/favoris"} className="size-8 flex items-center justify-center cursor-pointer max-xs:size-6">
+                <Link href={"/compte/mes-favoris"} className="size-8 flex items-center justify-center cursor-pointer max-xs:size-6">
                     <Image src={"/heart.svg"} width={30} height={40} alt="notification-btn"/>
                 </Link>
                 <Link href={"/compte"} className="size-8 flex items-center justify-center cursor-pointer max-xs:size-6">

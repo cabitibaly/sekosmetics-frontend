@@ -44,9 +44,9 @@ const CommandeCard = ({id, numero, statut, date, commandeId, setCommandeId, setP
                         <span className="text-gris-8 text-sm font-semibold max-[320px]:!text-xs">{date}</span>
                     </div>
                 </div>
-                <button className="cursor-pointer transition duration-200 ease-in-out group-hover:translate-x-2">
+                <div className="cursor-pointer transition duration-200 ease-in-out group-hover:translate-x-2">
                     <ChevronRight strokeWidth={1.5} className="stroke-red-8 size-12 max-sm:size-8" />
-                </button>
+                </div>
             </div> 
         </div>
     )

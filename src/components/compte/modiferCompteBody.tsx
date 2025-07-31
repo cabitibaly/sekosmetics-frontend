@@ -11,7 +11,7 @@ const ModiferCompteBody = () => {
             <div className='w-4/5 h-full flex items-start justify-center gap-8 max-lg:w-[90%] max-896:!w-full'>
                 <CompteNavbar />
                 <div className='border border-red-3 p-4 rounded-3xl bg-red-1 w-3/5 max-h-full flex flex-col items-center justify-start gap-4 max-896:w-full max-896:bg-transparent max-896:border-none max-896:p-0'>
-                    <div className='relative size-24 flex items-center justify-center rounded-full'>
+                    <div className='relative size-24 aspect-square flex items-center justify-center rounded-full'>
                         <Image src={"/profil-1.jpg"} fill alt="user-icon" className='object-cover rounded-full' />
                         <div className='absolute bottom-0 right-0 rounded-full p-0.5 size-8 bg-gris-1 flex items-center justify-center'>
                             <div className='relative rounded-full bg-red-4 size-full flex items-center justify-center'>
