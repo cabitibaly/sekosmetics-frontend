@@ -8,7 +8,7 @@ const NouvelArrivage = () => {
                 <span className="span-font-size font-jura text-gris-12 font-bold max-sm:!text-2xl max-xs:!text-lg">Nouvel Arrivage</span>
                 <Link href={"/article?"} className="link-voir-plus font-jura text-red-8 font-bold max-sm:!text-lg max-xs:!text-sm">Voir plus</Link>
             </div>
-            <div className="w-full grid grid-cols-6 gap-4 max-2xl:grid-cols-5 max-xl:grid-cols-4 max-896:!grid-cols-3 max-[512px]:!grid-cols-2">
+            <div className="w-full grid grid-cols-6 gap-4 max-2xl:grid-cols-5 max-xl:grid-cols-4 max-sm:!grid-cols-3 max-xs:!grid-cols-2">
                 <ArticleCard
                     id={1}
                     nom="Beauty Planet 15-Piece Professional brush"
