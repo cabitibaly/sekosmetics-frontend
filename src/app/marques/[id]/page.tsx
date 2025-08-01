@@ -14,7 +14,7 @@ const MarqueDetail = async ({params}: Props) => {
 
     return (
         <>
-            <Topbar href='/categories' title='Zaron' />
+            <Topbar href='/marques' title='Zaron' />
             <Navbar isSidebarVisible={false} />
             <MarqueDetailHero id={id} intitule={'Zaron'} />
             <MarqueDetailBody />

@@ -1,4 +1,5 @@
 import ArticleCard from "@/components/cards/articleCard"
+import { articles } from "@/data/articles"
 import { Search } from "lucide-react"
 import Image from "next/image"
 
@@ -16,102 +17,32 @@ const CategorieDetailBody = () => {
                 </button>
             </div>   
             <div className="w-full grid grid-cols-6 gap-4 max-2xl:grid-cols-5 max-xl:grid-cols-4 max-sm:!grid-cols-3 max-xs:!grid-cols-2">
-                <ArticleCard
-                    id={1}
-                    nom="Beauty Planet 15-Piece Professional brush"
-                    image={"/image-12.jpg"}
-                    prix={14000}
-                    notaion={4.5}
-                    estFavori={true}
-                />                
-                <ArticleCard
-                    id={2}
-                    nom="Palette concealer higioher et blush aille"
-                    image={"/image-13.jpg"}
-                    prix={10000}
-                    notaion={4.0}
-                    estFavori={false}
-                />                
-                <ArticleCard
-                    id={3}
-                    nom="kit 25 pinceaux professionnel Vicc"
-                    image={"/image-14.jpg"}
-                    prix={38000}
-                    notaion={4.0}
-                    estFavori={true}
-                />                
-                <ArticleCard
-                    id={4}
-                    nom="beauty by Ad fond de teint"
-                    image={"/image-15.jpg"}
-                    prix={10000}
-                    notaion={3.0}
-                    estFavori={true}
-                />                
-                <ArticleCard
-                    id={1}
-                    nom="Beauty Planet 15-Piece Professional brush"
-                    image={"/image-12.jpg"}
-                    prix={14000}
-                    notaion={4.5}
-                    estFavori={true}
-                />                
-                <ArticleCard
-                    id={2}
-                    nom="Palette concealer higioher et blush aille"
-                    image={"/image-13.jpg"}
-                    prix={10000}
-                    notaion={4.0}
-                    estFavori={false}
-                />                
-                <ArticleCard
-                    id={3}
-                    nom="kit 25 pinceaux professionnel Vicc"
-                    image={"/image-14.jpg"}
-                    prix={38000}
-                    notaion={4.0}
-                    estFavori={true}
-                />                
-                <ArticleCard
-                    id={4}
-                    nom="beauty by Ad fond de teint"
-                    image={"/image-15.jpg"}
-                    prix={10000}
-                    notaion={3.0}
-                    estFavori={true}
-                />                
-                <ArticleCard
-                    id={1}
-                    nom="Beauty Planet 15-Piece Professional brush"
-                    image={"/image-12.jpg"}
-                    prix={14000}
-                    notaion={4.5}
-                    estFavori={true}
-                />                
-                <ArticleCard
-                    id={2}
-                    nom="Palette concealer higioher et blush aille"
-                    image={"/image-13.jpg"}
-                    prix={10000}
-                    notaion={4.0}
-                    estFavori={false}
-                />                
-                <ArticleCard
-                    id={3}
-                    nom="kit 25 pinceaux professionnel Vicc"
-                    image={"/image-14.jpg"}
-                    prix={38000}
-                    notaion={4.0}
-                    estFavori={true}
-                />                
-                <ArticleCard
-                    id={4}
-                    nom="beauty by Ad fond de teint"
-                    image={"/image-15.jpg"}
-                    prix={10000}
-                    notaion={3.0}
-                    estFavori={true}
-                />                
+                {
+                    articles.map((article) => (
+                        <ArticleCard 
+                            key={article.id}
+                            id={article.id}
+                            nom={article.nom}
+                            image={article.image}
+                            prix={article.prix}
+                            notaion={article.notaion}
+                            estFavori={article.estFavori}
+                        />
+                    ))
+                }
+                {
+                    articles.map((article) => (
+                        <ArticleCard 
+                            key={article.id}
+                            id={article.id}
+                            nom={article.nom}
+                            image={article.image}
+                            prix={article.prix}
+                            notaion={article.notaion}
+                            estFavori={article.estFavori}
+                        />
+                    ))
+                }
             </div>         
         </div>
     )

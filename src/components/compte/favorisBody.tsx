@@ -34,32 +34,6 @@ const FavorisBody = () => {
                                 />
                             ))
                         }
-                        {
-                            articles.map((article) => (
-                                <ArticleCard 
-                                    key={article.id}
-                                    id={article.id}
-                                    nom={article.nom}
-                                    image={article.image}
-                                    prix={article.prix}
-                                    notaion={article.notaion}
-                                    estFavori={article.estFavori}
-                                />
-                            ))
-                        }
-                        {
-                            articles.map((article) => (
-                                <ArticleCard 
-                                    key={article.id}
-                                    id={article.id}
-                                    nom={article.nom}
-                                    image={article.image}
-                                    prix={article.prix}
-                                    notaion={article.notaion}
-                                    estFavori={article.estFavori}
-                                />
-                            ))
-                        }
                     </div>
                 </div>
             </div>

@@ -31,9 +31,7 @@ const ArticleHeader = ({id}: Props) => {
                 prixTotal: article.prix * quantite,
                 articleId: article.id,
                 image: article.image
-            })
-
-            setQuantite(1)
+            })            
         }
     }
 

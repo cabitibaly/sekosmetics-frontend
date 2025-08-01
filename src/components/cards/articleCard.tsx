@@ -34,11 +34,11 @@ const ArticleCard = ({id, nom, image, prix, notaion, estFavori = false}: Article
                     e.preventDefault();
                     setIsFavori(!isFavori)
                 }} 
-                className="z-10 absolute top-1 right-2 rounded-full bg-gris-3 size-10 flex items-center justify-center cursor-pointer transition duration-200 ease-in-out hover:scale-95 max-md:size-4">
+                className="p-2 z-10 absolute top-1 right-2 rounded-full bg-gris-3 size-10 flex items-center justify-center cursor-pointer transition duration-200 ease-in-out hover:scale-95 max-md:p-1 max-md:size-6">
                 {
                     isFavori ?
-                    <HeartActive color="#FF7993" className="size-6" /> :
-                    <HeartIcon className="size-6" />                    
+                    <HeartActive color="#FF7993" className="size-full" /> :
+                    <HeartIcon className="size-full" />                    
                 }
             </div>
         </Link>
