@@ -23,7 +23,7 @@ const NavbarDesktop = () => {
                     <Link href={"/offres"} className="text-gris-10 text-lg font-bold transition duration-200 ease-in hover:text-red-8 max-lg:text-sm">Offres Promo</Link>
                 </div>
                 <div className="flex items-center justify-between gap-6">
-                    <Link href={"/search"}>
+                    <Link href={"/recherche"}>
                         <Image src={"/search.svg"} width={18} height={20} alt={"search"} className="object-cover" />                    
                     </Link>
                     <Link href={"/panier"} className="relative">
