@@ -14,11 +14,11 @@ const CompteBody = () => {
                             <Image src={"/profil-1.jpg"} fill alt="user-icon" className='object-cover rounded-full' />                        
                         </div>
                         <div className="flex flex-col items-start justify-center gap-2">
-                            <p className="line-clamp-2 !w-[95%] text-gris-12 text-xl font-bold max-md:text-base">Nico Robin</p>
+                            <p className="line-clamp-2 text-gris-12 text-xl font-bold max-md:text-base">Nico Robin</p>
                             <span className="text-gris-8 text-xl font-bold max-md:text-base">Modifier</span>
                         </div>
                     </div>
-                    <div className="cursor-pointer transition duration-200 ease-in-out group-hover:translate-x-2">
+                    <div className="cursor-pointer aspect-square transition duration-200 ease-in-out group-hover:translate-x-2">
                         <ChevronRight strokeWidth={1} className="stroke-gris-12 size-12 max-sm:size-8" />
                     </div>                    
                 </Link>
