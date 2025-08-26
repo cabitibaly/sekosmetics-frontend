@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { baseUrl } from "../../constant/baseUrl";
-import type { CategorieField } from "../../types/categorieField";
+import { CategorieField } from "@/types/categorieField";
 
 const path = `${baseUrl}/categorie`;
 

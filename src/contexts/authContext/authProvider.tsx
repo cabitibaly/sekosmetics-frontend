@@ -56,7 +56,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             }
         }).catch((err) => {
             toast.error(
-                err.response.data.message,
+                err.response?.data.message || "Une erreur est survenue, veuillez réessayer plus tard",
                 {
                     type: "error",
                     position: "top-right",
@@ -100,7 +100,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             }
         }).catch((err) => {
             toast.error(
-                err.response.data.message,
+                err.response?.data.message || "Une erreur est survenue, veuillez réessayer plus tard",
                 {
                     type: "error",
                     position: "top-right",
