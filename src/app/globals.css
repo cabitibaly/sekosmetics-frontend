@@ -92,6 +92,13 @@ section {
   background-position: center;
 }
 
+@utility connexion {
+  background: linear-gradient(180deg, rgba(255, 232, 235, 0.5), rgba(255, 180, 192, 0.8)), url("../../public/login.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
 .categorie-hero {
   background: linear-gradient(rgba(30, 31, 36, 0.4), rgba(30, 31, 36, 0.4)), url("../../public/categorie-bg.jpg");
   background-repeat: no-repeat;

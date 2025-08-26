@@ -3,6 +3,8 @@ import { Comfortaa } from "next/font/google";
 import "./globals.css";
 import { PanierProvider } from "@/contexts/panierContext";
 import { KitProvider } from "@/contexts/kitContext";
+import AuthProvider from "@/contexts/authContext/authProvider";
+import { QueryProvider } from "@/contexts/tanstackQuery/queryProvider";
 
 const comfortaa = Comfortaa({
   subsets: ["latin"],
@@ -24,11 +26,15 @@ export default function RootLayout({
       <body
         className={`${comfortaa.className}`}
       >
-        <PanierProvider>
-          <KitProvider>
-            {children}
-          </KitProvider>
-        </PanierProvider>
+        <QueryProvider>
+          <AuthProvider>
+            <PanierProvider>
+              <KitProvider>
+                {children}
+              </KitProvider>
+            </PanierProvider>
+          </AuthProvider>
+        </QueryProvider>
       </body>
     </html>
   );
