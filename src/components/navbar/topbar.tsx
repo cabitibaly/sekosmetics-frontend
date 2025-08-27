@@ -4,7 +4,7 @@ import Link from "next/link"
 
 interface TopbarProps {
     href: string,
-    title: string,
+    title: string | undefined,
     boutonValidation?: boolean,
     isArtcile?: boolean,
     validationFn?: () => void

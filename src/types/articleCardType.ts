@@ -4,5 +4,7 @@ export type ArticleCardType = {
     image: string, 
     prix: number,
     notaion: number,
-    estFavori?: boolean   
+    estFavori?: boolean,
+    refechFavoris?: () => void,
+    idFavoris?: number
 }

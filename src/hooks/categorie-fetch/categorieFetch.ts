@@ -9,7 +9,6 @@ interface CategoriesFetchResponse {
     status: number;
     categories: CategorieField[];
 }
-
 interface CategorieFetchResponse {
     status: number;
     categorie: CategorieField;

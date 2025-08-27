@@ -1,7 +1,12 @@
+"use client"
 import Image from "next/image"
 import CategorieCard from "../cards/categorieCard"
+import { useGetLesCategories } from "@/hooks/categorie-fetch/categorieFetch"
+import { MoonLoader } from "react-spinners";
 
-const CategorieBody = () => {
+const CategorieBody = () => {    
+    const { categories, isLoading } = useGetLesCategories();
+
     return (
 
         <div className="overflow-x-hidden px-[150px] py-12 w-screen min-h-screen flex flex-col items-center justify-start gap-12 max-2xl:px-[100px] max-xl:px-[60px] max-lg:py-8 max-896:!px-4 max-896:!pt-20 max-896:!pb-36 max-md:gap-6">
@@ -14,48 +19,41 @@ const CategorieBody = () => {
                     <input id="recherche-categorie" type="text" className="bg-gris-1 border border-red-4  block w-full text-gris-10 text-lg rounded-full outline-none focus:ring-red-7 focus:border-red-7 ps-12 p-1.5 placeholder:text-gris-6 max-896:text-sm max-896:ps-11" placeholder="Rechercher une catégorie..." />
                 </div>
             </div>
-            <div className="w-full grid grid-cols-6 items-center justify-center gap-6 max-[1440px]:grid-cols-5 max-1080:grid-cols-4 max-896:grid-cols-5 max-md:grid-cols-4 max-sm:grid-cols-3 max-xs:grid-cols-2">
-                <CategorieCard 
-                    id={1}
-                    intitule='Poudre de finition'
-                    image={"/image-6.jpg"}
-                />
-                <CategorieCard 
-                    id={2}
-                    intitule='Lips'
-                    image={"/image-11.jpg"}
-                />
-                <CategorieCard 
-                    id={3}
-                    intitule='Makeup tools'
-                    image={"/image-10.jpg"}
-                />
-                <CategorieCard 
-                    id={4}
-                    intitule='Face'
-                    image={"/image-9.jpg"}
-                />
-                <CategorieCard 
-                    id={5}
-                    intitule='Poudre libre'
-                    image={"/image-8.jpg"}
-                />
-                <CategorieCard 
-                    id={6}
-                    intitule='Sourcils'
-                    image={"/image-7.jpg"}
-                />
-                <CategorieCard 
-                    id={3}
-                    intitule='Makeup tools'
-                    image={"/image-10.jpg"}
-                />
-                <CategorieCard 
-                    id={4}
-                    intitule='Face'
-                    image={"/image-9.jpg"}
-                />              
-            </div>
+
+            {
+                isLoading &&
+                    <div className='w-full h-64 flex items-center justify-center'>
+                        <MoonLoader                                    
+                            color="#FF7993"
+                            size={24}
+                        />
+                    </div>
+            }
+
+            {        
+                (categories.length > 0 && !isLoading) &&                    
+                    <div className="w-full grid grid-cols-6 items-center justify-center gap-6 max-[1440px]:grid-cols-5 max-1080:grid-cols-4 max-896:grid-cols-5 max-md:grid-cols-4 max-sm:grid-cols-3 max-xs:grid-cols-2">
+                        {
+                            categories.map((categories) => (
+                                <CategorieCard
+                                    key={categories.idCategorie}
+                                    id={categories.idCategorie}
+                                    intitule={categories.libelleCategorie}
+                                    image={categories.imgCategorie}
+                                />
+                            ))
+                        }                             
+                    </div>
+            }
+
+            {
+                categories.length === 0 && !isLoading && (
+                    <div className='w-full h-64 flex items-center justify-center'>
+                        <p className='text-gris-12'>Aucune catégorie</p>
+                    </div>
+                )
+            }
+
         </div>
     )
 }
