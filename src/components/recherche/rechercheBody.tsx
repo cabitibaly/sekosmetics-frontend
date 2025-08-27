@@ -5,6 +5,7 @@ import FilterIcon from '../../../public/svg/filterIcon'
 import ArticleCard from '../cards/articleCard'
 import { useDebounce } from '@/hooks/useDebounce'
 import { useGetLesArticles, useGetLesFavoris } from '@/hooks/article-fetch/articleFetch'
+import { ToastContainer } from 'react-toastify'
 
 const RechercheBody = () => {
     const [recherche, setRecherche] = useState<string>("")
@@ -14,6 +15,7 @@ const RechercheBody = () => {
 
     return (
         <div className={`overflow-x-hidden px-[100px] pt-32 py-6 w-screen h-screen flex items-start justify-center gap-4 max-xl:px-[30px] max-896:flex-wrap max-896:!pb-36 max-896:!px-4 max-896:pt-20`}>
+            <div className="absolute top-0"><ToastContainer /></div>
             <div className='w-full h-auto flex flex-col items-center justify-start gap-8'>
                 <div className='w-3/5 flex flex-col items-center justify-start gap-4 max-lg:w-full'>
                     <span className='text-gris-12 text-3xl font-bold max-896:hidden'>Recherche un article</span>

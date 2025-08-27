@@ -56,3 +56,15 @@ export interface FavorisArticle extends ArticleAvecVarianteSimple {
     clientId: number,
     articleId: number,
 }
+
+export interface Commentaire {
+    idAvis: number,
+    commentaire: string,
+    dateCreationAvis: string,
+    notation: number,
+    utiliteur: {
+        nomClient: string,
+        prenomClient: string,
+        img: string | null
+    }
+}

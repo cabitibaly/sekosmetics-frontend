@@ -10,6 +10,11 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.85.5",
+    "@tiptap/extension-text-align": "^3.3.0",
+    "@tiptap/extension-text-style": "^3.3.0",
+    "@tiptap/pm": "^3.3.0",
+    "@tiptap/react": "^3.3.0",
+    "@tiptap/starter-kit": "^3.3.0",
     "axios": "^1.11.0",
     "daisyui": "^5.0.46",
     "lucide-react": "^0.525.0",

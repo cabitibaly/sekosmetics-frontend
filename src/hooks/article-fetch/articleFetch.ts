@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { baseUrl } from "@/constant/baseUrl";
 import axios from "axios";
 import type { VarianteResponseObject } from "@/types/requestVarianteObject";
-import { ArticleAvecVarianteSimple, ArticleFetch, FavorisArticle } from "@/types/articleField";
+import { ArticleAvecVarianteSimple, ArticleFetch, Commentaire, FavorisArticle } from "@/types/articleField";
 
 const path = `${baseUrl}/article`;
 
@@ -23,6 +23,19 @@ interface ArticleFetchResponse {
 interface FavorisArticlesFetchResponse {
     status: number;
     articlesFavoris: FavorisArticle[];
+}
+
+interface CommentairesFetchResponse {
+    status: number;
+    commentaires: Commentaire[];
+}
+
+interface RatingCount {
+  star1: number;
+  star2: number;
+  star3: number;
+  star4: number;
+  star5: number;
 }
 
 export const useGetLesArticles = (categorieId?: string, marqueId?: string, nomArticle?: string) => {    
@@ -131,5 +144,47 @@ export const useGetLesFavoris = () => {
         isLoading,
         refetch,
         isError
+    }
+}
+
+export const useGetLesCommentaireDeUnArticle = (articleId: number) => {
+    const { data, isLoading, isError, refetch } = useQuery<CommentairesFetchResponse>({
+        queryKey: ["commentaires", articleId],
+        queryFn: async () => (
+            axios.get(
+                `${path}/${articleId}/avis/tous-les-commentaires/`,
+                {withCredentials: true}
+            ).then(res => res.data)
+        ),
+        staleTime: 60 * 60 * 1000
+    })
+
+    // const counts = data?.commentaires.reduce(
+    //     (acc, c) => {
+    //         acc[c.notation] = (acc[c.notation] || 0) + 1;
+    //         return acc;
+    //     },
+    //     {} as Record<number, number>
+    // );
+
+    const initialCounts: RatingCount = {
+        star1: 0,
+        star2: 0,
+        star3: 0,
+        star4: 0,
+        star5: 0,
+    };
+
+    const counts = data?.commentaires.reduce((acc, c) => {
+        acc[`star${c.notation}` as keyof RatingCount]++;
+        return acc;
+    }, { ...initialCounts });
+
+    return {
+        commentaires: data?.commentaires || [],
+        notations: counts,
+        isLoading,
+        isError,
+        refetch
     }
 }

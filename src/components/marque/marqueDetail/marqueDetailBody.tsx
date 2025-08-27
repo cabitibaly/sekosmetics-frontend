@@ -5,6 +5,7 @@ import { useDebounce } from '@/hooks/useDebounce'
 import { Search } from 'lucide-react'
 import Image from 'next/image'
 import React, { useState } from 'react'
+import { ToastContainer } from 'react-toastify'
 
 const MarqueDetailBody = ({id}: {id: string}) => {
     const [recherche, setRecherche] = useState<string>("")
@@ -14,6 +15,7 @@ const MarqueDetailBody = ({id}: {id: string}) => {
 
     return (
         <div className="overflow-x-hidden px-[150px] py-12 w-screen min-h-screen flex flex-col items-center justify-start gap-12 max-2xl:px-[100px] max-xl:px-[60px] max-lg:py-8 max-896:!px-4 max-896:!pt-20 max-896:!pb-36 max-md:gap-6">
+            <div className="absolute top-0"><ToastContainer /></div>
             <div className="w-3/5 flex items-center gap-0 max-896:w-4/5 max-sm:w-full">   
                 <label htmlFor="recherche-article" className="sr-only">Recherche</label>
                 <div className="relative w-full flex items-center justify-center">
