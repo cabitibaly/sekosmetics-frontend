@@ -1,14 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { baseUrl } from "@/constant/baseUrl";
 import axios from "axios";
-import type { VarianteResponseObject } from "@/types/requestVarianteObject";
-import { ArticleAvecVarianteSimple, ArticleFetch, Commentaire, FavorisArticle } from "@/types/articleField";
+import { ArticleAvecVariante, ArticleAvecVarianteSimple, Commentaire, FavorisArticle } from "@/types/articleField";
 
 const path = `${baseUrl}/article`;
-
-interface ArticleAvecVariante extends ArticleFetch {
-    variantes: VarianteResponseObject[]
-}
 
 interface ArticlesFetchResponse {
     status: number;

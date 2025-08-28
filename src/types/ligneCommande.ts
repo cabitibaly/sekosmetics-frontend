@@ -3,5 +3,6 @@ export type LigneCommande = {
     prixUnitaire: number,
     prixTotal: number
     articleId: number,
-    image: string,
+    image?: string,
+    nomArticle?: string,
 }

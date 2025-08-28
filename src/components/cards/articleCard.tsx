@@ -5,95 +5,15 @@ import Link from "next/link"
 import HeartActive from "../../../public/svg/heartActive"
 import HeartIcon from "../../../public/svg/heartIcon"
 import { useEffect, useState } from "react"
-import axios from "axios"
-import { baseUrl } from "@/constant/baseUrl"
-import { toast } from "react-toastify"
+import { useFavoris } from "@/hooks/useFavoris"
 
 const ArticleCard = ({id, nom, image, prix, notaion, estFavori = false, refechFavoris}: ArticleCardType) => {
     const [isFavoris, setIsFavoris] = useState<boolean>(estFavori)
+    const { ajouterSupprimerFavoris } = useFavoris({ id, setIsFavoris, isFavoris, refechFavoris })
 
     useEffect(() => {
         setIsFavoris(estFavori)
     }, [estFavori])
-
-    const AjouterSupprimerFavoris = (favoris: boolean) => {        
-        if(favoris) {
-            axios.post(
-                `${baseUrl}/article/mettre-en-favoris/${id}`,
-                {},
-                {withCredentials: true}
-            ).then(res => {
-                if(res.data.status === 201) {
-                    toast.success(
-                        "L'article a bien été ajouté à vos favoris",
-                        {
-                            position: "top-right",
-                            autoClose: 2000,
-                            hideProgressBar: true,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                            theme: "light"
-                        }
-                    )
-                    refechFavoris?.()
-                    setIsFavoris(!isFavoris)
-                }
-            }).catch(err => {
-                toast.error(
-                    err.response?.data.message || "Une erreur est survenue, veuillez réessayer plus tard",
-                    {
-                        position: "top-right",
-                        autoClose: 2000,
-                        hideProgressBar: true,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "light"
-                    }
-                )
-            })
-        } else {
-            axios.delete(
-                `${baseUrl}/article/supprimer-favoris/${id}`,
-                {withCredentials: true}
-            ).then(res => {
-                if(res.data.status === 200) {
-                    toast.success(
-                        "L'article a bien été supprimé de vos favoris",
-                        {
-                            position: "top-right",
-                            autoClose: 2000,
-                            hideProgressBar: true,
-                            closeOnClick: true,
-                            pauseOnHover: true,
-                            draggable: true,
-                            progress: undefined,
-                            theme: "light"
-                        }
-                    )
-                    setIsFavoris(!isFavoris)
-                    refechFavoris?.()
-                }
-            }).catch(err => {
-                toast.error(
-                    err.response?.data.message || "Une erreur est survenue, veuillez réessayer plus tard",
-                    {
-                        position: "top-right",
-                        autoClose: 2000,
-                        hideProgressBar: true,
-                        closeOnClick: true,
-                        pauseOnHover: true,
-                        draggable: true,
-                        progress: undefined,
-                        theme: "light"
-                    }
-                )
-            })
-        }
-    }
 
     return (
         <Link href={`/article/${id}`} className="border border-red-4 relative rounded-3xl h-full flex flex-col items-start justify-center">
@@ -118,7 +38,7 @@ const ArticleCard = ({id, nom, image, prix, notaion, estFavori = false, refechFa
                 onClick={(e) => {
                     e.stopPropagation(); 
                     e.preventDefault();
-                    AjouterSupprimerFavoris(!isFavoris)
+                    ajouterSupprimerFavoris(!isFavoris)
                 }} 
                 className="p-2 z-10 absolute top-1 right-2 rounded-full bg-gris-3 size-10 flex items-center justify-center cursor-pointer transition duration-200 ease-in-out hover:scale-95 max-md:p-1 max-md:size-6">
                 {

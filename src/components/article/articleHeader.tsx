@@ -63,7 +63,8 @@ const ArticleHeader = ({id}: Props) => {
                 prixUnitaire: varianteSelected?.prixVente || 0,
                 prixTotal: (varianteSelected?.prixVente || 0) * quantite,
                 articleId: varianteSelected?.idVariante as number,
-                image: articleFetch?.imagesArticle[0].urlImage as string
+                image: articleFetch?.imagesArticle[0].urlImage as string,
+                nomArticle: articleFetch?.nomArticle
             })            
         }
     }

@@ -1,4 +1,5 @@
 import z from "zod"
+import { VarianteResponseObject } from "./requestVarianteObject"
 
 export const articleSchema = z.object({
     idArticle: z.number().optional(),
@@ -22,7 +23,6 @@ export interface ImageArticle {
     idImage?: number
     urlImage: string
 }
-
 export interface ArticleFetch extends ArticleField {
     estReductionActive: boolean;
     categorie: {
@@ -34,6 +34,9 @@ export interface ArticleFetch extends ArticleField {
     imagesArticle: ImageArticle[]
 }
 
+export interface ArticleAvecVariante extends ArticleFetch {
+    variantes: VarianteResponseObject[]
+}
 export interface ArticleAvecVarianteSimple {
     idArticle: number,
     nomArticle: string,
