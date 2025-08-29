@@ -1,10 +1,18 @@
+"use client"
 import { Search } from "lucide-react"
 import CompteNavbar from "../navbar/compteNavbar"
 import FilterIcon from "../../../public/svg/filterIcon"
 import ArticleCard from "../cards/articleCard"
-import { articles } from "@/data/articles"
+import { useGetLesArticles, useGetLesFavoris } from "@/hooks/article-fetch/articleFetch"
+import { useState } from "react"
+import { useDebounce } from "@/hooks/useDebounce"
 
 const FavorisBody = () => {
+    const [recherche, setRecherche] = useState<string>("")
+    const debouceValue = useDebounce(recherche, 500);
+    const { articles } = useGetLesArticles("", "", debouceValue.trim() || "");
+    const { favorisArticles, refetch } = useGetLesFavoris();
+
     return (
         <div className={`overflow-x-hidden px-[100px] pt-32 py-6 w-screen h-screen flex items-start justify-center gap-4 max-xl:px-[30px] max-896:flex-wrap max-896:!pb-4 max-896:!px-4 max-896:pt-20`}>
             <div className='w-4/5 h-full flex items-start justify-center gap-8 max-lg:w-[90%] max-896:!w-full'>
@@ -14,7 +22,7 @@ const FavorisBody = () => {
                         <label htmlFor="recherche-article" className="sr-only">Recherche Article</label>
                         <div className="relative w-[90%] flex items-center justify-center max-896:w-[95%]">
                             <Search strokeWidth={1.25} className="stroke-gris-11 size-6 absolute left-4 max-896:size-5 max-sm:left-3" />
-                            <input id="recherche-article" type="text" className="bg-gris-1 border border-red-4  block w-full text-gris-10 text-lg rounded-full outline-none focus:ring-red-7 focus:border-red-7 pl-12 p-1.5 placeholder:text-gris-6 max-896:text-sm max-lg:pl-11 max-md:pl-9" placeholder="Rechercher un article..." />
+                            <input value={recherche} onChange={e => setRecherche(e.target.value)} id="recherche-article" type="text" className="bg-gris-1 border border-red-4  block w-full text-gris-10 text-lg rounded-full outline-none focus:ring-red-7 focus:border-red-7 pl-12 p-1.5 placeholder:text-gris-6 max-896:text-sm max-lg:pl-11 max-md:pl-9" placeholder="Rechercher un article..." />
                         </div>
                         <button className="relative size-10 rounded-full bg-gris-3 flex items-center justify-center cursor-pointer transition duration-200 ease-in-out hover:bg-gris-4 ">
                             <FilterIcon className="stroke-gris-12 size-5" />
@@ -24,13 +32,15 @@ const FavorisBody = () => {
                         {
                             articles.map((article) => (
                                 <ArticleCard 
-                                    key={article.id}
-                                    id={article.id}
-                                    nom={article.nom}
-                                    image={article.image}
-                                    prix={article.prix}
-                                    notaion={article.notaion}
-                                    estFavori={article.estFavori}
+                                    key={article.idArticle}
+                                    id={article.idArticle}
+                                    nom={article.nomArticle}
+                                    image={article.imagesArticle[0].urlImage}
+                                    prix={article.variantes[0].prixVente}
+                                    notaion={article.notationArticle}
+                                    estFavori={favorisArticles.map(favoris => favoris.articleId).includes(article.idArticle)}
+                                    refechFavoris={() => refetch()}
+                                    idFavoris={favorisArticles.find(favoris => favoris.articleId === article.idArticle)?.idFavori}
                                 />
                             ))
                         }

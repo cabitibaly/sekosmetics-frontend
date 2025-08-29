@@ -24,7 +24,11 @@ const VerificationBody = () => {
 
     const passerUneCommande = () => {
 
-        if(tab !== 4) return
+        if(tab !== 4) return;
+
+        if(total === 0) return;
+
+        if(adresseId === null) return;
 
         axios.post(
             `${baseUrl}/commande/passer`,
