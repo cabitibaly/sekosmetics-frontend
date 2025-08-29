@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { baseUrl } from "@/constant/baseUrl";
 import axios from "axios";
 import { ArticleAvecVariante, ArticleAvecVarianteSimple, Commentaire, FavorisArticle } from "@/types/articleField";
+import { useAuth } from "../useAuth";
 
 const path = `${baseUrl}/article`;
 
@@ -39,7 +40,7 @@ export const useGetLesArticles = (categorieId?: string, marqueId?: string, nomAr
         queryKey: ["articles", categorieId, marqueId, nomArticle],
         queryFn: async () => (
             axios.get(
-                `${path}/tous-les-articles?categorieId=${categorieId}&marqueId=${marqueId}&nomArticle=${nomArticle}`,
+                `${path}/tous-les-articles-client?categorieId=${categorieId}&marqueId=${marqueId}&nomArticle=${nomArticle}`,
                 {withCredentials: true}
             ).then(res => {                
                 if(res.data.status === 200) {
@@ -64,7 +65,7 @@ export const useGetUnArticles = (idArticle: number | null) => {
         queryKey: ["article", idArticle],
         queryFn: async () => (
             axios.get(
-                `${path}/tous-les-articles/${idArticle}`,
+                `${path}/tous-les-articles-client/${idArticle}`,
                 {withCredentials: true}
             ).then(res => {
                 if(res.data.status === 200) {
@@ -123,6 +124,8 @@ export const useGetUneVariante = (articleId: number, varianteId: number) => {
 }
 
 export const useGetLesFavoris = () => {
+    const { isAuthenticated } = useAuth()
+
     const { data, isLoading, isError, refetch } = useQuery<FavorisArticlesFetchResponse>({
         queryKey: ["favoris"],
         queryFn: async () => (
@@ -131,7 +134,8 @@ export const useGetLesFavoris = () => {
                 {withCredentials: true}
             ).then(res => res.data)
         ),
-        staleTime: 60 * 60 * 1000
+        staleTime: 60 * 60 * 1000,
+        enabled: isAuthenticated
     })
     
     return {
@@ -152,15 +156,7 @@ export const useGetLesCommentaireDeUnArticle = (articleId: number) => {
             ).then(res => res.data)
         ),
         staleTime: 60 * 60 * 1000
-    })
-
-    // const counts = data?.commentaires.reduce(
-    //     (acc, c) => {
-    //         acc[c.notation] = (acc[c.notation] || 0) + 1;
-    //         return acc;
-    //     },
-    //     {} as Record<number, number>
-    // );
+    });
 
     const initialCounts: RatingCount = {
         star1: 0,

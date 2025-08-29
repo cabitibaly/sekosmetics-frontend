@@ -19,7 +19,7 @@ const CommandeArticleCard = ({ligne}: {ligne: LigneCommande}) => {
                         <div>
                             <Dot className="stroke-gris-8 size-6 max-sm:size-4" />
                         </div>
-                        <span>Quantité : {ligne.quantiteLigne}</span>
+                        <span>Qté : {ligne.quantiteLigne}</span>
                     </div>
                 </div>
             </div>

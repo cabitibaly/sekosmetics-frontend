@@ -1,9 +1,11 @@
 "use client"
+import { useAuth } from "@/hooks/useAuth"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
 const CompteNavbar = () => {
-    const pathName = usePathname().split('/')[2]  
+    const pathName = usePathname().split('/')[2] 
+    const { logout } = useAuth()    
 
     return (
         <div className='border border-red-3 p-4 rounded-3xl bg-red-1 w-2/5 flex flex-col items-start justify-start gap-4 max-xl:gap-1 max-896:hidden'>
@@ -48,7 +50,7 @@ const CompteNavbar = () => {
                 Recherche récente
             </Link>
             <hr className='my-2 w-full border border-red-4' />
-            <button className='cursor-pointer px-4 text-xl text-red-6 font-bold transition duration-200 hover:text-red-8 max-xl:text-base'>Déconnexion</button>
+            <button onClick={() => logout()} type="button" className='cursor-pointer px-4 text-xl text-red-6 font-bold transition duration-200 hover:text-red-8 max-xl:text-base'>Déconnexion</button>
         </div>
     )
 }

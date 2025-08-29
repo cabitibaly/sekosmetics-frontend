@@ -14,5 +14,6 @@ export const useAuth = () => {
         isAuthenticated: context.isAuthenticated,
         login: context.login,
         logout: context.logout,
+        refetchUtilisateur: context.refetchUtilisateur
     }
 }

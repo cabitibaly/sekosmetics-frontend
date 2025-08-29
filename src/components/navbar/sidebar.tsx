@@ -41,7 +41,9 @@ const Sidebar = () => {
                 <div className="bg-red-1 w-1/2 h-full flex flex-col items-start justify-start gap-4 p-4 max-sm:w-2/3 max-xs:w-full">
                     <div className="w-full flex items-center justify-between">
                         <Link href={"/"} className="text-gris-12 text-2xl font-bold max-xl:text-lg">Sekosmetics</Link>
-                        <X onClick={() => handleSidebarToglle()} strokeWidth={1.5} className="cursor-pointer text-red-8 size-6" />
+                        <div onClick={() => handleSidebarToglle()} className="cursor-pointer">
+                            <X strokeWidth={2} className="text-red-8 size-6" />
+                        </div>                        
                     </div>  
                     <div className="w-full flex flex-col items-start justify-between">
                         <Link href={"/news"} className="pb-2 border-b border-gris-4 w-full text-gris-10 text-lg font-bold transition duration-200 ease-in hover:text-red-8 hover:border-red-8">News</Link>

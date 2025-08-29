@@ -14,7 +14,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);    
     const router = useRouter();
 
-    const { isLoading } = useQuery({
+    const { isLoading, refetch: refetchUtilisateur } = useQuery({
         queryKey: ["utilisateur"],
         queryFn: async () => axios.get(
             `${baseUrl}/info`, 
@@ -123,7 +123,8 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                 utilisateur,
                 isAuthenticated,
                 login,
-                logout
+                logout,
+                refetchUtilisateur
             }}
         >
             <ToastContainer />

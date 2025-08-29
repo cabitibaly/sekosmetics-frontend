@@ -8,7 +8,8 @@ interface AuthContextType {
     isLoading: boolean;
     isAuthenticated: boolean;
     login: (data: ConnexionField) => void;
-    logout: () => void;    
+    logout: () => void; 
+    refetchUtilisateur: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
