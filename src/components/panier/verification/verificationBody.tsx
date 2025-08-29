@@ -134,7 +134,7 @@ const VerificationBody = () => {
                 }
 
                 <div className="w-full flex items-center justify-between max-896:hidden">
-                    <button disabled={tab === 1} onClick={() => setTab(tab - 1)} className={"cursor-pointer text-lg text-red-8 underline max-lg:text-sm max-896:hidden"}>
+                    <button disabled={tab === 1} onClick={() => setTab(tab - 1)} className={`cursor-pointer text-lg text-red-8 underline max-lg:text-sm max-896:hidden ${tab === 1 ? "hidden" : "block"}`}>
                         Précédent
                     </button>
                     <button disabled={tab === 4} onClick={() => setTab(tab + 1)} className={`rounded-full font-bold bg-red-8 items-center justify-center text-gris-12 text-lg py-1 px-4 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6

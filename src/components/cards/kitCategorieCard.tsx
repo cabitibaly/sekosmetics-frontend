@@ -5,21 +5,18 @@ interface Props {
     id: number,
     intitule: string,
     image: string
-    setCategory: (categorie: number) => void,
-    categoriy: number,
-    setPrevCategorie: (categorie: number) => void
+    setCategory: (categorie: number) => void,     
 }
 
-const KitCategorieCard = ({id, intitule, image, setCategory, categoriy, setPrevCategorie}: Props) => {
+const KitCategorieCard = ({id, intitule, image, setCategory}: Props) => {
 
-    const handleClick = () => {
-        setPrevCategorie(categoriy)
+    const handleClick = () => {        
         setCategory(id)
     }
 
 
     return (
-        <div onClick={() => handleClick()} className="cursor-pointer group border border-red-4 rounded-3xl w-full h-full flex flex-col items-center justify-start gap-2 transition duration-200 ease-in-out hover:border-red-6">
+        <div onClick={() => handleClick()} className="cursor-pointer group border border-red-4 rounded-3xl w-full h-full flex flex-col items-center justify-start gap-3 transition duration-200 ease-in-out hover:border-red-6">
             <div className="relative aspect-square w-full flex items-center justify-center">
                 <Image src={image} fill alt="kit" className="rounded-3xl" />
             </div>

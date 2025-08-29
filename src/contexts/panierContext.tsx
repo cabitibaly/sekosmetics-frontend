@@ -62,9 +62,9 @@ export const PanierProvider = ({ children }: { children: ReactNode }) => {
                 } else {
                     mapPanier.set(ligne.articleId, { ...ligne });
                 }
-            }
+            }            
 
-            return Array.from(mapPanier.values());
+            return Array.from(mapPanier.values());            
         });
     };
 
@@ -99,7 +99,7 @@ export const PanierProvider = ({ children }: { children: ReactNode }) => {
             articleExiste, 
             modifierQuantiteLigne,
             ajouterLignesKit
-        }}>
+        }}>            
             {children}
         </PanierContext.Provider>
     )

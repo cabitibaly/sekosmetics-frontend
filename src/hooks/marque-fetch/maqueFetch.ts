@@ -31,8 +31,7 @@ export const useGetLesMarques = (query?: string) => {
                 return { status: 404, marques: [] };
             })
         ),
-        staleTime: 60 * 60 * 1000,
-        enabled: query === undefined || query.length >= 1
+        staleTime: 60 * 60 * 1000,        
     })
 
     return {

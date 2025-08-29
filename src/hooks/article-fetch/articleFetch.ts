@@ -3,6 +3,7 @@ import { baseUrl } from "@/constant/baseUrl";
 import axios from "axios";
 import { ArticleAvecVariante, ArticleAvecVarianteSimple, Commentaire, FavorisArticle } from "@/types/articleField";
 import { useAuth } from "../useAuth";
+import { VarianteResponseObject } from "@/types/requestVarianteObject";
 
 const path = `${baseUrl}/article`;
 
@@ -24,6 +25,11 @@ interface FavorisArticlesFetchResponse {
 interface CommentairesFetchResponse {
     status: number;
     commentaires: Commentaire[];
+}
+
+interface VarianteFetchResponse {
+    variantes: VarianteResponseObject[],
+    status: number
 }
 
 interface RatingCount {
@@ -98,25 +104,19 @@ export const useGetUnArticles = (idArticle: number | null) => {
     }
 }
 
-export const useGetUneVariante = (articleId: number, varianteId: number) => {
-    const { data, isLoading, refetch, isError } = useQuery({
-        queryKey: ["variante", articleId, varianteId],
+export const useGetLesVariantes = (articleId: number) => {
+    const { data, isLoading, refetch, isError } = useQuery<VarianteFetchResponse>({
+        queryKey: ["variantes", articleId],
         queryFn: async () => (
             axios.get(
-                `${path}/${articleId}/variante/toutes-les-variantes/${varianteId}`,
+                `${path}/${articleId}/variante/toutes-les-variantes-client`,
                 {withCredentials: true}
-            ).then(res => {
-                if(res.data.status === 200) {
-                    return res.data
-                }
-                return {status: 404, article: null}
-            })
-        ),
-        staleTime: 10 * 60 * 1000
-    })
+            ).then(res => res.data)
+        )
+    })    
 
     return {
-        variante: data?.variante || null,
+        variantes: data?.variantes || [],
         isLoading,
         refetch,
         isError
