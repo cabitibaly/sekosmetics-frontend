@@ -179,3 +179,43 @@ export const useGetLesCommentaireDeUnArticle = (articleId: number) => {
         refetch
     }
 }
+
+export const useGetNouvelleArrivage = () => {
+    const { data, isLoading, isError, refetch } = useQuery<ArticlesFetchResponse>({
+        queryKey: ["nouvelle-arrivage"],
+        queryFn: async () => (
+            axios.get(
+                `${path}/nouvelle-arrivage`,
+                {withCredentials: true}
+            ).then(res => res.data)
+        ),
+        staleTime: 60 * 60 * 1000
+    })
+
+    return {
+        articles: data?.articles || [],
+        isLoading,
+        isError,
+        refetch
+    }
+}
+
+export const useGetBestseller = () => {
+    const { data, isLoading, isError, refetch } = useQuery<ArticlesFetchResponse>({
+        queryKey: ["bestseller"],
+        queryFn: async () => (
+            axios.get(
+                `${path}/les-plus-vendus`,
+                {withCredentials: true}
+            ).then(res => res.data)
+        ),
+        staleTime: 60 * 60 * 1000
+    })
+
+    return {
+        articles: data?.articles || [],
+        isLoading,
+        isError,
+        refetch
+    }
+}

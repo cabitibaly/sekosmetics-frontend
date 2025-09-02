@@ -3,9 +3,13 @@ import Image from "next/image"
 import CategorieCard from "../cards/categorieCard"
 import { useGetLesCategories } from "@/hooks/categorie-fetch/categorieFetch"
 import { MoonLoader } from "react-spinners";
+import { useState } from "react";
+import { useDebounce } from "@/hooks/useDebounce";
 
 const CategorieBody = () => {    
-    const { categories, isLoading } = useGetLesCategories();
+    const [recherche, setRecherche] = useState<string>("");
+    const debouceValue = useDebounce(recherche, 500);
+    const { categories, isLoading } = useGetLesCategories(debouceValue.trim() || "");
 
     return (
 
@@ -16,7 +20,7 @@ const CategorieBody = () => {
                     <div className="size-5 absolute inset-y-2.5 start-1 flex items-center ps-12 pointer-events-none max-896:size-4 max-896:ps-10 max-896:inset-y-2">
                         <Image src={"/search.svg"} fill alt={"recherche"} />
                     </div>
-                    <input id="recherche-categorie" type="text" className="bg-gris-1 border border-red-4  block w-full text-gris-10 text-lg rounded-full outline-none focus:ring-red-7 focus:border-red-7 ps-12 p-1.5 placeholder:text-gris-6 max-896:text-sm max-896:ps-11" placeholder="Rechercher une catégorie..." />
+                    <input value={recherche} onChange={e => setRecherche(e.target.value)} id="recherche-categorie" type="text" className="bg-gris-1 border border-red-4  block w-full text-gris-10 text-lg rounded-full outline-none focus:ring-red-7 focus:border-red-7 ps-12 p-1.5 placeholder:text-gris-6 max-896:text-sm max-896:ps-11" placeholder="Rechercher une catégorie..." />
                 </div>
             </div>
 

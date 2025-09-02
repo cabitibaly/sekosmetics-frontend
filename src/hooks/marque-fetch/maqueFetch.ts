@@ -16,7 +16,7 @@ interface MarqueFetchResponse {
 }
 
 export const useGetLesMarques = (query?: string) => {
-    const url = query ? `${path}/rechercher-une-marque?libelle=${query}` : `${path}/toutes-les-marques`;    
+    const url = query ? `${path}/rechercher-une-marque-client?libelle=${query}` : `${path}/toutes-les-marques-client`;    
 
     const { data, isLoading, isError, refetch } = useQuery<marquesFetchResponse>({
         queryKey: ["marques", query],
@@ -48,7 +48,7 @@ export const useGetUneMarque = (idMarque: number | null) => {
         queryKey: ["marque", idMarque],
         queryFn: async () => (
             axios.get(
-                `${path}/toutes-les-marques/${idMarque}`,
+                `${path}/toutes-les-marques-client/${idMarque}`,
                 { withCredentials: true }
             ).then(res => {                
                 if(res.data.status === 200) {                    

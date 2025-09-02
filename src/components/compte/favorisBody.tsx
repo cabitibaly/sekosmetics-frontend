@@ -41,6 +41,11 @@ const FavorisBody = () => {
                                     estFavori={favorisArticles.map(favoris => favoris.articleId).includes(article.idArticle)}
                                     refechFavoris={() => refetch()}
                                     idFavoris={favorisArticles.find(favoris => favoris.articleId === article.idArticle)?.idFavori}
+                                    reduction={{
+                                        type: article.typeReductionArticle,
+                                        valeur: article.reductionArticle,
+                                        estActive: article.estReductionActive
+                                    }}
                                 />
                             ))
                         }

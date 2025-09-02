@@ -1,12 +1,15 @@
 "use client"
 import Image from 'next/image'
-import React from 'react'
+import React, { useState } from 'react'
 import MarqueCard from '../cards/marqueCard'
 import { useGetLesMarques } from '@/hooks/marque-fetch/maqueFetch'
 import { MoonLoader } from 'react-spinners'
+import { useDebounce } from '@/hooks/useDebounce'
 
 const MarqueBody = () => {
-    const { marques, isLoading } = useGetLesMarques();
+    const [recherche, setRecherche] = useState<string>("");
+    const debouceValue = useDebounce(recherche, 500);
+    const { marques, isLoading } = useGetLesMarques(debouceValue.trim() || "");
 
     return (
         <div className="overflow-x-hidden px-[150px] py-12 w-screen min-h-screen flex flex-col items-center justify-start gap-12 max-2xl:px-[100px] max-xl:px-[60px] max-lg:py-8 max-896:!px-4 max-896:!pt-20 max-896:!pb-36 max-md:gap-6">
@@ -16,7 +19,7 @@ const MarqueBody = () => {
                     <div className="size-5 absolute inset-y-2.5 start-1 flex items-center ps-12 pointer-events-none max-896:size-4 max-896:ps-10 max-896:inset-y-2">
                         <Image src={"/search.svg"} fill alt={"recherche"} />
                     </div>
-                    <input id="recherche-marque" type="text" className="bg-gris-1 border border-red-4  block w-full text-gris-10 text-lg rounded-full outline-none focus:ring-red-7 focus:border-red-7 ps-12 p-1.5 placeholder:text-gris-6 max-896:text-sm max-896:ps-11" placeholder="Rechercher une marque..." />
+                    <input value={recherche} onChange={e => setRecherche(e.target.value)} id="recherche-marque" type="text" className="bg-gris-1 border border-red-4  block w-full text-gris-10 text-lg rounded-full outline-none focus:ring-red-7 focus:border-red-7 ps-12 p-1.5 placeholder:text-gris-6 max-896:text-sm max-896:ps-11" placeholder="Rechercher une marque..." />
                 </div>
             </div>
 

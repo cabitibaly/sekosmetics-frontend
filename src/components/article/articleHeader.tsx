@@ -7,6 +7,8 @@ import { usePanier } from "@/hooks/usePanier"
 import { useGetLesFavoris, useGetUnArticles } from "@/hooks/article-fetch/articleFetch"
 import { VarianteResponseObject } from "@/types/requestVarianteObject"
 import { useFavoris } from "@/hooks/useFavoris"
+import { appliquerReduction } from "@/utils/appliquerReduction"
+import { toast, ToastContainer } from "react-toastify"
 
 interface Props {
     id: string,
@@ -58,15 +60,31 @@ const ArticleHeader = ({id}: Props) => {
     const ajouterAuPanier = () => {        
 
         if (articleFetch) {
+            const prixReel = appliquerReduction(articleFetch.typeReductionArticle, articleFetch.reductionArticle, varianteSelected?.prixVente, articleFetch.estReductionActive)
+            
             ajouterLigne({
                 quantiteLigne: quantite,
-                prixUnitaire: varianteSelected?.prixVente || 0,
-                prixTotal: (varianteSelected?.prixVente || 0) * quantite,
+                prixUnitaire: prixReel,
+                prixTotal: prixReel * quantite,
                 articleId: varianteSelected?.idVariante as number,
                 image: articleFetch?.imagesArticle[0].urlImage as string,
                 nomArticle: articleFetch?.nomArticle
-            })            
-        }
+            })
+            
+            toast.success(
+                "Article ajouté au panier",
+                {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "colored"
+                }
+            )
+        }        
     }
 
     const diminuerQuantite = () => {
@@ -76,10 +94,25 @@ const ArticleHeader = ({id}: Props) => {
         } else {
             supprimerLigne(Number(varianteSelected?.idVariante))
         }
+
+        toast.success(
+            "Article retiré du panier",
+            {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored"
+            }
+        )
     }
 
     return (
         <div className="overflow-x-hidden relative pt-24 pb-10 px-[150px] w-screen flex flex-col items-center justify-start max-2xl:px-[100px] max-xl:px-[60px] max-896:!px-4 max-896:!pt-2 max-896:!pb-4 max-md:gap-6">
+            <div className="absolute top-0"><ToastContainer /></div>
             <div className="w-full h-auto grid grid-cols-2 items-start justify-center gap-8 max-xl:gap-4 max-lg:flex max-lg:flex-wrap">
                 
                 <div className="w-full h-full flex items-center justify-between gap-4 max-xl:hidden">
@@ -119,7 +152,14 @@ const ArticleHeader = ({id}: Props) => {
                         <div className="w-full text-gris-12 text-2xl font-bold text-left line-clamp-2 max-lg:line-clamp-none max-md:text-xl">
                             {articleFetch?.nomArticle}
                         </div>
-                        <span className="text-red-8 text-2xl text-left font-bold max-md:text-xl">{varianteSelected?.prixVente.toLocaleString()} FCFA</span>
+                        <div className="flex items-end justify-center gap-4">
+                            <span className={`text-red-8 text-2xl text-left font-bold max-md:text-xl ${articleFetch?.estReductionActive ? "block" : "hidden"}`}>
+                                {appliquerReduction(articleFetch?.typeReductionArticle, articleFetch?.reductionArticle, varianteSelected?.prixVente, articleFetch?.estReductionActive)?.toLocaleString()} FCFA
+                            </span>
+                            <span className={`text-left font-bold ${articleFetch?.estReductionActive ? "line-through text-xl text-gris-8 max-md:text-base" : "text-2xl text-red-8 max-md:text-xl"}`}>
+                                {varianteSelected?.prixVente.toLocaleString()} FCFA
+                            </span>                            
+                        </div>                        
                     </div>                        
                     <div className="w-full flex flex-col items-start justify-center gap-3 max-md:gap-2">
                         <span className="text-xl text-gris-12 font-semibold max-md:text-base">

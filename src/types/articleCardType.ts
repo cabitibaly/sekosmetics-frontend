@@ -6,5 +6,10 @@ export type ArticleCardType = {
     notaion: number,
     estFavori?: boolean,
     refechFavoris?: () => void,
-    idFavoris?: number
+    idFavoris?: number,
+    reduction?: {
+        type: string | null | undefined,
+        valeur: number | null | undefined,
+        estActive: boolean | null | undefined
+    }
 }

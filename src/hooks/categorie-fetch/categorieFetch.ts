@@ -15,7 +15,7 @@ interface CategorieFetchResponse {
 }
 
 export const useGetLesCategories = (query?: string) => {
-    const url = query ? `${path}/rechercher-une-categorie?libelle=${query}` : `${path}/toutes-les-categories`;    
+    const url = query ? `${path}/rechercher-une-categorie-client?libelle=${query}` : `${path}/toutes-les-categories-client`;    
 
     const { data, isLoading, isError, refetch } = useQuery<CategoriesFetchResponse>({
         queryKey: ["categories", query],
@@ -47,7 +47,7 @@ export const useGetUneCategorie = (idCategorie: number | null) => {
         queryKey: ["categorie", idCategorie],
         queryFn: async () => (
             axios.get(
-                `${path}/toutes-les-categories/${idCategorie}`,
+                `${path}/toutes-les-categories-client/${idCategorie}`,
                 { withCredentials: true }
             ).then(res => {                
                 if(res.data.status === 200) {                    
