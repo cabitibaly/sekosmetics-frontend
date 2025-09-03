@@ -1,20 +1,40 @@
 "use client"
 import { Search } from 'lucide-react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import FilterIcon from '../../../public/svg/filterIcon'
 import ArticleCard from '../cards/articleCard'
 import { useDebounce } from '@/hooks/useDebounce'
 import { useGetLesArticles, useGetLesFavoris } from '@/hooks/article-fetch/articleFetch'
 import { ToastContainer } from 'react-toastify'
+import FilterModal from '../modal/filterModal'
 
 const RechercheBody = () => {
     const [recherche, setRecherche] = useState<string>("")
     const debounceValue = useDebounce(recherche, 500);
-    const { articles } = useGetLesArticles("", "", debounceValue.trim() || "");
+    const [categorieId, setCategorieId] = useState<string | undefined>(undefined);
+    const [marqueId, setMarqueId] = useState<string | undefined>(undefined);
+    const [prixMin, setPrixMin] = useState<string>("");
+    const [prixMax, setPrixMax] = useState<string>("");
+    const { articles, refetch: refetchArticles } = useGetLesArticles(categorieId, marqueId, debounceValue.trim() || "", prixMin, prixMax);
     const { favorisArticles, refetch } = useGetLesFavoris();
+    const [isFilterOpen, setIsFilterOpen] = useState(false);    
+
+    useEffect(() => {
+        if(isFilterOpen) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "auto";
+        }
+    }, [isFilterOpen])
+
+    useEffect(() => {
+        if (!isFilterOpen) { 
+            refetchArticles()
+        }
+    }, [isFilterOpen, refetchArticles])
 
     return (
-        <div className={`overflow-x-hidden px-[100px] pt-32 py-6 w-screen h-screen flex items-start justify-center gap-4 max-xl:px-[30px] max-896:flex-wrap max-896:!pb-36 max-896:!px-4 max-896:pt-20`}>
+        <div className={`overflow-x-hidden px-[100px] relative pt-32 py-6 w-screen h-screen flex items-start justify-center gap-4 max-xl:px-[30px] max-896:flex-wrap max-896:!pb-36 max-896:!px-4 max-896:pt-20`}>
             <div className="absolute top-0"><ToastContainer /></div>
             <div className='w-full h-auto flex flex-col items-center justify-start gap-8'>
                 <div className='w-3/5 flex flex-col items-center justify-start gap-4 max-lg:w-full'>
@@ -25,7 +45,7 @@ const RechercheBody = () => {
                             <Search strokeWidth={1.25} className="stroke-gris-11 size-6 absolute left-4 max-896:size-5 max-sm:left-3" />
                             <input value={recherche} onChange={e => setRecherche(e.target.value)} id="recherche-article" type="text" className="bg-gris-1 border border-red-4  block w-full text-gris-10 text-lg rounded-full outline-none focus:ring-red-7 focus:border-red-7 pl-12 p-1.5 placeholder:text-gris-6 max-896:text-sm max-lg:pl-11 max-md:pl-9" placeholder="Rechercher un article..." />
                         </div>
-                        <button className="relative size-10 aspect-square rounded-full bg-gris-3 flex items-center justify-center cursor-pointer transition duration-200 ease-in-out hover:bg-gris-4 ">
+                        <button type='button' onClick={() => setIsFilterOpen(!isFilterOpen)} className="relative size-10 aspect-square rounded-full bg-gris-3 flex items-center justify-center cursor-pointer transition duration-200 ease-in-out hover:bg-gris-4 ">
                             <FilterIcon className="stroke-gris-12 size-5" />
                         </button>
                     </div>
@@ -49,10 +69,27 @@ const RechercheBody = () => {
                                     estActive: article.estReductionActive
                                 }}
                             />
-                    ))
-                }
+                        ))
+                    }
                 </div>
-            </div>              
+            </div> 
+
+            {        
+                isFilterOpen &&
+                    <FilterModal 
+                        isModalOpen={isFilterOpen} 
+                        setIsModalOpen={setIsFilterOpen} 
+                        categorieId={categorieId} 
+                        setCategorieId={setCategorieId} 
+                        marqueId={marqueId} 
+                        setMarqueId={setMarqueId} 
+                        prixMin={prixMin} 
+                        setPrixMin={setPrixMin} 
+                        prixMax={prixMax} 
+                        setPrixMax={setPrixMax} 
+                        refetchArticles={refetchArticles}                        
+                    />
+            }             
         </div>
   )
 }

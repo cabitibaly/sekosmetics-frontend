@@ -1,17 +1,36 @@
 "use client"
 import ArticleCard from '@/components/cards/articleCard'
+import FilterModal from '@/components/modal/filterModal'
 import { useGetLesArticles, useGetLesFavoris } from '@/hooks/article-fetch/articleFetch'
 import { useDebounce } from '@/hooks/useDebounce'
 import { Search } from 'lucide-react'
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ToastContainer } from 'react-toastify'
 
 const MarqueDetailBody = ({id}: {id: string}) => {
+    const [isFilterOpen, setIsFilterOpen] = useState(false);    
+    const [categorieId, setCategorieId] = useState<string | undefined>(undefined);
+    const [prixMin, setPrixMin] = useState<string>("");
+    const [prixMax, setPrixMax] = useState<string>("");
     const [recherche, setRecherche] = useState<string>("")
     const debouceValue = useDebounce(recherche, 500);
-    const { articles } = useGetLesArticles("", id, debouceValue.trim() || "");
-    const { favorisArticles, refetch } = useGetLesFavoris();    
+    const { articles, refetch: refetchArticles } = useGetLesArticles(categorieId || "", id, debouceValue.trim() || "", prixMin || "", prixMax || "");
+    const { favorisArticles, refetch } = useGetLesFavoris();   
+    
+    useEffect(() => {
+        if(isFilterOpen) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "auto";
+        }
+    }, [isFilterOpen])
+
+    useEffect(() => {
+        if (!isFilterOpen) { 
+            refetchArticles()
+        }
+    }, [isFilterOpen, refetchArticles])
 
     return (
         <div className="overflow-x-hidden px-[150px] py-12 w-screen min-h-screen flex flex-col items-center justify-start gap-12 max-2xl:px-[100px] max-xl:px-[60px] max-lg:py-8 max-896:!px-4 max-896:!pt-20 max-896:!pb-36 max-md:gap-6">
@@ -22,7 +41,7 @@ const MarqueDetailBody = ({id}: {id: string}) => {
                     <Search strokeWidth={1.25} className="stroke-gris-11 size-6 absolute left-10 max-[1545px]:left-7 max-md:left-5 max-md:size-5" />
                     <input value={recherche} onChange={e => setRecherche(e.target.value)} id="recherche-article" type="text" className="bg-gris-1 border border-red-4  block w-[95%] text-gris-10 text-lg rounded-full outline-none focus:ring-red-7 focus:border-red-7 pl-12 p-1.5 placeholder:text-gris-6 max-896:text-sm max-[1545px]:pl-10 max-lg:pl-11 max-md:pl-9" placeholder="Rechercher un article..." />
                 </div>
-                <button className="relative size-10 rounded-full bg-gris-3 flex items-center justify-center cursor-pointer transition duration-200 ease-in-out hover:bg-gris-4">
+                <button onClick={() => setIsFilterOpen(!isFilterOpen)} className="relative size-10 rounded-full bg-gris-3 flex items-center justify-center cursor-pointer transition duration-200 ease-in-out hover:bg-gris-4">
                     <Image src={"/filter.svg"} width={24} height={10} alt={"filtre"} />
                 </button>
             </div>   
@@ -47,7 +66,23 @@ const MarqueDetailBody = ({id}: {id: string}) => {
                         />
                     ))
                 }                
-            </div>         
+            </div>  
+            {
+                isFilterOpen &&
+                    <FilterModal 
+                        isModalOpen={isFilterOpen} 
+                        setIsModalOpen={setIsFilterOpen} 
+                        categorieId={categorieId} 
+                        setCategorieId={setCategorieId}                      
+                        marqueId={id} 
+                        setMarqueId={() => {}} 
+                        prixMin={prixMin} 
+                        setPrixMin={setPrixMin} 
+                        prixMax={prixMax} 
+                        setPrixMax={setPrixMax}
+                        refetchArticles={refetchArticles}
+                    />
+            }       
         </div>
     )
 }

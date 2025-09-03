@@ -92,7 +92,7 @@ const DropdownPays = ({setCountrySelcted}: Props) => {
                         }
                     </div>
                 }
-            </div>
+        </div>
     )
 }
 

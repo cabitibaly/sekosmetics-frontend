@@ -40,13 +40,13 @@ interface RatingCount {
   star5: number;
 }
 
-export const useGetLesArticles = (categorieId?: string, marqueId?: string, nomArticle?: string) => {    
-    
+export const useGetLesArticles = (categorieId?: string, marqueId?: string, nomArticle?: string, prixMin?: string, prixMax?: string) => {      
+
     const { data, isLoading, refetch, isError } = useQuery<ArticlesFetchResponse>({
         queryKey: ["articles", categorieId, marqueId, nomArticle],
         queryFn: async () => (
             axios.get(
-                `${path}/tous-les-articles-client?categorieId=${categorieId}&marqueId=${marqueId}&nomArticle=${nomArticle}`,
+                `${path}/tous-les-articles-client?categorieId=${categorieId}&marqueId=${marqueId}&nomArticle=${nomArticle}&prixMin=${prixMin}&prixMax=${prixMax}`,
                 {withCredentials: true}
             ).then(res => {                
                 if(res.data.status === 200) {
