@@ -5,6 +5,7 @@ import { PanierProvider } from "@/contexts/panierContext";
 import { KitProvider } from "@/contexts/kitContext";
 import AuthProvider from "@/contexts/authContext/authProvider";
 import { QueryProvider } from "@/contexts/tanstackQuery/queryProvider";
+import { ToastContainer } from "react-toastify";
 
 const comfortaa = Comfortaa({
   subsets: ["latin"],
@@ -30,6 +31,7 @@ export default function RootLayout({
           <AuthProvider>
             <PanierProvider>
               <KitProvider>
+                <ToastContainer />
                 {children}
               </KitProvider>
             </PanierProvider>

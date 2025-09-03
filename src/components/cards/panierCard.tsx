@@ -1,5 +1,5 @@
 "use client"
-import { Minus, Plus } from "lucide-react"
+import { Dot, Minus, Plus } from "lucide-react"
 import Image from "next/image"
 import TrashIcon from "../../../public/svg/trash"
 import { usePanier } from "@/hooks/usePanier"
@@ -45,7 +45,11 @@ const PanierCard = ({ id }: Props) => {
                 </div>
                 <div className="flex flex-col items-start justify-center gap-2">
                     <div className="w-[90%] line-clamp-2 text-base text-gris-12 font-bold max-896:text-base max-sm:text-xs">{articleDansPanier?.nomArticle}</div>
-                    <div className="line-clamp-2 text-base text-red-8 font-bold max-896:text-base max-sm:text-xs">{articleDansPanier?.prixUnitaire.toLocaleString()} FCFA</div>                    
+                    <div className="flex items-center justify-center gap-1">
+                        <div className="line-clamp-2 text-base text-red-8 font-bold max-896:text-base max-sm:text-xs">{articleDansPanier?.prixUnitaire.toLocaleString()} FCFA</div>                        
+                        <Dot className="stroke-gris-8 size-6 max-sm:size-4" />
+                        <span className="text-gris-8 text-sm font-semibold max-sm:!text-xs">{articleDansPanier?.valeursOption?.map(vo => vo.valeurOption).join(", ")}</span>
+                    </div>                    
                 </div>
             </div>
             <div className="self-end flex items-center justify-center gap-4 max-896:gap-2">

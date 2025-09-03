@@ -6,7 +6,7 @@ import InfoPersonnelle from "./infoPersonnelle"
 import AdresseLivraison from "./adresseLivraison"
 import ModePaiement from "./modePaiement"
 import Confirmation from "./confirmation"
-import { toast, ToastContainer } from "react-toastify"
+import { toast } from "react-toastify"
 import { Code } from "@/types/codeField"
 import axios from "axios"
 import { usePanier } from "@/hooks/usePanier"
@@ -80,8 +80,7 @@ const VerificationBody = () => {
     }
 
     return (
-        <section className='overflow-x-hidden px-[150px] pt-32 py-6 w-screen min-h-screen flex flex-col items-center justify-start gap-8 max-896:py-20  max-896:!px-4'>
-            <div className="absolute top-0"><ToastContainer /></div>
+        <section className='overflow-x-hidden px-[150px] pt-32 py-6 w-screen min-h-screen flex flex-col items-center justify-start gap-8 max-896:py-20  max-896:!px-4'>            
             <div className="w-2/3 flex flex-col items-center justify-start gap-4 max-xl:w-4/5 max-lg:w-full">
                 <div className={`z-50 fixed top-0 left-0 w-full bg-red-2 ${tab === 1 ? "hidden" : ""}`}>
                     <VerificationTopBar 

@@ -4,33 +4,14 @@ import Image from "next/image"
 
 interface CommandeArticleCardProps {
     ligne: LigneCommande,
-    setLigneId: React.Dispatch<React.SetStateAction<number | null>>,
-    isModalOpen: boolean,
-    setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>,
-    date: string | null,
-    statutCommande: string
 }
 
-const CommandeArticleCard = ({  ligne, setLigneId, isModalOpen, setIsModalOpen, date, statutCommande }: CommandeArticleCardProps) => {    
+const RetourArticleCard = ({  ligne }: CommandeArticleCardProps) => {
 
-    const handleClick = () => {
 
-        if(statutCommande !== "LIVREE") return
-
-        if (date) {
-            const livraison = new Date(date)
-            const limite = new Date(livraison)
-            limite.setDate(livraison.getDate() + 7)
-            
-            if (new Date() > limite) return
-        }
-
-        setLigneId(ligne.idLigne || null)
-        setIsModalOpen(!isModalOpen)
-    }
 
     return (
-        <div onClick={() => handleClick()} className="relative border border-red-6 p-4 cursor-pointer rounded-3xl w-full flex items-center justify-between gap-4 transition duration-300 ease-in-out hover:border-red-8 hover:bg-red-2 max-896:p-2 max-sm:rounded-xl">
+        <div className="relative border border-red-6 p-4 cursor-pointer rounded-3xl w-full flex items-center justify-between gap-4 max-896:p-2 max-sm:rounded-xl">
             <div className="flex items-center justify-start gap-4">
                 {
                     ligne.article.article.imagesArticle[0]?.urlImage ?
@@ -60,4 +41,4 @@ const CommandeArticleCard = ({  ligne, setLigneId, isModalOpen, setIsModalOpen, 
     )
 }
 
-export default CommandeArticleCard
+export default RetourArticleCard

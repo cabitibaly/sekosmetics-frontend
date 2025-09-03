@@ -1,5 +1,4 @@
 "use client"
-import { articles } from "@/data/articles"
 import { LigneCommande } from "@/types/ligneCommande"
 import { useState, useEffect, createContext, ReactNode } from "react"
 
@@ -36,13 +35,14 @@ export const KitProvider = ({ children }: { children: ReactNode}) => {
             }
         
             return [
-                { 
+                {                     
                     articleId: Number(ligne.articleId), 
                     quantiteLigne: 1, 
                     prixUnitaire: ligne.prixUnitaire, 
                     prixTotal: ligne.prixUnitaire, 
                     image: ligne.image, 
                     nomArticle: ligne.nomArticle,
+                    valeursOption: ligne.valeursOption
                 }, 
                 ...prev
             ]

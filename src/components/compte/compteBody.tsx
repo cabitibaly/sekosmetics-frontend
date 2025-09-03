@@ -41,6 +41,10 @@ const CompteBody = () => {
                     href="/compte/mes-commandes"
                 />
                 <CompteLink 
+                    title="Mes Retours"
+                    href="/compte/mes-retours"
+                />
+                <CompteLink 
                     title="Mes Favoris"
                     href="/compte/mes-favoris"
                 />

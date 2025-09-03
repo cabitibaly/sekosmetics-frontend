@@ -112,3 +112,15 @@ section {
   background-size: cover;
   background-position: center;
 }
+
+.tiptap {
+  @apply px-2 overflow-auto caret-red-8 h-full outline-0 ring-0 focus:ring-0 focus:border-none;
+
+  ul {
+    @apply list-disc list-outside pl-6 space-y-1;
+  }
+  
+  ol {
+    @apply list-decimal list-outside pl-6 space-y-1;
+  }
+}

@@ -69,11 +69,11 @@ const FilterModal = ({
                 </div>
                 <div className='absolute bottom-8 left-0 px-8 w-full flex items-center justify-between gap-4'>
                     <button onClick={() => handleReset()} className={`rounded-full font-bold bg-red-2 flex items-center justify-center text-gris-12 text-lg w-1/2 py-1 px-4 cursor-pointer ease-in-out transition duration-300 border border-red-3 hover:text-red-8 hover:bg-red-1 hover:border-red-6
-                        max-lg:text-`}>
+                        max-lg:text-base`}>
                         Réinitialiser
                     </button>
                     <button onClick={() => {refetchArticles(); setIsModalOpen(false)}} className={`rounded-full font-bold bg-red-8 flex items-center justify-center text-gris-12 text-lg w-1/2 py-1 px-4 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
-                        max-lg:text-`}>
+                        max-lg:text-base`}>
                         Appliquer
                     </button>
                 </div>

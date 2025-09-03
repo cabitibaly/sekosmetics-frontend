@@ -3,7 +3,6 @@ import { useEffect, useState } from "react"
 import CommentaireCard from "../cards/commentaireCard"
 import { useGetLesCommentaireDeUnArticle, useGetUnArticles } from "@/hooks/article-fetch/articleFetch"
 import EditeurTexte from "../editeur-texte/editeurTexte"
-import { ToastContainer } from "react-toastify"
 
 const ArticleBody = ({id}: {id: string}) => {
     const [tab, setTab] = useState<string>("1") 
@@ -18,8 +17,7 @@ const ArticleBody = ({id}: {id: string}) => {
     }, [article])
 
     return (
-        <div className="overflow-x-hidden px-[150px] py-6 w-screen flex flex-col items-center justify-start gap-4 max-2xl:px-[100px] max-xl:px-[60px] max-xl:py-2 max-896:!px-4 max-896:!pb-38">
-            <div className="absolute top-0"><ToastContainer /></div>
+        <div className="overflow-x-hidden px-[150px] py-6 w-screen flex flex-col items-center justify-start gap-4 max-2xl:px-[100px] max-xl:px-[60px] max-xl:py-2 max-896:!px-4 max-896:!pb-38">            
             <div className="border-b border-gris-6 pb-6 w-full carousel carousel-start items-center justify-center gap-4 max-lg:justify-start max-lg:pb-3">
                 <button onClick={() => setTab("1")} className={`carousel-item rounded-full font-bold text-lg py-2 px-4 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
                     max-lg:text-sm max-md:text-xs ${tab === "1" ? "bg-red-8 text-gris-12" : "bg-transparent border-transparent text-gris-8"}`}>

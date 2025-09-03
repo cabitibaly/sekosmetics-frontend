@@ -1,4 +1,4 @@
-import { ChevronRight } from "lucide-react"
+import { ChevronRight, Undo2 } from "lucide-react"
 import ShoppingBagIcon from "../../../public/svg/shoppingBag"
 import Link from "next/link"
 import HeartIcon from "../../../public/svg/heartIcon"
@@ -17,6 +17,7 @@ const CompteLink = ({ title, href }: Props) => {
                 <div className="size-10 rounded-full bg-gris-3 flex items-center justify-center max-md:size-10">
                     {title === "Mot de passe" && <PasswordIcon color="#1E1F24" className="size-6" />}
                     {title === "Mes Commandes" && <ShoppingBagIcon color="#1E1F24" className="size-6" />}
+                    {title === "Mes Retours" && <Undo2 strokeWidth={1} color="#1E1F24" className="size-6" />}
                     {title === "Mes Favoris" && <HeartIcon color="#1E1F24" className="size-6" />}
                     {title === "Recherches récentes" && <RecentIcon color="#1E1F24" className="size-6" />}
                 </div>

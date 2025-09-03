@@ -1,7 +1,6 @@
 "use client"
 import { Search } from "lucide-react"
 import CompteNavbar from "../navbar/compteNavbar"
-import FilterIcon from "../../../public/svg/filterIcon"
 import ArticleCard from "../cards/articleCard"
 import { useGetLesArticles, useGetLesFavoris } from "@/hooks/article-fetch/articleFetch"
 import { useState } from "react"

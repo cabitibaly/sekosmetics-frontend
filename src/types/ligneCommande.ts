@@ -5,4 +5,7 @@ export type LigneCommande = {
     articleId: number,
     image?: string,
     nomArticle?: string,
+    valeursOption?: {        
+        valeurOption: string
+    }[]
 }

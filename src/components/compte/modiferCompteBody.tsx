@@ -9,7 +9,7 @@ import { UtilisateurType } from '@/types/utilisateurType'
 import { useRouter } from 'next/navigation'
 import axios from 'axios'
 import { baseUrl } from '@/constant/baseUrl'
-import { toast, ToastContainer } from 'react-toastify'
+import { toast } from 'react-toastify'
 
 const ModiferCompteBody = () => { 
     const { utilisateur } = useAuth();
@@ -172,11 +172,10 @@ const ModiferCompteBody = () => {
     }
 
     return (
-        <div className='overflow-x-hidden relative px-[100px] pt-32 py-6 w-screen h-screen flex items-start justify-center gap-4 max-xl:px-[60px] max-896:flex-wrap max-896:pt-20 max-896:pb-0 max-896:!px-4'>
-            <div className='absolute top-0'><ToastContainer /></div>
+        <div className='overflow-x-hidden relative px-[100px] pt-32 py-6 w-screen h-screen flex items-start justify-center gap-4 max-xl:px-[60px] max-896:flex-wrap max-896:pt-20 max-896:pb-0 max-896:!px-4'>            
             <div className='w-4/5 h-full flex items-start justify-center gap-8 max-lg:w-[90%] max-896:!w-full'>
                 <CompteNavbar />
-                <div className='border border-red-3 p-4 rounded-3xl bg-red-1 w-3/5 max-h-full flex flex-col items-center justify-start gap-4 max-896:w-full max-896:bg-transparent max-896:border-none max-896:p-0'>
+                <div className='border border-red-3 p-4 rounded-3xl bg-red-1 w-3/5 flex flex-col items-center justify-start gap-4 max-896:w-full max-896:bg-transparent max-896:border-none max-896:p-0'>
                     {
                         utilisateur?.img ? 
                             <label htmlFor='img-change' className='cursor-pointer relative size-24 aspect-square flex items-center justify-center rounded-full group'>
@@ -199,7 +198,7 @@ const ModiferCompteBody = () => {
                                 </div>
                             </label>
                     }
-                    <form onSubmit={handleSubmit(modifierCompte)} className="w-full h-full flex flex-col items-center justify-start gap-4">
+                    <form onSubmit={handleSubmit(modifierCompte)} className="w-full flex flex-col items-center justify-start gap-4">
                         <div className="w-full flex flex-col items-start justify-center gap-4">
                             <span className="text-2xl text-gris-12 font-normal max-xl:text-lg">Information Personnelle</span>
                             <div className="w-full flex items-center">   

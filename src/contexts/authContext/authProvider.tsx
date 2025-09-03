@@ -6,8 +6,8 @@ import type { UtilisateurType } from "../../types/utilisateurType";
 import type { ConnexionField } from "../../types/connexionField";
 import { baseUrl } from "../../constant/baseUrl";
 import { useQuery } from "@tanstack/react-query";
-import { ToastContainer, toast } from 'react-toastify';
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [utilisateur, setUtilisateur] = useState<UtilisateurType | null>(null);
@@ -126,8 +126,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                 logout,
                 refetchUtilisateur
             }}
-        >
-            <ToastContainer />
+        >            
             {children}
         </AuthContext.Provider>
     )

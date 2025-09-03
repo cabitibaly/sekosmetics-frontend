@@ -3,14 +3,18 @@ import Image from "next/image"
 import CommandeArticleCard from "../cards/commandeArticleCard"
 import { useGetUneCommande } from "@/hooks/commande-fetch/commandeFetch"
 import { statutLisible } from "@/utils/statutLisible"
+import { useState } from "react"
+import RetourModal from "../modal/retourModal"
 
 interface Props {
     id: number
-    setCommandeId: (id: number) => void
+    setCommandeId: (id: number | null) => void
 }
 
 const CommandeDetail = ({ id, setCommandeId}: Props) => {
     const {commande, adresseLivraison, historiqueStatut, lignesCommande} = useGetUneCommande(id)
+    const [openRetour, setOpenRetour] = useState<boolean>(false)
+    const [ligneId, seLigneId] = useState<number | null>(null)
 
     return (
         <div className="overflow-auto pt-4 w-full flex flex-col items-center justify-start gap-6 max-896:!bg-red-2 max-896:!pb-36">
@@ -69,10 +73,24 @@ const CommandeDetail = ({ id, setCommandeId}: Props) => {
                         <CommandeArticleCard
                             key={ligne.idLigne}
                             ligne={ligne}
+                            setLigneId={seLigneId}
+                            isModalOpen={openRetour}
+                            setIsModalOpen={setOpenRetour} 
+                            statutCommande={commande?.statutCommande || ""} 
+                            date={historiqueStatut[historiqueStatut.length - 1]?.statutActuel === "LIVREE" ? historiqueStatut[historiqueStatut.length - 1]?.dateChangement : null}                          
                         />
                     ))
                 }
             </div>
+            {
+                openRetour &&
+                <RetourModal  
+                    isModalOpen={openRetour}
+                    setIsModalOpen={setOpenRetour}
+                    ligneId={ligneId}
+                    commandeId={id}
+                />
+            }
         </div>
     )
 }

@@ -4,23 +4,24 @@ import { TextStyleKit } from "@tiptap/extension-text-style"
 import { EditorContent, useEditor, useEditorState } from "@tiptap/react"
 import StarterKit from "@tiptap/starter-kit"
 import { AlignCenter, AlignJustify, AlignLeft, AlignRight, Bold, Italic, List, ListOrdered, Underline } from "lucide-react"
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 
 const extensions = [
-    TextStyleKit, 
-    StarterKit, 
+    StarterKit,
+    TextStyleKit,     
     TextAlign.configure({ 
         types: ['heading', 'paragraph'] 
-})]
+    })
+]
 
 interface Props {
-    onChange: (content: string) => void
+    onChange: React.Dispatch<React.SetStateAction<string>>
     html?: string,
     isEditable?: boolean
 }
 
 const EditeurTexte = ({ onChange, html = "", isEditable = true }: Props) => {
-    const [content, setContent] = useState<string>(html || `<p>Saisissez votre texte ici...</p>`)    
+    const [content, setContent] = useState<string>(`<p>Saisissez votre texte ici...</p>`)    
 
     const editor = useEditor({
         immediatelyRender: false,
@@ -28,17 +29,17 @@ const EditeurTexte = ({ onChange, html = "", isEditable = true }: Props) => {
         extensions,
         content,
         onUpdate: ({editor}) => {
-            const html= editor.getHTML();
-            setContent(html);
+            const html = editor.getHTML();
+            setContent(html); 
             onChange(html);
         }            
-    })
+    })    
     
     useEffect(() => {
-        if (html && editor) {
+        if (html && editor) {            
             editor.commands.setContent(html);
         }
-    }, [html, editor]);
+    }, [html, editor]);    
 
     const editorState = useEditorState({
         editor,
@@ -61,7 +62,7 @@ const EditeurTexte = ({ onChange, html = "", isEditable = true }: Props) => {
     })
 
     return (        
-        <div className="rounded-3xl p-4 w-full h-auto flex flex-col items-start justify-start gap-4">
+        <div className={`rounded-3xl p-4 w-full flex flex-col items-start justify-start gap-4 ${isEditable ? "h-64 border border-red-4" : "h-auto"}`}>
             <div className="overflow-auto w-full flex-1">
                 <EditorContent className="text-base text-gris-12 w-full h-full focus:outline-none max-xs:text-sm" editor={editor}/>
             </div>

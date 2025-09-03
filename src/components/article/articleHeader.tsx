@@ -8,7 +8,7 @@ import { useGetLesFavoris, useGetUnArticles } from "@/hooks/article-fetch/articl
 import { VarianteResponseObject } from "@/types/requestVarianteObject"
 import { useFavoris } from "@/hooks/useFavoris"
 import { appliquerReduction } from "@/utils/appliquerReduction"
-import { toast, ToastContainer } from "react-toastify"
+import { toast } from "react-toastify"
 
 interface Props {
     id: string,
@@ -68,20 +68,19 @@ const ArticleHeader = ({id}: Props) => {
                 prixTotal: prixReel * quantite,
                 articleId: varianteSelected?.idVariante as number,
                 image: articleFetch?.imagesArticle[0].urlImage as string,
-                nomArticle: articleFetch?.nomArticle
+                nomArticle: articleFetch?.nomArticle,
+                valeursOption: varianteSelected?.valeursOption.map(vo => ({valeurOption: vo.valeurOption}))
             })
             
             toast.success(
                 "Article ajouté au panier",
                 {
                     position: "top-right",
-                    autoClose: 5000,
+                    autoClose: 3000,
                     hideProgressBar: true,
                     closeOnClick: true,
                     pauseOnHover: true,
                     draggable: true,
-                    progress: undefined,
-                    theme: "colored"
                 }
             )
         }        
@@ -112,7 +111,7 @@ const ArticleHeader = ({id}: Props) => {
 
     return (
         <div className="overflow-x-hidden relative pt-24 pb-10 px-[150px] w-screen flex flex-col items-center justify-start max-2xl:px-[100px] max-xl:px-[60px] max-896:!px-4 max-896:!pt-2 max-896:!pb-4 max-md:gap-6">
-            <div className="absolute top-0"><ToastContainer /></div>
+           
             <div className="w-full h-auto grid grid-cols-2 items-start justify-center gap-8 max-xl:gap-4 max-lg:flex max-lg:flex-wrap">
                 
                 <div className="w-full h-full flex items-center justify-between gap-4 max-xl:hidden">

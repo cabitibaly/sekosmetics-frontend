@@ -34,6 +34,14 @@ const CompteNavbar = () => {
                 Mes commandes
             </Link>
             <Link 
+                href={"/compte/mes-retours"} 
+                className={`px-4 py-2 rounded-full flex items-center justify-center text-xl font-bold transition duration-300 ease-in-out hover:bg-red-8 hover:text-gris-12
+                   max-xl:text-base ${pathName === "mes-retours" ? "bg-red-8 text-gris-12" : "bg-transparent text-gris-8"}
+                `}
+            >
+                Mes retours
+            </Link>
+            <Link 
                 href={"/compte/mes-favoris"} 
                 className={`px-4 py-2 rounded-full flex items-center justify-center text-xl font-bold transition duration-300 ease-in-out hover:bg-red-8 hover:text-gris-12
                    max-xl:text-base ${pathName === "mes-favoris" ? "bg-red-8 text-gris-12" : "bg-transparent text-gris-8"}

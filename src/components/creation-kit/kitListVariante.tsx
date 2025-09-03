@@ -29,7 +29,8 @@ const KitListVariante = ({ articleId, setIdArticle, nomArticle, }: Props) => {
             prixUnitaire: variantes.find(v => v.idVariante === id)?.prixVente || 0,
             prixTotal: variantes.find(v => v.idVariante === id)?.prixVente || 0,
             image: variantes.find(v => v.idVariante === id)?.imageVariante || "",
-            nomArticle: nomArticle
+            nomArticle: nomArticle,
+            valeursOption: variantes.find(v => v.idVariante === id)?.valeursOption.map(vo => ({valeurOption: vo.valeurOption}))
         })
     }
 
