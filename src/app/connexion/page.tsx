@@ -34,8 +34,8 @@ const Connexion = () => {
                         <input {...register("email", {required: true})} id="email" type="email" className="bg-gris-1 border border-red-4  block w-full text-gris-12 text-lg rounded-full outline-none focus:ring-red-7 focus:border-red-7 ps-4 px-1.5 py-2 placeholder:text-gris-6 max-896:text-base" placeholder="example@example.com" />                                        
                     </div>
                     <div className="relative w-full flex flex-col items-start gap-2">   
-                        <label htmlFor="ancien" className="sr-only">Mot de passe actuel</label>
-                        <input {...register("motDePasse", {required: true})} id="ancien" type={isVisibleOld ? "text" : "password"} className="bg-gris-1 border border-red-4  block w-full text-gris-12 text-lg rounded-full outline-none focus:ring-red-7 focus:border-red-7 ps-4 px-1.5 py-2 placeholder:text-gris-6 max-896:text-base" placeholder="12345678" />
+                        <label htmlFor="mdp" className="sr-only">Mot de passe</label>
+                        <input {...register("motDePasse", {required: true})} id="mdp" type={isVisibleOld ? "text" : "password"} className="bg-gris-1 border border-red-4  block w-full text-gris-12 text-lg rounded-full outline-none focus:ring-red-7 focus:border-red-7 ps-4 px-1.5 py-2 placeholder:text-gris-6 max-896:text-base" placeholder="12345678" />
                         <button type="button" onClick={() => setIsVisibleOld(!isVisibleOld)} className="absolute z-50 right-3 top-2.5 cursor-pointer max-896:top-3">
                             {
                                 isVisibleOld ? <Eye strokeWidth={1.5} className="size-6 stroke-red-8 max-896:size-5" /> : <EyeOff strokeWidth={1.5} className="size-6 stroke-gris-12 max-896:size-5" />
@@ -48,7 +48,7 @@ const Connexion = () => {
                         Connexion
                     </button>
                     <div className='w-full flex items-center justify-center'>
-                        <p className='text-gris-12 text-sm max-896:text-center'>Vous n&apos;avez pas encore de compte ? <Link href={"/inscriprion"} className='text-red-8 cursor-pointer hover:underline max-896:text-red-10'>S&apos;inscrire</Link></p>
+                        <p className='text-gris-12 text-sm max-896:text-center'>Vous n&apos;avez pas encore de compte ? <Link href={"/inscription"} className='text-red-8 cursor-pointer hover:underline max-896:text-red-10'>S&apos;inscrire</Link></p>
                     </div>
                 </form>
             </div>

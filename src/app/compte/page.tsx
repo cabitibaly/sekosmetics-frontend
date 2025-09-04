@@ -7,14 +7,14 @@ import { useRouter } from 'next/navigation'
 import React, { useEffect } from 'react'
 
 const Compte = () => {
-    const { isAuthenticated } = useAuth()  
+    const { isAuthenticated, isLoading } = useAuth()  
     const router = useRouter();
     
     useEffect(() => {
-        if (!isAuthenticated) {            
+        if (!isAuthenticated && !isLoading) {            
             router.push("/connexion");
         }
-    }, [isAuthenticated, router]);
+    }, [isAuthenticated, isLoading, router]);
 
     return (
         <>

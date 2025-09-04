@@ -12,7 +12,7 @@ const Verification = () => {
     
     useEffect(() => {
         if (!isAuthenticated) {            
-            router.push("/connexion");
+            router.push("/panier");
         }
     }, [isAuthenticated, router]);
 

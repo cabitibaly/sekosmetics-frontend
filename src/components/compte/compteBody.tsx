@@ -9,8 +9,8 @@ const CompteBody = () => {
     const { utilisateur } = useAuth()
 
     return (
-        <div className={`overflow-x-hidden px-[100px] pt-32 py-6 w-screen h-screen flex items-center justify-center max-xl:px-[30px] max-896:flex-wrap max-896:!pb-4 max-896:!px-4 max-896:pt-20`}>
-            <div className='border border-red-3 p-4 bg-red-1 rounded-3xl w-2/5 h-full flex flex-col items-center justify-start gap-8 max-xl:w-3/5 max-896:!w-full max-896:bg-transparent max-896:border-none max-896:p-0'>
+        <div className={`overflow-x-hidden px-[100px] pt-32 py-6 w-screen h-screen flex items-center justify-center max-xl:px-[30px] max-896:flex-wrap max-896:!pb-16 max-896:!px-4 max-896:pt-20`}>
+            <div className='border border-red-3 px-4 pt-4 bg-red-1 rounded-3xl w-2/5 h-full flex flex-col items-center justify-start gap-8 max-xl:w-3/5 max-896:overflow-auto max-896:!w-full max-896:bg-transparent max-896:border-none max-896:p-0 max-896:pb-8'>
                 <Link href="/compte/modifier-compte" className="cursor-pointer p-4 bg-red-3 rounded-3xl w-full flex items-center justify-between gap-4 group transition duration-200 ease-in-out hover:bg-red-4/70">
                     <div className="flex items-center justify-center gap-3">
                         {

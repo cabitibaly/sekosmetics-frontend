@@ -8,6 +8,7 @@ import { baseUrl } from "../../constant/baseUrl";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import { renvoyerOtp } from "@/utils/renvoyerOtp";
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [utilisateur, setUtilisateur] = useState<UtilisateurType | null>(null);
@@ -52,9 +53,32 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                     progress: undefined,
                     theme: "light"
                 });                
-                router.push("/");
+                window.location.href = "/";
             }
         }).catch((err) => {
+            if(err.response?.status === 400) {
+                toast.error(
+                    err.response?.data.message || "Une erreur est survenue, veuillez réessayer plus tard",
+                    {
+                        type: "error",
+                        position: "top-right",
+                        autoClose: 3000,
+                        hideProgressBar: true,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                        theme: "light"
+                    }
+                )
+
+                renvoyerOtp(data.email)
+
+                setTimeout(() => {
+                    router.push("/inscription/verification-compte?email=" + data.email)
+                }, 3000)
+            }
+
             toast.error(
                 err.response?.data.message || "Une erreur est survenue, veuillez réessayer plus tard",
                 {

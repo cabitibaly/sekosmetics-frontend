@@ -190,7 +190,7 @@ const ModiferCompteBody = () => {
                         :
                             <label htmlFor='img-change' className='cursor-pointer relative bg-red-7 size-24 aspect-square flex items-center justify-center rounded-full group'>
                                 <input onChange={e => changerImage(e.target.files)} id='img-change' type="file" accept='image/*' className="sr-only" />
-                                <span className='text-bold text-red-1 text-xl'>{utilisateur?.nomClient.charAt(0)}</span>
+                                <span className='text-bold text-red-1 text-xl'>{utilisateur?.nomClient?.charAt(0) || "U"}</span>
                                 <div className='absolute bottom-0 right-0 rounded-full p-0.5 size-8 bg-gris-1 flex items-center justify-center transition duration-300 ease-in group-hover:scale-90'>
                                     <div className='relative rounded-full bg-red-4 size-full flex items-center justify-center'>
                                         <CameraIcon className='size-4' />
