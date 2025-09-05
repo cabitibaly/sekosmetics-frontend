@@ -12,7 +12,7 @@ const NouvelArrivage = () => {
         <section className="overflow-x-hidden px-[150px] py-6 w-screen flex flex-col items-center justify-start gap-4 max-2xl:px-[100px] max-xl:px-[60px] max-xl:py-2 max-896:!px-4">
             <div className="w-full flex items-center justify-between">
                 <span className="span-font-size font-jura text-gris-12 font-bold max-sm:!text-2xl max-xs:!text-lg">Nouvel Arrivage</span>
-                <Link href={"/article?"} className="link-voir-plus font-jura text-red-8 font-bold max-sm:!text-lg max-xs:!text-sm">Voir plus</Link>
+                <Link href={"/article/nouvelle-arrivage"} className="link-voir-plus font-jura text-red-8 font-bold max-sm:!text-lg max-xs:!text-sm">Voir plus</Link>
             </div>
             {
                 isLoading &&

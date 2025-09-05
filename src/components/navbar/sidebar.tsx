@@ -46,7 +46,7 @@ const Sidebar = () => {
                         </div>                        
                     </div>  
                     <div className="w-full flex flex-col items-start justify-between">
-                        <Link href={"/news"} className="pb-2 border-b border-gris-4 w-full text-gris-10 text-lg font-bold transition duration-200 ease-in hover:text-red-8 hover:border-red-8">News</Link>
+                        <Link href={"/article/nouvelle-arrivage"} className="pb-2 border-b border-gris-4 w-full text-gris-10 text-lg font-bold transition duration-200 ease-in hover:text-red-8 hover:border-red-8">Nouvelle arrivage</Link>
                         <Link href={"/categories"} className="py-2 border-b border-gris-4 w-full text-gris-10 text-lg font-bold transition duration-200 ease-in hover:text-red-8 hover:border-red-8">Categories</Link>
                         <Link href={"/marques"} className="py-2 border-b border-gris-4 w-full text-gris-10 text-lg font-bold transition duration-200 ease-in hover:text-red-8 hover:border-red-8">Marques</Link>
                         <Link href={"/offres"} className="py-2 border-b border-gris-4 w-full text-gris-10 text-lg font-bold transition duration-200 ease-in hover:text-red-8 hover:border-red-8">Offres Promo</Link>

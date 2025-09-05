@@ -180,12 +180,12 @@ export const useGetLesCommentaireDeUnArticle = (articleId: number) => {
     }
 }
 
-export const useGetNouvelleArrivage = () => {
+export const useGetNouvelleArrivage = (query?: string) => {
     const { data, isLoading, isError, refetch } = useQuery<ArticlesFetchResponse>({
-        queryKey: ["nouvelle-arrivage"],
+        queryKey: ["nouvelle-arrivage", query],
         queryFn: async () => (
             axios.get(
-                `${path}/nouvelle-arrivage`,
+                `${path}/nouvelle-arrivage?nomArticle=${query ? query : ""}`,
                 {withCredentials: true}
             ).then(res => res.data)
         ),
@@ -200,12 +200,12 @@ export const useGetNouvelleArrivage = () => {
     }
 }
 
-export const useGetBestseller = () => {
+export const useGetBestseller = (query?: string) => {
     const { data, isLoading, isError, refetch } = useQuery<ArticlesFetchResponse>({
-        queryKey: ["bestseller"],
+        queryKey: ["bestseller", query],
         queryFn: async () => (
             axios.get(
-                `${path}/les-plus-vendus`,
+                `${path}/les-plus-vendus?nomArticle=${query ? query : ""}`,
                 {withCredentials: true}
             ).then(res => res.data)
         ),
