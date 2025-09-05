@@ -20,7 +20,7 @@ const NavbarDesktop = () => {
                     <Link href={"/article/nouvelle-arrivage"} className="text-gris-10 text-lg font-bold transition duration-200 ease-in hover:text-red-8 max-lg:text-sm">News</Link>
                     <Link href={"/categories"} className="text-gris-10 text-lg font-bold transition duration-200 ease-in hover:text-red-8 max-lg:text-sm">Categories</Link>
                     <Link href={"/marques"} className="text-gris-10 text-lg font-bold transition duration-200 ease-in hover:text-red-8 max-lg:text-sm">Marques</Link>
-                    <Link href={"/offres"} className="text-gris-10 text-lg font-bold transition duration-200 ease-in hover:text-red-8 max-lg:text-sm">Offres Promo</Link>
+                    <Link href={"/offre-promotionnelle"} className="text-gris-10 text-lg font-bold transition duration-200 ease-in hover:text-red-8 max-lg:text-sm">Offres Promo</Link>
                 </div>
                 <div className="flex items-center justify-between gap-6">
                     <Link href={"/recherche"}>
