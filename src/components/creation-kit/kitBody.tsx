@@ -5,16 +5,16 @@ import { useState } from "react"
 import KitCard from "../cards/kitCard"
 import KitListArticle from "./kitListArticle"
 import { useKit } from "@/hooks/useKit"
-import { useGetLesCategories } from "@/hooks/categorie-fetch/categorieFetch"
+import { useGetLesCategoriesPagine } from "@/hooks/categorie-fetch/categorieFetch"
 import { MoonLoader } from "react-spinners"
 import { useDebounce } from "@/hooks/useDebounce"
 
 const KitBody = () => {
-    const [categorie, setCategorie] = useState<number>(0)    
+    const [categorie, setCategorie] = useState<number | null>(null)    
     const [recherche, setRecherche] = useState<string>("")
     const debouceValue = useDebounce(recherche, 500);
     const { kit } = useKit()    
-    const { categories, isLoading } = useGetLesCategories(debouceValue.trim() || "");
+    const { categories, isLoading, hasNextPage, fetchNextPage, isFetchingNextPage } = useGetLesCategoriesPagine(8 ,debouceValue.trim() || "");
     const nbArticle = kit.reduce((acc, curr) => acc + curr.quantiteLigne, 0)
     const sousTotal = kit.reduce((acc, curr) => acc + curr.prixTotal, 0)
 
@@ -55,7 +55,7 @@ const KitBody = () => {
                 }
                 
                 {   
-                    categorie === 0 && !isLoading &&
+                    categorie === null && !isLoading &&
                     <>
                         <div className="w-4/5 flex items-center gap-0 max-sm:w-full">   
                             <label htmlFor="recherche-cqtegorie" className="sr-only">Recherche</label>
@@ -77,10 +77,19 @@ const KitBody = () => {
                                 ))
                             }
                         </div>
+                        {    
+                            hasNextPage &&
+                            <div className="w-full flex items-center justify-center">
+                                <button onClick={() => fetchNextPage()} disabled={isFetchingNextPage} className={`rounded-full font-bold bg-red-8 flex items-center justify-center text-gris-12 text-lg py-1.5 px-3 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
+                                    max-lg:text-base`}>
+                                    Charger plus
+                                </button>
+                            </div>
+                        }
                     </>
                 }
                 {
-                    categorie !== 0 &&
+                    categorie !== null &&
                     <KitListArticle 
                         categorie={categorie}                                                 
                         setCategorie={setCategorie}

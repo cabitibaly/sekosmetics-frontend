@@ -1,7 +1,7 @@
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { ChevronDown } from 'lucide-react';
 import { MoonLoader } from 'react-spinners';
-import { useGetLesCategories } from '@/hooks/categorie-fetch/categorieFetch';
+import { useGetLesCategories, useGetLesCategoriesPagine } from '@/hooks/categorie-fetch/categorieFetch';
 import { useEffect, useRef, useState } from 'react';
 import { CategorieField } from '@/types/categorieField';
 import { useDebounce } from '@/hooks/useDebounce';
@@ -17,21 +17,21 @@ const DropdownCategorie = ({setCategorieId, categorieId}: Props) => {
     const [recherche, setRecherche] = useState<string>("")
     const debounceValue = useDebounce(recherche, 500);
     const ref = useRef<HTMLDivElement>(null);
-    const { categories, isLoading } = useGetLesCategories(debounceValue.trim() || "");    
+    const { categories, isLoading, fetchNextPage, isFetchingNextPage, hasNextPage } = useGetLesCategoriesPagine(8, debounceValue.trim() || "");
 
     useClickOutside(ref, () => setIsOpen(false), isOpen);
 
     useEffect(() => {
         if(categorieId === undefined) {
-            setIsOpen(false);
+            // setIsOpen(false);
             setRecherche("");
             setCategorie(null);
         } else {
             setCategorie(categories.find(c => c.idCategorie === Number(categorieId)) || null);
         }
-    }, [categorieId,categories])
+    }, [categorieId, categories])    
 
-    const handleChangePays = (category: CategorieField) => {
+    const handleChangeCategorie = (category: CategorieField) => {
         setCategorie(category);
         setCategorieId(category.idCategorie.toString());
         setIsOpen(!isOpen);        
@@ -39,8 +39,8 @@ const DropdownCategorie = ({setCategorieId, categorieId}: Props) => {
     }
 
     return (
-        <div ref={ref} onClick={() => setIsOpen(!isOpen)} className={`relative border border-red-4 py-2 px-3 rounded-full w-full flex items-center justify-start`}>
-                <div className={` w-full flex items-center justify-between gap-4`}>
+        <div ref={ref} className={`relative border border-red-4 py-2 px-3 rounded-full w-full flex items-center justify-start`}>
+                <div onClick={() => setIsOpen(prev => !prev)} className={` w-full flex items-center justify-between gap-4`}>
                     <div className={`cursor-default text-lg line-clamp-1 max-lg:text-base ${categorie ? "text-red-8 font-bold" : "text-red-6 font-normal"} `}>
                         {categorie ? categorie.libelleCategorie : "Sélectionnez une catégorie"}
                     </div>                     
@@ -67,7 +67,7 @@ const DropdownCategorie = ({setCategorieId, categorieId}: Props) => {
 
                         {
                             categories.map((categorie, index) => (
-                                <div key={index} onClick={() => handleChangePays(categorie)} className="p-4 cursor-pointer w-full flex items-center justify-start gap-2 hover:bg-gris-4">
+                                <div key={index} onClick={() => handleChangeCategorie(categorie)} className="p-4 cursor-pointer w-full flex items-center justify-start gap-2 hover:bg-gris-4">
                                     <span className="text-lg text-gris-12 font-normal max-896:text-sm">{categorie.libelleCategorie}</span>
                                 </div>
                             ))
@@ -78,6 +78,11 @@ const DropdownCategorie = ({setCategorieId, categorieId}: Props) => {
                             <div className="w-full h-full text-gris-12 flex items-center justify-center">
                                 Aucune categorie trouvée
                             </div>
+                        }
+
+                        {
+                            hasNextPage &&
+                            <button onClick={() => fetchNextPage()} disabled={isFetchingNextPage} className="p-2 cursor-pointer w-full flex items-center justify-center text-base text-red-8 hover:underline">Afficher plus</button>
                         }
                     </div>
                 }

@@ -31,7 +31,7 @@ const DropdownMarque = ({setMarqueId, marqueId}: Props) => {
         }
     }, [marqueId, marques])
 
-    const handleChangePays = (brand: MarqueField) => {
+    const handleChangeMarque = (brand: MarqueField) => {
         setMarque(brand);
         setMarqueId(brand.idMarque.toString());
         setIsOpen(!isOpen);        
@@ -67,7 +67,7 @@ const DropdownMarque = ({setMarqueId, marqueId}: Props) => {
 
                         {
                             marques.map((marque, index) => (
-                                <div key={index} onClick={() => handleChangePays(marque)} className="p-4 cursor-pointer w-full flex items-center justify-start gap-2 hover:bg-gris-4">
+                                <div key={index} onClick={() => handleChangeMarque(marque)} className="p-4 cursor-pointer w-full flex items-center justify-start gap-2 hover:bg-gris-4">
                                     <span className="text-lg text-gris-12 font-normal max-896:text-sm">{marque.libelleMarque}</span>
                                 </div>
                             ))

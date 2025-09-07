@@ -3,10 +3,10 @@ import Link from 'next/link'
 import React from 'react'
 import CategorieCard from '../cards/categorieCard'
 import { MoonLoader } from 'react-spinners'
-import { useGetLesCategories } from '@/hooks/categorie-fetch/categorieFetch'
+import { useGetLesCategoriesPagine } from '@/hooks/categorie-fetch/categorieFetch'
 
 const CategorieSection = () => {
-    const { categories, isLoading } = useGetLesCategories()
+    const { categories, isLoading } = useGetLesCategoriesPagine(8);
 
     return (
         <section className="overflow-x-hidden px-[150px] py-6 w-screen flex flex-col items-center justify-start gap-4 max-2xl:px-[100px] max-xl:px-[60px] max-xl:py-2 max-896:!px-4">

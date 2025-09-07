@@ -1,15 +1,15 @@
 "use client"
 import Image from "next/image"
 import CategorieCard from "../cards/categorieCard"
-import { useGetLesCategories } from "@/hooks/categorie-fetch/categorieFetch"
+import { useGetLesCategoriesPagine } from "@/hooks/categorie-fetch/categorieFetch"
 import { MoonLoader } from "react-spinners";
 import { useState } from "react";
 import { useDebounce } from "@/hooks/useDebounce";
 
 const CategorieBody = () => {    
     const [recherche, setRecherche] = useState<string>("");
-    const debouceValue = useDebounce(recherche, 500);
-    const { categories, isLoading } = useGetLesCategories(debouceValue.trim() || "");
+    const debouceValue = useDebounce(recherche, 500);    
+    const { categories, isLoading, fetchNextPage, isFetchingNextPage, hasNextPage } = useGetLesCategoriesPagine(8, debouceValue.trim() || "");
 
     return (
 
@@ -56,6 +56,16 @@ const CategorieBody = () => {
                         <p className='text-gris-12'>Aucune catégorie</p>
                     </div>
                 )
+            }
+
+            {    
+                hasNextPage &&
+                <div className="w-full flex items-center justify-center">
+                    <button onClick={() => fetchNextPage()} disabled={isFetchingNextPage} className={`rounded-full font-bold bg-red-8 flex items-center justify-center text-gris-12 text-lg py-1.5 px-3 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
+                        max-lg:text-base`}>
+                        Charger plus
+                    </button>
+                </div>
             }
 
         </div>

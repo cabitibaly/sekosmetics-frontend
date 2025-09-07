@@ -8,7 +8,7 @@ import { useGetUneCategorie } from "@/hooks/categorie-fetch/categorieFetch";
 import KitListVariante from "./kitListVariante";
 
 interface Props {
-    categorie: number,        
+    categorie: number | null,        
     setCategorie: (categorie: number) => void
 }
 
@@ -16,7 +16,7 @@ const KitListArticle = ({ categorie, setCategorie }: Props) => {
     const [recherche, setRecherche] = useState<string>("")
     const [articleSelected, setArticleSelected] = useState<number | null>(null)
     const debounceValue = useDebounce(recherche, 500);
-    const { articles } = useGetLesArticles(categorie.toString(), "", debounceValue.trim() || "");
+    const { articles } = useGetLesArticles(categorie?.toString(), "", debounceValue.trim() || "");
     const { categorie: categorieFetch } = useGetUneCategorie(categorie);
 
     return (
