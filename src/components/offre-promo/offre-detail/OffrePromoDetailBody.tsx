@@ -1,24 +1,30 @@
 "use client"
-
 import ArticleCard from '@/components/cards/articleCard'
-import { useGetLesArticles, useGetLesFavoris } from '@/hooks/article-fetch/articleFetch'
+import { useGetLesFavoris } from '@/hooks/article-fetch/articleFetch'
+import { useGetUneOffre } from '@/hooks/offre-fetch/offreFetch'
 import { useDebounce } from '@/hooks/useDebounce'
 import { Search } from 'lucide-react'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
-const OffrePromoDetailBody = () => {
+
+const OffrePromoDetailBody = ({id}: {id: number}) => {
     const [recherche, setRecherche] = useState<string>("")
-    const debounceValue = useDebounce(recherche, 500);
-    const { articles } = useGetLesArticles("", "", debounceValue.trim() || "", "", "");
-    const { favorisArticles, refetch } = useGetLesFavoris();    
+    const debounceValue = useDebounce(recherche, 500);    
+    const { favorisArticles, refetch } = useGetLesFavoris();  
+    const { articles, offre } = useGetUneOffre(id);
+
+    const articlesFiltered = useMemo(() => articles.filter(article => article.nomArticle.toLowerCase().includes(debounceValue.trim().toLowerCase())), [articles, debounceValue])
 
     return (
         <div className="overflow-x-hidden px-[150px] py-12 w-screen min-h-screen flex flex-col items-center justify-start gap-8 max-2xl:px-[100px] max-xl:px-[60px] max-896:!px-4 max-896:!pt-20 max-896:!pb-36 max-md:gap-6 max-xs:!pb-28">
             <div className="px-4 relative top-0 w-screen items-center justify-centerx">
-                <div className="rounded-3xl relative w-full aspect-video flex items-center justify-between">
-                    <Image src={"/hero-bg.jpg"} fill alt="hero-bg" className="object-cover rounded-3xl"/>
-                </div>
+                {
+                    offre &&
+                    <div className="rounded-3xl relative w-full aspect-video flex items-center justify-between">
+                        <Image src={offre.imageOffre!} fill alt={offre.intituleOffre} className="object-cover rounded-3xl"/>
+                    </div>
+                }                
             </div> 
             <div className='w-full h-auto flex flex-col items-center justify-start gap-8'>
                 <div className='w-3/5 flex flex-col items-center justify-start gap-4 max-lg:w-full'>                    
@@ -32,7 +38,7 @@ const OffrePromoDetailBody = () => {
                 </div>
                 <div className="w-full grid grid-cols-6 gap-4 max-2xl:grid-cols-5 max-xl:grid-cols-4 max-sm:!grid-cols-3 max-xs:!grid-cols-2">
                     {
-                        articles.map((article) => (
+                        articlesFiltered.map((article) => (
                             <ArticleCard 
                                 key={article.idArticle}
                                 id={article.idArticle}
