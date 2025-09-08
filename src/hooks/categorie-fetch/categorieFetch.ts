@@ -57,6 +57,7 @@ export const useGetLesCategoriesPagine = (limit: number = 8, libelle?: string) =
             }
             return undefined
         },
+        staleTime: 30 * 60 * 1000,        
     })
 
     return {

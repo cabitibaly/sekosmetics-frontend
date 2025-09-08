@@ -22,8 +22,7 @@ const DropdownMarque = ({setMarqueId, marqueId}: Props) => {
     useClickOutside(ref, () => setIsOpen(false), isOpen);    
 
     useEffect(() => {
-        if(marqueId === undefined) {            
-            setIsOpen(false);
+        if(marqueId === undefined) {                        
             setRecherche("");
             setMarque(null);
         } else {

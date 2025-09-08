@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { baseUrl } from "@/constant/baseUrl";
 import axios from "axios";
 import { ArticleAvecVariante, ArticleAvecVarianteSimple, Commentaire, FavorisArticle } from "@/types/articleField";
@@ -10,11 +10,12 @@ const path = `${baseUrl}/article`;
 interface ArticlesFetchResponse {
     status: number;
     articles: ArticleAvecVarianteSimple[];
+    hasMore: boolean;
 }
 
 interface ArticleFetchResponse {
     status: number;
-    article: ArticleAvecVariante;
+    article: ArticleAvecVariante;    
 }
 
 interface FavorisArticlesFetchResponse {
@@ -43,7 +44,7 @@ interface RatingCount {
 export const useGetLesArticles = (categorieId?: string, marqueId?: string, nomArticle?: string, prixMin?: string, prixMax?: string) => {      
 
     const { data, isLoading, refetch, isError } = useQuery<ArticlesFetchResponse>({
-        queryKey: ["articles", categorieId, marqueId, nomArticle],
+        queryKey: ["articles", categorieId, marqueId, nomArticle, prixMin, prixMax],
         queryFn: async () => (
             axios.get(
                 `${path}/tous-les-articles-client?categorieId=${categorieId}&marqueId=${marqueId}&nomArticle=${nomArticle}&prixMin=${prixMin}&prixMax=${prixMax}`,
@@ -63,6 +64,43 @@ export const useGetLesArticles = (categorieId?: string, marqueId?: string, nomAr
         isLoading,
         refetch,
         isError 
+    }
+}
+
+export const useGetLesArticlesPagine = (
+    limit: number = 8, 
+    categorieId?: string, 
+    marqueId?: string, 
+    nomArticle?: 
+    string, 
+    prixMin?: 
+    string, 
+    prixMax?: string
+) => {
+    const { data, isLoading, isError, refetch, fetchNextPage, isFetchingNextPage, hasNextPage } = useInfiniteQuery<ArticlesFetchResponse>({
+        queryKey: ["articles", categorieId, marqueId, nomArticle, prixMin, prixMax],
+        initialPageParam: 1,
+        queryFn: async ({ pageParam = 1 }) => {
+            const res = await axios.get(`${path}/tous-les-articles-client?page=${pageParam}&limit=${limit}&categorieId=${categorieId}&marqueId=${marqueId}&nomArticle=${nomArticle}&prixMin=${prixMin}&prixMax=${prixMax}`);
+            return res.data
+        },
+        getNextPageParam: (lastPage, allPages) => {
+            if (lastPage.hasMore) {                
+                return lastPage.hasMore ? allPages.length + 1 : undefined
+            }
+            return undefined
+        },
+        staleTime: 30 * 60 * 1000,
+    })
+
+    return {
+        articles: data?.pages.flatMap(page => page.articles) || [],
+        isLoading,
+        isError,
+        refetch,
+        isFetchingNextPage,
+        fetchNextPage,
+        hasNextPage
     }
 }
 

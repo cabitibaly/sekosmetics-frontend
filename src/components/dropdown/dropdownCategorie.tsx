@@ -22,8 +22,7 @@ const DropdownCategorie = ({setCategorieId, categorieId}: Props) => {
     useClickOutside(ref, () => setIsOpen(false), isOpen);
 
     useEffect(() => {
-        if(categorieId === undefined) {
-            // setIsOpen(false);
+        if(categorieId === undefined) {            
             setRecherche("");
             setCategorie(null);
         } else {
