@@ -17,7 +17,7 @@ const DropdownMarque = ({setMarqueId, marqueId}: Props) => {
     const [recherche, setRecherche] = useState<string>("")
     const debounceValue = useDebounce(recherche, 500);
     const ref = useRef<HTMLDivElement>(null);
-    const { marques, isLoading } = useGetLesMarques(debounceValue.trim() || "");    
+    const { marques, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage } = useGetLesMarques(8, debounceValue.trim() || "");    
 
     useClickOutside(ref, () => setIsOpen(false), isOpen);    
 
@@ -77,6 +77,11 @@ const DropdownMarque = ({setMarqueId, marqueId}: Props) => {
                             <div className="w-full h-full text-gris-12 flex items-center justify-center">
                                 Aucune marque trouvée
                             </div>
+                        }
+
+                        {
+                            hasNextPage &&
+                            <button onClick={() => fetchNextPage()} disabled={isFetchingNextPage} className="p-2 cursor-pointer w-full flex items-center justify-center text-base text-red-8 hover:underline">Afficher plus</button>
                         }
                     </div>
                 }

@@ -11,10 +11,10 @@ const CommandeBody = () => {
     const [commandeId, setCommandeId] = useState<number | null>(null)    
     const [recherche, setRecherche] = useState<string>("")
     const debouceValue = useDebounce(recherche, 500);
-    const { commandes } = useGetLesCommandes(debouceValue.trim() || "");
+    const { commandes, fetchNextPage, isFetchingNextPage, hasNextPage } = useGetLesCommandes(8, debouceValue.trim() || "");
 
     return (
-        <div className={`overflow-x-hidden px-[100px] pt-32 py-6 w-screen h-screen flex items-start justify-center gap-4 max-xl:px-[30px] max-896:flex-wrap max-896:!pb-4 max-896:!px-4 ${commandeId ? "max-896:pt-10" : "max-896:pt-20"}`}>
+        <div className={`overflow-x-hidden px-[100px] pt-32 py-6 w-screen h-screen flex items-start justify-center gap-4 max-xl:px-[30px] max-896:flex-wrap max-896:!pb-26 max-896:!px-4 max-xs:!pb-24 ${commandeId ? "max-896:pt-10" : "max-896:pt-20"}`}>
             <div className='w-4/5 h-full flex items-start justify-center gap-8 max-lg:w-[90%] max-896:!w-full'>
                 <CompteNavbar />
                 <div className='border border-red-3 p-4 rounded-3xl bg-red-1 w-3/5 h-full flex flex-col items-center justify-start gap-4 max-896:w-full max-896:bg-transparent max-896:border-none max-896:p-0'>
@@ -40,7 +40,17 @@ const CommandeBody = () => {
                                             setCommandeId={setCommandeId}                                            
                                         />
                                     ))
-                                }                                
+                                }
+                                 
+                                {    
+                                    hasNextPage &&
+                                    <div className="w-full flex items-center justify-center">
+                                        <button onClick={() => fetchNextPage()} disabled={isFetchingNextPage} className={`rounded-full font-bold bg-red-8 flex items-center justify-center text-gris-12 text-lg py-1.5 px-3 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
+                                            max-lg:text-base`}>
+                                            Charger plus
+                                        </button>
+                                    </div>
+                                }                               
                             </div>
                         </>
                     } 

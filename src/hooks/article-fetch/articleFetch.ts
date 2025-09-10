@@ -30,6 +30,7 @@ interface CommentairesFetchResponse {
 
 interface VarianteFetchResponse {
     variantes: VarianteResponseObject[],
+    hasMore: boolean,
     status: number
 }
 
@@ -142,22 +143,33 @@ export const useGetUnArticles = (idArticle: number | null) => {
     }
 }
 
-export const useGetLesVariantes = (articleId: number) => {
-    const { data, isLoading, refetch, isError } = useQuery<VarianteFetchResponse>({
+export const useGetLesVariantes = (limit: number = 8, articleId?: number) => {
+    const { data, isLoading, refetch, isError, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteQuery<VarianteFetchResponse>({
         queryKey: ["variantes", articleId],
-        queryFn: async () => (
+        initialPageParam: 1,
+        queryFn: async ({pageParam}) => (
             axios.get(
-                `${path}/${articleId}/variante/toutes-les-variantes-client`,
+                `${path}/${articleId}/variante/toutes-les-variantes-client?page=${pageParam}&limit=${limit}`,
                 {withCredentials: true}
             ).then(res => res.data)
-        )
+        ),
+        getNextPageParam: (lastPage, allPages) => {
+            if (lastPage.hasMore) {                
+                return lastPage.hasMore ? allPages.length + 1 : undefined
+            }
+            return undefined
+        },
+        staleTime: 15 * 60 * 1000
     })    
 
     return {
-        variantes: data?.variantes || [],
+        variantes: data?.pages.flatMap(page => page.variantes) || [],
         isLoading,
         refetch,
-        isError
+        isError,
+        hasNextPage,
+        isFetchingNextPage,
+        fetchNextPage
     }
 }
 
@@ -218,42 +230,62 @@ export const useGetLesCommentaireDeUnArticle = (articleId: number) => {
     }
 }
 
-export const useGetNouvelleArrivage = (query?: string) => {
-    const { data, isLoading, isError, refetch } = useQuery<ArticlesFetchResponse>({
+export const useGetNouvelleArrivage = (limit: number = 8, query?: string) => {
+    const { data, isLoading, isError, refetch, hasNextPage, fetchNextPage, isFetchingNextPage } = useInfiniteQuery<ArticlesFetchResponse>({
         queryKey: ["nouvelle-arrivage", query],
-        queryFn: async () => (
+        initialPageParam: 1,
+        queryFn: async ({pageParam}) => (
             axios.get(
-                `${path}/nouvelle-arrivage?nomArticle=${query ? query : ""}`,
+                `${path}/nouvelle-arrivage?page=${pageParam}&limit=${limit}&nomArticle=${query ? query : ""}`,
                 {withCredentials: true}
             ).then(res => res.data)
         ),
+        getNextPageParam: (lastPage, allPages) => {
+            if (lastPage.hasMore) {                
+                return lastPage.hasMore ? allPages.length + 1 : undefined
+            }
+            return undefined
+        },
         staleTime: 60 * 60 * 1000
     })
 
     return {
-        articles: data?.articles || [],
+        articles: data?.pages.flatMap(page => page.articles) || [],
         isLoading,
         isError,
-        refetch
+        refetch,
+        isFetchingNextPage,
+        fetchNextPage,
+        hasNextPage        
     }
 }
 
-export const useGetBestseller = (query?: string) => {
-    const { data, isLoading, isError, refetch } = useQuery<ArticlesFetchResponse>({
+export const useGetBestseller = (limit: number = 8, query?: string) => {
+    const { data, isLoading, isError, refetch, fetchNextPage, isFetchingNextPage, hasNextPage } = useInfiniteQuery<ArticlesFetchResponse>({
         queryKey: ["bestseller", query],
-        queryFn: async () => (
+        initialPageParam: 1,
+        queryFn: async ({pageParam}) => (
             axios.get(
-                `${path}/les-plus-vendus?nomArticle=${query ? query : ""}`,
+                `${path}/les-plus-vendus?page=${pageParam}&limit=${limit}&nomArticle=${query ? query : ""}`,
                 {withCredentials: true}
             ).then(res => res.data)
         ),
+        getNextPageParam: (lastPage, allPages) => {
+            if (lastPage.hasMore) {                
+                return lastPage.hasMore ? allPages.length + 1 : undefined
+            }
+            return undefined
+        },
         staleTime: 60 * 60 * 1000
     })
 
     return {
-        articles: data?.articles || [],
+        articles: data?.pages.flatMap(page => page.articles) || [],
         isLoading,
         isError,
-        refetch
+        refetch,
+        isFetchingNextPage,
+        fetchNextPage,
+        hasNextPage
     }
 }

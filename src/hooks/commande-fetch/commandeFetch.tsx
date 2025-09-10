@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query"
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query"
 import { baseUrl } from "@/constant/baseUrl"
 import axios from "axios"
 import type { AdresseLivraison, ClientCommande, CommandeField, HistoriqueStatut, LigneCommande, utilisationCodePromo } from "@/types/commandeField"
@@ -7,6 +7,7 @@ const path = `${baseUrl}/commande`
 
 interface CommandesFetchResponse {
     commandes: CommandeField[],
+    hasMore: boolean,
     status: number
 }
 
@@ -23,25 +24,41 @@ interface CommandeFetchResponse {
     commande: CommandeFullField
 }
 
-export const useGetLesCommandes = (query?: string) => {
-    const url = query ? `${path}/rechercher?numeroCommande=${query}` : `${path}/toutes-les-commandes`
+export const useGetLesCommandes = (limit: number = 8, numeroCommande?: string) => {    
 
-    const { data, isLoading, isError, refetch } = useQuery<CommandesFetchResponse>({
-        queryKey: ["commandes", query],
-        queryFn: async () =>  (
+    const { data, isLoading, isError, refetch, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteQuery<CommandesFetchResponse>({
+        queryKey: ["commandes", numeroCommande],
+        initialPageParam: 1,
+        queryFn: async ({pageParam}) => (
             axios.get(
-                url,
-                {withCredentials: true},                
+                `${path}/toutes-les-commandes`,
+                {
+                    withCredentials: true,
+                    params: {
+                        numeroCommande,
+                        limit,
+                        page: pageParam
+                    }
+                },                
             ).then(res => res.data)
         ),
+        getNextPageParam: (lastPage, allPages) => {
+            if (lastPage.hasMore) {                
+                return lastPage.hasMore ? allPages.length + 1 : undefined
+            }
+            return undefined
+        },
         staleTime: 5 * 60 * 1000
     })
 
     return {
-        commandes: data?.commandes || [],
+        commandes: data?.pages.flatMap(page => page.commandes) || [],
         isLoading,
         isError,
-        refetch
+        refetch,
+        isFetchingNextPage,
+        fetchNextPage,
+        hasNextPage
     }
 }
 

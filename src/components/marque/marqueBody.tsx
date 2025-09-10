@@ -9,7 +9,7 @@ import { useDebounce } from '@/hooks/useDebounce'
 const MarqueBody = () => {
     const [recherche, setRecherche] = useState<string>("");
     const debouceValue = useDebounce(recherche, 500);
-    const { marques, isLoading } = useGetLesMarques(debouceValue.trim() || "");
+    const { marques, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage } = useGetLesMarques(8, debouceValue.trim() || "");
 
     return (
         <div className="overflow-x-hidden px-[150px] py-12 w-screen min-h-screen flex flex-col items-center justify-start gap-12 max-2xl:px-[100px] max-xl:px-[60px] max-lg:py-8 max-896:!px-4 max-896:!pt-20 max-896:!pb-36 max-md:gap-6">
@@ -59,6 +59,16 @@ const MarqueBody = () => {
                         <p className='text-gris-12'>Aucune marque</p>
                     </div>
                 )
+            }
+
+            {    
+                hasNextPage &&
+                <div className="w-full flex items-center justify-center">
+                    <button onClick={() => fetchNextPage()} disabled={isFetchingNextPage} className={`rounded-full font-bold bg-red-8 flex items-center justify-center text-gris-12 text-lg py-1.5 px-3 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
+                        max-lg:text-base`}>
+                        Charger plus
+                    </button>
+                </div>
             }
         </div>
     )

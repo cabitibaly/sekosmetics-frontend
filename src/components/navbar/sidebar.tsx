@@ -42,8 +42,9 @@ const Sidebar = () => {
                     <Image src={"/sidebar.svg"} width={40} height={40} alt="sidebar-btn"/>
                 </div>
                 <Link href={"/"} className="text-gris-12 text-2xl font-bold max-xl:text-lg">Sekosmetics</Link>
-                <div onClick={() => setIsNotificationOpen(true)} className="size-10 flex items-center justify-center cursor-pointer">
+                <div onClick={() => setIsNotificationOpen(true)} className="relative size-10 flex items-center justify-center cursor-pointer">
                     <Image src={"/notification.svg"} width={40} height={40} alt="notification-btn"/>
+                    <div className={`absolute top-[2px] right-[2px] size-2.5 bg-red-8 rounded-full ${notifications.some((notif) => !notif.estLu) ? "block" : "hidden"}`} />
                 </div>                
             </div>
             <div onClick={() => handleSidebarToglle()} className={`fixed z-50 h-screen w-screen bg-gris-12/60 transition-transform ease-in-out duration-300 hidden items-start justify-start max-[896px]:flex ${isClicked ? "translate-x-0" : "-translate-x-full"}`}>

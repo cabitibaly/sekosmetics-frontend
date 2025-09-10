@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query"
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query"
 import { baseUrl } from "../../constant/baseUrl"
 import axios from "axios"
 import type { LigneRetour, RetourField } from "../../types/retourFiels"
@@ -7,6 +7,7 @@ const path = `${baseUrl}/retour`
 
 interface RetoursFetchResponse {
     retours: RetourField[],
+    hasMore: boolean,
     status: number
 }
 
@@ -22,27 +23,41 @@ interface RetourFetchResponse {
     status: number
 }
 
-export const useGetLesRetours = (filter?: { statutRetour?: string, date?: string, numeroRetour?: string }) => {    
+export const useGetLesRetours = (limit: number = 8, numeroRetour?: string) => {    
 
-    const { data, isLoading, isError, refetch } = useQuery<RetoursFetchResponse>({
-        queryKey: ["retours", filter],
-        queryFn: async () => (
+    const { data, isLoading, isError, refetch, fetchNextPage, isFetchingNextPage, hasNextPage } = useInfiniteQuery<RetoursFetchResponse>({
+        queryKey: ["retours", numeroRetour],
+        initialPageParam: 1,
+        queryFn: async ({pageParam}) => (
             axios.get(
                 `${path}/tous-les-retours/`,
                 {
                     withCredentials: true,
-                    params: filter
+                    params: {
+                        numeroRetour,
+                        limit,
+                        page: pageParam
+                    }
                 }
             ).then(res => res.data)
         ),
+        getNextPageParam: (lastPage, allPages) => {
+            if (lastPage.hasMore) {                
+                return lastPage.hasMore ? allPages.length + 1 : undefined
+            }
+            return undefined
+        },
         staleTime: 1000 * 60 * 5
     })
 
     return {
-        retours: data?.retours || [],
+        retours: data?.pages.flatMap(page => page.retours) || [],
         isLoading,
         isError,
-        refetch
+        refetch,
+        fetchNextPage,
+        isFetchingNextPage,
+        hasNextPage
     }
 }
 

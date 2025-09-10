@@ -1,5 +1,5 @@
 import Footer from '@/components/accueil/footer'
-import BestsellerBody from '@/components/article/bestseller/nouvelleArrivageBody'
+import BestsellerBody from '@/components/article/bestseller/bestsellerBody'
 import Navbar from '@/components/navbar/navbar'
 import Topbar from '@/components/navbar/topbar'
 import React from 'react'

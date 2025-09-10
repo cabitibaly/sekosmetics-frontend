@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { baseUrl } from "../../constant/baseUrl";
 import axios from "axios";
 import type { OffreField } from "../../types/offreField";
@@ -8,6 +8,7 @@ const path = `${baseUrl}/offre-promotionnelle`
 
 interface OffresFetchResponse {
     offresPromo: OffreField[],
+    hasMore: boolean,
     status: 200
 }
 
@@ -19,6 +20,7 @@ interface OffreAvecArticleId extends OffreField {
 
 interface OffreFetchResponse {
     articles: ArticleAvecVarianteSimple[],
+    hasMore: boolean,
     offrePromo: {
         idOffre: number,
         intituleOffre: string,
@@ -32,44 +34,64 @@ interface OffreFetchResponse {
 
 export const useGetLesOffres = () =>  {
 
-    const { data, isLoading, isError, refetch } = useQuery<OffresFetchResponse>({
+    const { data, isLoading, isError, refetch, isFetchingNextPage, fetchNextPage, hasNextPage } = useInfiniteQuery<OffresFetchResponse>({
         queryKey: ["offres"],
-        queryFn: async () => (
+        initialPageParam: 1,
+        queryFn: async ({pageParam}) => (
             axios.get(
-                `${path}/toutes-les-offres-client/`,
+                `${path}/toutes-les-offres-client?limit=8&page=${pageParam}`,
                 {withCredentials: true}
             ).then(res => res.data)
         ),
+        getNextPageParam: (lastPage, allPages) => {
+            if (lastPage.hasMore) {                
+                return lastPage.hasMore ? allPages.length + 1 : undefined
+            }
+            return undefined
+        },
         staleTime: 1000 * 60 * 30 // 5 minutes
     })
 
     return {
-        offres: data?.offresPromo || [],
+        offres: data?.pages.flatMap(page => page.offresPromo) || [],
         isLoading,
         isError,
-        refetch
+        refetch,
+        isFetchingNextPage,
+        fetchNextPage,
+        hasNextPage
     }
 }
 
 export const useGetUneOffre = (idOffre: number) =>  {
 
-    const { data, isLoading, isError, refetch } = useQuery<OffreFetchResponse>({
+    const { data, isLoading, isError, refetch, fetchNextPage, isFetchingNextPage, hasNextPage } = useInfiniteQuery<OffreFetchResponse>({
         queryKey: ["offre", idOffre],
-        queryFn: async () => (
+        initialPageParam: 1,
+        queryFn: async ({pageParam}) => (
             axios.get(
-                `${path}/toutes-les-offres-client/${idOffre}`,
+                `${path}/toutes-les-offres-client/${idOffre}?page=${pageParam}&limit=8`,
                 {withCredentials: true}
             ).then(res => res.data)
         ),
+        getNextPageParam: (lastPage, allPages) => {
+            if (lastPage.hasMore) {                
+                return lastPage.hasMore ? allPages.length + 1 : undefined
+            }
+            return undefined
+        },
         enabled: !!idOffre,
-        staleTime: 30 * 60 * 1000 // 5 minutes
+        staleTime: 30 * 60 * 1000
     })
 
     return {
-        articles: data?.articles || [],
-        offre: data?.offrePromo || null,
+        articles: data?.pages.flatMap(page => page.articles) || [],
+        offre: data?.pages[0]?.offrePromo || null,
         isLoading,
         isError,
-        refetch
+        refetch,
+        isFetchingNextPage,
+        fetchNextPage,
+        hasNextPage
     }
 }

@@ -23,7 +23,7 @@ const ArticleHeader = ({id}: Props) => {
     const articleDansPanier = articleExiste(Number(id))
     const {article: articleFetch, options} = useGetUnArticles(Number(id))
     const { favorisArticles, refetch } = useGetLesFavoris();
-    const { ajouterSupprimerFavoris } = useFavoris({ id, setIsFavoris, isFavoris, refechFavoris: refetch })
+    const { ajouterSupprimerFavoris } = useFavoris({ id, setIsFavoris, isFavoris, refechFavoris: refetch })    
 
     useEffect(() => {
 
@@ -161,13 +161,15 @@ const ArticleHeader = ({id}: Props) => {
                         </div>                        
                     </div>                        
                     <div className="w-full flex flex-col items-start justify-center gap-3 max-md:gap-2">
-                        <span className="text-xl text-gris-12 font-semibold max-md:text-base">
-                            {
-                                options?.map((option) => (
-                                    option.intituleOption
-                                )).join(", ")
-                            }
-                        </span>
+                        <div className="w-full flex items-center justify-between gap-4">
+                            <span className="text-xl text-gris-12 font-semibold max-md:text-base">
+                                {
+                                    options?.map((option) => (
+                                        option.intituleOption
+                                    )).join(", ")
+                                }
+                            </span>
+                        </div>                        
                         <div className="w-full rounded-2xl carousel carousel-center items-start space-x-4">
                             {
                                 articleFetch?.variantes.map((variante) => (

@@ -5,7 +5,7 @@ import Link from "next/link"
 import { MoonLoader } from "react-spinners"
 
 const OffrePromoBody = () => {
-    const { offres, isLoading } = useGetLesOffres();
+    const { offres, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage } = useGetLesOffres();
 
     return (
         <div className="overflow-x-hidden px-[150px] py-12 w-screen min-h-screen flex flex-col items-center justify-start gap-8 max-2xl:px-[100px] max-xl:px-[60px] max-896:!px-4 max-896:!pt-20 max-896:!pb-36 max-md:gap-6 max-xs:!pb-28">
@@ -19,6 +19,7 @@ const OffrePromoBody = () => {
                     />
                 </div>
             }
+
             {
                 !isLoading && offres.length > 0 &&                
                     <div className="w-full flex flex-col items-center justify-center gap-8 max-896:gap-4">
@@ -32,12 +33,24 @@ const OffrePromoBody = () => {
                         }
                     </div>                
             }
+
             {
                 !isLoading && offres.length === 0 &&
                 <div className="w-full h-64 flex items-center justify-center">
                     <span className="text-gris-12 text-base font-bold">Aucune offre disponible</span>
                 </div>
             }
+
+            {    
+                hasNextPage &&
+                <div className="w-full flex items-center justify-center">
+                    <button onClick={() => fetchNextPage()} disabled={isFetchingNextPage} className={`rounded-full font-bold bg-red-8 flex items-center justify-center text-gris-12 text-lg py-1.5 px-3 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
+                        max-lg:text-base`}>
+                        Charger plus
+                    </button>
+                </div>
+            }
+
         </div>
     )
 }

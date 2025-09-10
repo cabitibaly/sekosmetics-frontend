@@ -15,7 +15,7 @@ interface Props {
 const KitListVariante = ({ articleId, setIdArticle, nomArticle, }: Props) => {
     const [recherche, setRecherche] = useState<string>("")
     const debounceValue = useDebounce(recherche, 500);
-    const { variantes } = useGetLesVariantes(articleId);
+    const { variantes, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetLesVariantes(8, articleId);
     const { ajouterLigneKit, kit } = useKit();
 
     const filterVariantes = useMemo(() => (
@@ -53,20 +53,32 @@ const KitListVariante = ({ articleId, setIdArticle, nomArticle, }: Props) => {
                     <input value={recherche} onChange={e => setRecherche(e.target.value)} id="recherche-article" type="text" className="bg-gris-1 border border-red-4  block w-full text-gris-10 text-lg rounded-full outline-none focus:ring-red-7 focus:border-red-7 pl-12 p-1.5 placeholder:text-gris-6 max-896:text-sm max-896:pl-8" placeholder="Rechercher une variante..." />
                 </div>
             </div>
-            <div className="overflow-y-auto pt-4 pr-4 w-full max-h-[86%] grid grid-cols-7 items-start justify-start gap-4 max-xl:grid-cols-4 max-lg:grid-cols-3 max-896:!grid-cols-4 max-[512px]:!grid-cols-3 max-[360px]:grid-cols-2">
+            <div className="overflow-y-auto pt-4 pr-4 w-full max-h-[86%] flex flex-col items-center justify-start gap-4">
+                <div className="w-full grid grid-cols-7 items-start justify-start gap-4 max-xl:grid-cols-4 max-lg:grid-cols-3 max-896:!grid-cols-4 max-[512px]:!grid-cols-3 max-[360px]:grid-cols-2">
+                    {
+                        filterVariantes.map(variante => (
+                            <VarianteCard
+                                key={variante.idVariante}
+                                id={variante.idVariante}
+                                intitule={variante.valeursOption[0].valeurOption}
+                                image={variante.imageVariante}
+                                prix={variante.prixVente}
+                                handleClick={() => toggleClick(variante.idVariante)}
+                                estSelected={kit.map(k => k.articleId).includes(variante.idVariante)}
+                            />
+                        ))
+                    }                    
+                </div>  
+                
                 {
-                    filterVariantes.map(variante => (
-                        <VarianteCard
-                            key={variante.idVariante}
-                            id={variante.idVariante}
-                            intitule={variante.valeursOption[0].valeurOption}
-                            image={variante.imageVariante}
-                            prix={variante.prixVente}
-                            handleClick={() => toggleClick(variante.idVariante)}
-                            estSelected={kit.map(k => k.articleId).includes(variante.idVariante)}
-                        />
-                    ))
-                }                        
+                    hasNextPage &&
+                    <div className="w-full flex items-center justify-center">
+                        <button onClick={() => fetchNextPage()} disabled={isFetchingNextPage} className={`rounded-full font-bold bg-red-8 flex items-center justify-center text-gris-12 text-lg py-1.5 px-3 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
+                            max-lg:text-base`}>
+                            Charger plus
+                        </button>
+                    </div>
+                }
             </div>
         </>
     )
