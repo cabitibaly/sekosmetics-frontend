@@ -29,7 +29,6 @@ const NavbarDesktop = () => {
                     <Link href={"/panier"} className="relative">
                         <Image src={"/bag.svg"} width={18} height={20} alt={"search"} className="object-cover" />
                         <div className={`absolute z-50 top-0 -right-[2px] size-2 bg-red-8 rounded-full ${estVide ? "hidden" : ""}`}>
-
                         </div>
                     </Link>
                     <Link href={"/compte/modifier-compte"}>
