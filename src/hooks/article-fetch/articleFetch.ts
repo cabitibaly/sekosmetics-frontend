@@ -201,8 +201,7 @@ export const useGetLesCommentaireDeUnArticle = (articleId: number) => {
         queryKey: ["commentaires", articleId],
         queryFn: async () => (
             axios.get(
-                `${path}/${articleId}/avis/tous-les-commentaires/`,
-                {withCredentials: true}
+                `${path}/${articleId}/avis/tous-les-commentaires/`,                
             ).then(res => res.data)
         ),
         staleTime: 60 * 60 * 1000

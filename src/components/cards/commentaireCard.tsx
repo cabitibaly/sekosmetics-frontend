@@ -1,4 +1,5 @@
 "use client"
+import { useAuth } from "@/hooks/useAuth"
 import { Commentaire } from "@/types/articleField"
 import Image from "next/image"
 
@@ -7,7 +8,7 @@ interface CommentaireCardProps {
 }
 
 const CommentaireCard = ({ commentaire }: CommentaireCardProps) => {
-
+    
 
     return (
         <div className="w-full flex flex-col items-center-start justify-center gap-4">
@@ -15,11 +16,11 @@ const CommentaireCard = ({ commentaire }: CommentaireCardProps) => {
                 <div className="flex items-center justify-center gap-4">
                     {
                         commentaire.utiliteur.img ? 
-                            <div className="relative size-12 rounded-full flex items-center justify-center max-lg:size-10">
-                                <Image src={"/profil-1.jpg"} fill alt="profil" className="rounded-full" />
+                            <div className="relative size-12 aspect-square rounded-full flex items-center justify-center max-lg:size-10">
+                                <Image src={commentaire.utiliteur.img} fill alt="profil" className="aspect-square rounded-full" />
                             </div>
                         :
-                            <div className="relative bg-red-6 size-12 rounded-full flex items-center justify-center max-lg:size-10">
+                            <div className="relative bg-red-6 size-12 aspect-square rounded-full flex items-center justify-center max-lg:size-10">
                                 <span className="text-base text-red-1 font-bold">{commentaire.utiliteur.nomClient.charAt(0)}</span>
                             </div>
                     }                    
