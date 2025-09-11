@@ -13,21 +13,25 @@ interface CommandeArticleCardProps {
 
 const CommandeArticleCard = ({  ligne, setLigneId, isModalOpen, setIsModalOpen, date, statutCommande }: CommandeArticleCardProps) => {    
 
+
+    const isDateValide = (date: string | null) => {
+        if (!date) return false
+
+        const dateLivraison = new Date(date)
+        const dateLimite = new Date(dateLivraison)
+        dateLimite.setDate(dateLivraison.getDate() + 7)
+
+        return new Date() <= dateLimite
+    }
+
     const handleClick = () => {
 
         if(statutCommande !== "LIVREE") return
-
-        if (date) {
-            const livraison = new Date(date)
-            const limite = new Date(livraison)
-            limite.setDate(livraison.getDate() + 7)
-            
-            if (new Date() > limite) return
-        }
+        if(!isDateValide(date)) return              
 
         setLigneId(ligne.idLigne || null)
         setIsModalOpen(!isModalOpen)
-    }
+    }    
 
     return (
         <div onClick={() => handleClick()} className="relative border border-red-6 p-4 cursor-pointer rounded-3xl w-full flex items-center justify-between gap-4 transition duration-300 ease-in-out hover:border-red-8 hover:bg-red-2 max-896:p-2 max-sm:rounded-xl">
@@ -56,6 +60,13 @@ const CommandeArticleCard = ({  ligne, setLigneId, isModalOpen, setIsModalOpen, 
                     </div>
                 </div>
             </div>
+
+            {
+                isDateValide(date) && statutCommande == "LIVREE" &&
+                <div className={`absolute -top-2 -right-0 px-1 py-0.5 rounded-sm text-xs bg-red-8 max-896:-top-3`}>
+                    Retourner
+                </div>
+            }
         </div>
     )
 }

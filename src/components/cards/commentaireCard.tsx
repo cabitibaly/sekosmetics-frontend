@@ -1,8 +1,6 @@
 "use client"
-import { useAuth } from "@/hooks/useAuth"
 import { Commentaire } from "@/types/articleField"
 import Image from "next/image"
-
 interface CommentaireCardProps {
     commentaire: Commentaire
 }

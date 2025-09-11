@@ -9,6 +9,7 @@ import { VarianteResponseObject } from "@/types/requestVarianteObject"
 import { useFavoris } from "@/hooks/useFavoris"
 import { appliquerReduction } from "@/utils/appliquerReduction"
 import { toast } from "react-toastify"
+import { MoonLoader } from "react-spinners"
 
 interface Props {
     id: string,
@@ -21,7 +22,7 @@ const ArticleHeader = ({id}: Props) => {
     const [varianteSelected, setVarianteSelected] = useState<VarianteResponseObject | null>(null)
     const { ajouterLigne, supprimerLigne, modifierQuantiteLigne, articleExiste } = usePanier()    
     const articleDansPanier = articleExiste(Number(id))
-    const {article: articleFetch, options} = useGetUnArticles(Number(id))
+    const {article: articleFetch, isLoading, options} = useGetUnArticles(Number(id))
     const { favorisArticles, refetch } = useGetLesFavoris();
     const { ajouterSupprimerFavoris } = useFavoris({ id, setIsFavoris, isFavoris, refechFavoris: refetch })    
 
@@ -111,8 +112,18 @@ const ArticleHeader = ({id}: Props) => {
 
     return (
         <div className="overflow-x-hidden relative pt-24 pb-10 px-[150px] w-screen flex flex-col items-center justify-start max-2xl:px-[100px] max-xl:px-[60px] max-896:!px-4 max-896:!pt-2 max-896:!pb-4 max-md:gap-6">
-           
-            <div className="w-full h-auto grid grid-cols-2 items-start justify-center gap-8 max-xl:gap-4 max-lg:flex max-lg:flex-wrap">
+            
+            {
+                isLoading &&
+                <div className="w-full h-64 flex items-center justify-center">
+                    <MoonLoader
+                        color="#FF7993"
+                        size={24}
+                    />
+                </div>
+            }
+
+            <div className={`w-full h-auto grid-cols-2 items-start justify-center gap-8 max-xl:gap-4 max-lg:flex-wrap ${isLoading ? "hidden" : "grid max-lg:flex"}`}>
                 
                 <div className="w-full h-full flex items-center justify-between gap-4 max-xl:hidden">
                     <div className="w-[15%] h-full flex flex-col items-center justify-start gap-4 aspect-tiktok"> 
@@ -155,7 +166,7 @@ const ArticleHeader = ({id}: Props) => {
                             <span className={`text-red-8 text-2xl text-left font-bold max-md:text-xl ${articleFetch?.estReductionActive ? "block" : "hidden"}`}>
                                 {appliquerReduction(articleFetch?.typeReductionArticle, articleFetch?.reductionArticle, varianteSelected?.prixVente, articleFetch?.estReductionActive)?.toLocaleString()} FCFA
                             </span>
-                            <span className={`text-left font-bold ${articleFetch?.estReductionActive ? "line-through text-xl text-gris-8 max-md:text-base" : "text-2xl text-red-8 max-md:text-xl"}`}>
+                            <span className={`text-left font-bold ${articleFetch?.estReductionActive ? "line-through text-xl text-gris-8 max-md:text-base" : "text-2xl text-red-8 max-md:text-xl"} ${isLoading ? "hidden" : ""}`}>
                                 {varianteSelected?.prixVente.toLocaleString()} FCFA
                             </span>                            
                         </div>                        
@@ -197,7 +208,7 @@ const ArticleHeader = ({id}: Props) => {
                 </div>
             </div>
 
-            <div className="fixed left-1/2 z-40 -translate-1/2 bottom-2 w-[91.96%] p-2 rounded-full border-[1.5px] border-red-6 bg-red-1 hidden items-center justify-between gap-4 max-lg:flex">
+            <div className={"fixed left-1/2 z-40 -translate-1/2 bottom-2 w-[91.96%] p-2 rounded-full border-[1.5px] border-red-6 bg-red-1 hidden items-center justify-between gap-4 max-lg:flex"}>
                 <div className="border border-red-4 p-2 w-1/3 rounded-full flex items-center justify-between">
                     <button onClick={() => diminuerQuantite()} className="cursor-pointer">
                         <Minus strokeWidth={1.25} className="stroke-red-6 size-6 transition duration-300 ease-in-out hover:stroke-[2] hover:stroke-red-8" />

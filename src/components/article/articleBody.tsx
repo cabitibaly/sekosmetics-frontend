@@ -9,7 +9,7 @@ import { ToastContainer } from "react-toastify"
 const ArticleBody = ({id}: {id: string}) => {
     const [tab, setTab] = useState<string>("1") 
     const [html, setHtml] = useState<string>("");
-    const { article } = useGetUnArticles(Number(id)) 
+    const { article, isLoading } = useGetUnArticles(Number(id)) 
     const { commentaires, notations, refetch } = useGetLesCommentaireDeUnArticle(Number(id));
     
     useEffect(() => {
@@ -19,7 +19,7 @@ const ArticleBody = ({id}: {id: string}) => {
     }, [article])
 
     return (
-        <div className="overflow-x-hidden px-[150px] py-6 w-screen flex flex-col items-center justify-start gap-4 max-2xl:px-[100px] max-xl:px-[60px] max-xl:py-2 max-896:!px-4 max-896:!pb-38">            
+        <div className={`overflow-x-hidden px-[150px] py-6 w-screen flex-col items-center justify-start gap-4 max-2xl:px-[100px] max-xl:px-[60px] max-xl:py-2 max-896:!px-4 max-896:!pb-38 ${isLoading ? "hidden" : "flex"}`}>            
             <ToastContainer />
             <div className="border-b border-gris-6 pb-6 w-full carousel carousel-start items-center justify-center gap-4 max-lg:justify-start max-lg:pb-3">
                 <button onClick={() => setTab("1")} className={`carousel-item rounded-full font-bold text-lg py-2 px-4 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6

@@ -48,10 +48,6 @@ const CompteBody = () => {
                     title="Mes Favoris"
                     href="/compte/mes-favoris"
                 />
-                <CompteLink 
-                    title="Recherches récentes"
-                    href="/compte/recherche-recente"
-                />
                 <button className="cursor-pointer pr-6 w-full flex items-center justify-between gap-4 group">
                     <div className="flex items-center justify-center gap-4 max-md:gap-2">
                         <div className="size-10 rounded-full bg-red-3/60 flex items-center justify-center max-md:size-10">

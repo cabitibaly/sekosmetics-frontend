@@ -49,14 +49,6 @@ const CompteNavbar = () => {
             >
                 Mes Favoris
             </Link>
-            <Link 
-                href={"/compte/recherche-recente"} 
-                className={`px-4 py-2 rounded-full flex items-center justify-center text-xl font-bold transition duration-300 ease-in-out hover:bg-red-8 hover:text-gris-12
-                   max-xl:text-base ${pathName === "recherche-recente" ? "bg-red-8 text-gris-12" : "bg-transparent text-gris-8"}
-                `}
-            >
-                Recherche récente
-            </Link>
             <hr className='my-2 w-full border border-red-4' />
             <button onClick={() => logout()} type="button" className='cursor-pointer px-4 text-xl text-red-6 font-bold transition duration-200 hover:text-red-8 max-xl:text-base'>Déconnexion</button>
         </div>
