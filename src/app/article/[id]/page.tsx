@@ -5,9 +5,9 @@ import Navbar from "@/components/navbar/navbar"
 import Topbar from "@/components/navbar/topbar"
 
 interface Props {
-    params: {
+    params: Promise<{
         id: string
-    }
+    }>
 }
 
 const ArticleDetail = async ({params}: Props) => {

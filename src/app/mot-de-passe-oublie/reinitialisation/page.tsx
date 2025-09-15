@@ -5,8 +5,9 @@ import axios from 'axios'
 import { Eye, EyeOff } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { MoonLoader } from 'react-spinners'
 import { toast } from 'react-toastify'
 
 interface ResetPasswordField {
@@ -14,7 +15,7 @@ interface ResetPasswordField {
     nouveauMotDePasse: string
 }
 
-const RenitialiseMotDePasse = () => {
+const RenitialiseMotDePasseWrapper = () => {
     const searchParams = useSearchParams();
     const email = searchParams.get("email")
     const [isVisibleNew, setIsVisibleNew] = useState<boolean>(false)
@@ -132,6 +133,23 @@ const RenitialiseMotDePasse = () => {
                 </form>
             </div>
         </div>
+    )
+}
+
+const RenitialiseMotDePasse = () => {
+    return (
+        <Suspense
+            fallback={
+                <div className='w-screen h-screen flex items-center justify-center'>
+                    <MoonLoader
+                        color="#FF7993"
+                        size={24}
+                    />
+                </div>
+            }
+        >
+            <RenitialiseMotDePasseWrapper />
+        </Suspense>
     )
 }
 

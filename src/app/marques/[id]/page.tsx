@@ -2,10 +2,11 @@ import Footer from "@/components/accueil/footer";
 import MarqueDetailBody from "@/components/marque/marqueDetail/marqueDetailBody";
 import MarqueDetailHero from "@/components/marque/marqueDetail/marqueDetailHero";
 import Navbar from "@/components/navbar/navbar";
+
 interface Props {
-    params: {
+    params: Promise<{
         id: string
-    }
+    }>
 }
 
 const MarqueDetail = async ({params}: Props) => {

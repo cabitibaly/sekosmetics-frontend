@@ -1,13 +1,14 @@
-"use client"
+"use client";
 import { baseUrl } from '@/constant/baseUrl';
 import { renvoyerOtp } from '@/utils/renvoyerOtp';
 import axios from 'axios';
 import Image from 'next/image'
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useRef, useState } from 'react';
+import { Suspense, useRef, useState } from 'react';
+import { MoonLoader } from 'react-spinners';
 import { toast } from 'react-toastify';
 
-const VerificationCompet = () => {
+const VerificationWrapper = () => {
     const searchParams = useSearchParams()
     const email = searchParams.get("email")
     const inputRefs = useRef<(HTMLInputElement | null )[]>([]);
@@ -121,6 +122,23 @@ const VerificationCompet = () => {
                 </div>
             </div>
         </div>
+    )
+}
+
+const VerificationCompet = () => {
+    return (
+        <Suspense
+            fallback={
+                <div className='w-screen h-screen flex items-center justify-center'>
+                    <MoonLoader 
+                        color="#FF7993"
+                        size={24}
+                    />
+                </div>
+            }
+        >
+            <VerificationWrapper />
+        </Suspense>
     )
 }
 

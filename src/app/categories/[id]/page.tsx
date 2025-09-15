@@ -4,7 +4,9 @@ import CategorieDetailHero from '@/components/categorie/categorieDetail/categori
 import Navbar from '@/components/navbar/navbar';
 
 interface Props {
-    params: { id: string }
+    params: Promise<{
+        id: string
+    }>
 }
 
 const CategoriesDetail = async ({ params }: Props) => {
