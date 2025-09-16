@@ -2,6 +2,7 @@
 import { usePanier } from "@/hooks/usePanier"
 import PanierCard from "../cards/panierCard"
 import Link from "next/link"
+import { toast } from "react-toastify"
 
 interface Props {
     isBtn?: boolean
@@ -9,7 +10,7 @@ interface Props {
 }
 
 const ResumerPanier = ({ isBtn = true, isConfirmation = false }: Props) => {
-    const { panier } = usePanier()
+    const { panier, estVide } = usePanier()
     const sousTotal: number = panier.reduce((acc, curr) => acc + curr.prixTotal, 0)
     const nbArticcle: number = panier.reduce((acc, curr) => acc + curr.quantiteLigne, 0)
 
@@ -34,8 +35,18 @@ const ResumerPanier = ({ isBtn = true, isConfirmation = false }: Props) => {
                     <span className="text-left text-xl text-gris-12 font-bold max-896:text-base max-xs:text-sm">Sous-total</span>
                     <span className="text-left text-xl text-red-8 font-bold max-896:text-base max-xs:text-sm">{sousTotal.toLocaleString()} FCFA</span>
                 </div>
-                <Link href={"/panier/verification"} className={`mt-2 rounded-full font-bold bg-red-8 w-1/2 items-center justify-center text-gris-12 text-lg py-2 px-4 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
-                    max-lg:text-sm max-896:hidden ${isBtn ? "flex" : "hidden"}`}>
+                <Link 
+                    onClick={(e) => {
+                        if(estVide) {
+                            e.preventDefault()
+                            toast.info("Vous devez ajouter au moins un article à votre panier")
+                        }
+                    }}
+                    href={"/panier/verification"} 
+                    className={`
+                        mt-2 rounded-full font-bold bg-red-8 w-1/2 items-center justify-center text-gris-12 text-lg py-2 px-4 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
+                        max-lg:text-sm max-896:hidden ${isBtn ? "flex" : "hidden"}
+                    `}>
                     Commander
                 </Link>
             </div>

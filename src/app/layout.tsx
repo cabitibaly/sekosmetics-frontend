@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Comfortaa } from "next/font/google";
+import { Comfortaa, Jura } from "next/font/google";
 import "./globals.css";
 import { PanierProvider } from "@/contexts/panierContext";
 import { KitProvider } from "@/contexts/kitContext";
@@ -8,6 +8,11 @@ import { QueryProvider } from "@/contexts/tanstackQuery/queryProvider";
 import { ToastContainer } from "react-toastify";
 
 const comfortaa = Comfortaa({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+})
+
+const jura = Jura({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
 })
@@ -25,7 +30,7 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body
-        className={`${comfortaa.className}`}
+        className={`${comfortaa.className} ${jura.className}`}
       >
         <QueryProvider>
           <AuthProvider>

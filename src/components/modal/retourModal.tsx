@@ -142,7 +142,7 @@ const RetourModal = ({isModalOpen, setIsModalOpen, ligneId, commandeId}: RetourM
                                 images.map((image, index) => (
                                     image.urlPreuve !== "" ?
                                         <div key={index} className="relative w-full aspect-square rounded-3xl flex items-center justify-center max-xs:rounded-xl">
-                                            <button onClick={() => onRemoveImage(index)} className={`absolute -top-1 -right-1 cursor-pointer bg-rouge-9 size-5 aspect-square rounded-full flex items-center justify-center`}>
+                                            <button onClick={() => onRemoveImage(index)} className={`absolute -top-1 -right-1 z-10 cursor-pointer bg-rouge-9 size-5 aspect-square rounded-full flex items-center justify-center`}>
                                                 <X className="size-4 stroke-gris-1"/>
                                             </button>
                                             <div className="relative size-full aspect-square object-cover rounded-3xl max-xs:rounded-xl">

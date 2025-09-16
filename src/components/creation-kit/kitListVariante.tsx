@@ -5,14 +5,18 @@ import { useDebounce } from "@/hooks/useDebounce";
 import { useGetLesVariantes } from "@/hooks/article-fetch/articleFetch";
 import VarianteCard from "../cards/varianteCard";
 import { useKit } from "@/hooks/useKit";
+import { appliquerReduction } from "@/utils/appliquerReduction";
 
 interface Props {
     articleId: number,
+    typeReductionArticle: string,
+    reductionArticle: number,
+    estReductionActive: boolean,
     nomArticle: string,    
     setIdArticle: React.Dispatch<React.SetStateAction<number | null>>,
 }
 
-const KitListVariante = ({ articleId, setIdArticle, nomArticle, }: Props) => {
+const KitListVariante = ({ articleId, setIdArticle, nomArticle, typeReductionArticle, reductionArticle, estReductionActive }: Props) => {
     const [recherche, setRecherche] = useState<string>("")
     const debounceValue = useDebounce(recherche, 500);
     const { variantes, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetLesVariantes(8, articleId);
@@ -23,11 +27,16 @@ const KitListVariante = ({ articleId, setIdArticle, nomArticle, }: Props) => {
     ), [variantes, debounceValue]);
 
     const toggleClick = (id: number) => {
+        const varianteSelected = variantes.find(v => v.idVariante === id)
+        if(!varianteSelected) return
+
+        const prixReel = appliquerReduction(typeReductionArticle, reductionArticle, varianteSelected?.prixVente, estReductionActive)
+
         ajouterLigneKit({
             articleId: id,
             quantiteLigne: 1,
-            prixUnitaire: variantes.find(v => v.idVariante === id)?.prixVente || 0,
-            prixTotal: variantes.find(v => v.idVariante === id)?.prixVente || 0,
+            prixUnitaire: prixReel,
+            prixTotal: prixReel,
             image: variantes.find(v => v.idVariante === id)?.imageVariante || "",
             nomArticle: nomArticle,
             valeursOption: variantes.find(v => v.idVariante === id)?.valeursOption.map(vo => ({valeurOption: vo.valeurOption}))
@@ -62,7 +71,7 @@ const KitListVariante = ({ articleId, setIdArticle, nomArticle, }: Props) => {
                                 id={variante.idVariante}
                                 intitule={variante.valeursOption[0].valeurOption}
                                 image={variante.imageVariante}
-                                prix={variante.prixVente}
+                                prix={appliquerReduction(typeReductionArticle, reductionArticle, variante.prixVente, estReductionActive)}
                                 handleClick={() => toggleClick(variante.idVariante)}
                                 estSelected={kit.map(k => k.articleId).includes(variante.idVariante)}
                             />

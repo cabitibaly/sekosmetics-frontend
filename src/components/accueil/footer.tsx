@@ -17,10 +17,10 @@ const Footer = () => {
                         <span className='text-left text-gris-12 text-2xl font-bold underline uppercase max-lg:text-lg'>Navigation</span>
                         <div className='w-full flex flex-col items-start justify-center gap-2'>
                             <Link href={"/"} className="text-gris-10 text-lg font-bold transition duration-200 ease-in hover:text-red-8 max-lg:text-base">Accueil</Link>
-                            <Link href={"/news"} className="text-gris-10 text-lg font-bold transition duration-200 ease-in hover:text-red-8 max-lg:text-base">News</Link>
+                            <Link href={"/article/nouvelle-arrivage"} className="text-gris-10 text-lg font-bold transition duration-200 ease-in hover:text-red-8 max-lg:text-base">News</Link>
                             <Link href={"/marques"} className="text-gris-10 text-lg font-bold transition duration-200 ease-in hover:text-red-8 max-lg:text-base">Marques</Link>
                             <Link href={"/categories"} className="text-gris-10 text-lg font-bold transition duration-200 ease-in hover:text-red-8 max-lg:text-base">Catégories</Link>
-                            <Link href={"/offres"} className="text-gris-10 text-lg font-bold transition duration-200 ease-in hover:text-red-8 max-lg:text-base">Offres promos</Link>
+                            <Link href={"/offre-promotionnelle"} className="text-gris-10 text-lg font-bold transition duration-200 ease-in hover:text-red-8 max-lg:text-base">Offres promos</Link>
                         </div>
                     </div>
                     <div className='w-1/4 flex flex-col items-start justify-center gap-4 max-xl:w-1/3'>

@@ -1,16 +1,19 @@
 "use client"
 import { useAuth } from '@/hooks/useAuth'
 import { ConnexionField } from '@/types/connexionField'
-import { Eye, EyeOff } from 'lucide-react'
+import { ChevronLeft, Eye, EyeOff } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 const Connexion = () => {
     const [isVisibleOld, setIsVisibleOld] = useState<boolean>(false)
+    const [ isLoding, setIsLoding ] = useState<boolean>(false)
     const { register, handleSubmit } = useForm<ConnexionField>()
     const { login } = useAuth();    
+    const router = useRouter();
 
     const connexion = async (data: ConnexionField) => {
         if(data.motDePasse.length < 8) {
@@ -18,7 +21,15 @@ const Connexion = () => {
             return
         }
 
-        login(data);
+        setIsLoding(true)
+
+        try {
+            login(data);   
+        } catch (error) {
+            console.log(error)
+        } finally{
+            setIsLoding(false)
+        }       
     }
 
     return (
@@ -27,8 +38,12 @@ const Connexion = () => {
                 <Image src={"/login.jpg"} fill alt='login' className='absolute size-full object-cover'/>
             </div>
             <div className='px-8 relative w-2/5 h-full flex flex-col items-center justify-center gap-12 max-xl:w-1/2 max-896:connexion max-896:w-full!'>
+                <button onClick={() => router.push("/panier")} className='cursor-pointer absolute top-8 left-8 z-10 flex items-center justify-center gap-1 transition-transform duration-200 ease-linear hover:scale-90'>
+                    <ChevronLeft strokeWidth={1.5} className='size-5 stroke-gris-12' />
+                    <span className='text-xl text-gris-12 font-bold'>Retour</span>
+                </button>
                 <h1 className='text-2xl text-gris-12 font-bold text-center'>Bienvenue chez <span className='text-red-8'>Sekosmetics</span></h1>
-                <form onSubmit={handleSubmit(connexion)} className='w-2/3 flex flex-col items-center justify-center gap-4 max-xl:w-3/4 max-xs:w-full'>
+                <form onSubmit={handleSubmit(connexion)} className='w-full flex flex-col items-center justify-center gap-4'>
                     <div className="w-full flex items-center">   
                         <label htmlFor="email" className="sr-only">Email</label>
                         <input {...register("email", {required: true})} id="email" type="email" className="bg-gris-1 border border-red-4  block w-full text-gris-12 text-lg rounded-full outline-none focus:ring-red-7 focus:border-red-7 ps-4 px-1.5 py-2 placeholder:text-gris-6 max-896:text-base" placeholder="example@example.com" />                                        
@@ -43,7 +58,7 @@ const Connexion = () => {
                         </button>
                         <Link href={"/mot-de-passe-oublie"} className='self-end text-red-8 cursor-pointer hover:underline'>Mot de passe oublié ?</Link>
                     </div>
-                    <button type='submit' className="bg-red-8 w-full rounded-full font-bold text-gris-12 text-lg py-2 px-4 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
+                    <button disabled={isLoding} type='submit' className="bg-red-8 w-full rounded-full font-bold text-gris-12 text-lg py-2 px-4 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
                         max-896:text-base">
                         Connexion
                     </button>

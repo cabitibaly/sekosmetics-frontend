@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useGetUneCategorie } from "@/hooks/categorie-fetch/categorieFetch";
 import KitListVariante from "./kitListVariante";
+import { appliquerReduction } from "@/utils/appliquerReduction";
 
 interface Props {
     categorie: number | null,        
@@ -51,7 +52,7 @@ const KitListArticle = ({ categorie, setCategorie }: Props) => {
                                         setIdArticle={setArticleSelected}
                                         nom={item.nomArticle} 
                                         image={item.imagesArticle[0].urlImage}
-                                        prix={item.variantes[0].prixVente}
+                                        prix={appliquerReduction(item.typeReductionArticle || "", item.reductionArticle || 0, item.variantes[0].prixVente, item.estReductionActive || false)}
                                     />
                                 ))
                             }
@@ -75,6 +76,9 @@ const KitListArticle = ({ categorie, setCategorie }: Props) => {
                     articleId={articleSelected}
                     nomArticle={articles.find(a => a.idArticle === articleSelected)?.nomArticle || ""}                    
                     setIdArticle={setArticleSelected}
+                    typeReductionArticle={articles.find(a => a.idArticle === articleSelected)?.typeReductionArticle || ""}
+                    reductionArticle={articles.find(a => a.idArticle === articleSelected)?.reductionArticle || 0}
+                    estReductionActive={articles.find(a => a.idArticle === articleSelected)?.estReductionActive || false}
                 />
             }
         </>
