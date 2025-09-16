@@ -38,7 +38,7 @@ const Connexion = () => {
                 <Image src={"/login.jpg"} fill alt='login' className='absolute size-full object-cover'/>
             </div>
             <div className='px-8 relative w-2/5 h-full flex flex-col items-center justify-center gap-12 max-xl:w-1/2 max-896:connexion max-896:w-full!'>
-                <button onClick={() => router.push("/panier")} className='cursor-pointer absolute top-8 left-8 z-10 flex items-center justify-center gap-1 transition-transform duration-200 ease-linear hover:scale-90'>
+                <button onClick={() => router.push("/")} className='cursor-pointer absolute top-8 left-8 z-10 flex items-center justify-center gap-1 transition-transform duration-200 ease-linear hover:scale-90'>
                     <ChevronLeft strokeWidth={1.5} className='size-5 stroke-gris-12' />
                     <span className='text-xl text-gris-12 font-bold'>Retour</span>
                 </button>
