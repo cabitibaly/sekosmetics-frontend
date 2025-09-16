@@ -1,7 +1,7 @@
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { ChevronDown } from 'lucide-react';
 import { MoonLoader } from 'react-spinners';
-import { useGetLesCategories, useGetLesCategoriesPagine } from '@/hooks/categorie-fetch/categorieFetch';
+import { useGetLesCategoriesPagine } from '@/hooks/categorie-fetch/categorieFetch';
 import { useEffect, useRef, useState } from 'react';
 import { CategorieField } from '@/types/categorieField';
 import { useDebounce } from '@/hooks/useDebounce';
@@ -22,8 +22,7 @@ const DropdownCategorie = ({setCategorieId, categorieId}: Props) => {
     useClickOutside(ref, () => setIsOpen(false), isOpen);
 
     useEffect(() => {
-        if(categorieId === undefined) {            
-            setRecherche("");
+        if(categorieId === undefined) {                        
             setCategorie(null);
         } else {
             setCategorie(categories.find(c => c.idCategorie === Number(categorieId)) || null);
