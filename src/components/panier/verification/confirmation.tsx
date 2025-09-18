@@ -5,15 +5,13 @@ import { Code } from "@/types/codeField"
 import { formatReduction } from "@/utils/formatReduction"
 import React, { useEffect, useState } from "react"
 
-interface ConfirmationProps {    
-    total: number,
-    setTotal: React.Dispatch<React.SetStateAction<number>>,
-    fraisLivraison: number,
+interface ConfirmationProps {        
     setCodeValide: React.Dispatch<React.SetStateAction<Code | null>>
 }
 
-const Confirmation = ({total, setTotal, fraisLivraison, setCodeValide}: ConfirmationProps) => {
-    const [code, setCode] = useState<string>("")    
+const Confirmation = ({setCodeValide}: ConfirmationProps) => {
+    const [code, setCode] = useState<string>("")  
+    const [total, setTotal] = useState<number>(0)
     const { panier } = usePanier()
     const { code: codePromo, isLoading, refetch } = useGetUnCode(code)           
 
@@ -24,17 +22,17 @@ const Confirmation = ({total, setTotal, fraisLivraison, setCodeValide}: Confirma
             if(codePromo.typeReductionCode === "LIVRAISON_GRATUITE") {
                 setTotal(sousTotal)
             } else if(codePromo.typeReductionCode === "MONTANT_FIXE") {
-                setTotal(sousTotal + fraisLivraison - codePromo.valeurReductionCode)
+                setTotal(sousTotal - codePromo.valeurReductionCode)
             } else if(codePromo.typeReductionCode === "POURCENTAGE") {
-                setTotal(sousTotal + fraisLivraison - (codePromo.valeurReductionCode * sousTotal)/100)
+                setTotal(sousTotal - (codePromo.valeurReductionCode * sousTotal)/100)
             }
             setCodeValide(codePromo  || null)
             return;
         }
 
-        setTotal(sousTotal + fraisLivraison)
+        setTotal(sousTotal)
 
-    }, [codePromo, panier, setCodeValide, setTotal, code, fraisLivraison])
+    }, [codePromo, panier, setCodeValide, setTotal, code])
 
     const handleClick = () => {
         if(!code) return
@@ -47,13 +45,9 @@ const Confirmation = ({total, setTotal, fraisLivraison, setCodeValide}: Confirma
                 <span className="text-2xl text-gris-12 font-bold max-896:text-lg">Nombre d&apos;article</span>
                 <span className="text-2xl text-red-8 font-bold max-896:text-lg">{panier.reduce((acc, curr) => acc + curr.quantiteLigne, 0)}</span>
             </div>
-            <div className="w-full flex items-center justify-between">
+            <div className="border-b border-red-6 pb-4 w-full flex items-center justify-between">
                 <span className="text-2xl text-gris-12 font-bold max-896:text-lg">Sous-total</span>
                 <span className="text-2xl text-red-8 font-bold max-896:text-lg">{panier.reduce((acc, curr) => acc + curr.prixTotal, 0).toLocaleString()} FCFA</span>
-            </div>
-            <div className="border-b border-red-6 pb-4 w-full flex items-center justify-between">
-                <span className="text-2xl text-gris-12 font-bol max-896:text-lg">Frais de livraison</span>
-                <span className="text-2xl text-red-8 font-bold max-896:text-lg">1 500 FCFA</span>
             </div>
             <div className="border-b border-red-6 pb-4 w-full flex items-center justify-between gap-4">
                 <div className="w-3/4 flex items-center">   
@@ -67,7 +61,7 @@ const Confirmation = ({total, setTotal, fraisLivraison, setCodeValide}: Confirma
                 <span className="text-2xl text-red-8 font-bold max-896:text-lg">{formatReduction(codePromo?.typeReductionCode, codePromo?.valeurReductionCode)}</span>
             </div>
             <div className="w-full flex items-center justify-between">
-                <span className="text-2xl text-gris-12 font-bold max-896:text-lg">Total</span>
+                <span className="text-2xl text-gris-12 font-bold max-896:text-lg">Total sans frais</span>
                 <span className="text-2xl text-red-8 font-bold max-896:text-lg">{total.toLocaleString()} FCFA</span>
             </div>
         </div>

@@ -4,7 +4,6 @@ import ResumerPanier from "../resumerPanier"
 import VerificationTopBar from "./verificationTopBar"
 import InfoPersonnelle from "./infoPersonnelle"
 import AdresseLivraison from "./adresseLivraison"
-import ModePaiement from "./modePaiement"
 import Confirmation from "./confirmation"
 import { toast } from "react-toastify"
 import { Code } from "@/types/codeField"
@@ -12,32 +11,30 @@ import axios from "axios"
 import { usePanier } from "@/hooks/usePanier"
 import { useRouter } from "next/navigation"
 import { baseUrl } from "@/constant/baseUrl"
+import TypeCommande from "./typeCommande"
 
 const VerificationBody = () => {
     const { panier, viderPanier } = usePanier()
     const [tab, setTab] = useState<number>(1)
     const [adresseId, setAdresseId] = useState<number | null>(null)
-    const [codeValide, setCodeValide] = useState<Code | null>(null)
-    const [total, setTotal] = useState<number>(0)
-    const router = useRouter();
-    const fraisLivraison = 1500
+    const [codeValide, setCodeValide] = useState<Code | null>(null) 
+    const [livreAujourdhui, setLivreAujourdhui] = useState<boolean>(false)   
+    const router = useRouter();    
 
     const passerUneCommande = () => {
 
-        if(tab !== 4) return;
-
-        if(total === 0) return;
+        if(tab !== 4) return;        
 
         if(adresseId === null) return;
 
         axios.post(
             `${baseUrl}/commande/passer`,
             {
-                data: {
-                    montantTotal: total,
-                    fraisDeLivraison: codeValide?.typeReductionCode === "LIVRAISON_GRATUITE" ? 0 : fraisLivraison,
+                data: {                    
+                    sousTotal: panier.reduce((acc, curr) => acc + curr.prixTotal, 0),                   
                     reductionCommande: codeValide ? codeValide.valeurReductionCode : 0,
-                    adresseLivraisonId: adresseId
+                    adresseLivraisonId: adresseId,
+                    livreAujourdhui
                 },
                 codePromo: codeValide?.code,
                 lignesCommande: panier.map(({ image, nomArticle, ...rest }) => rest)
@@ -57,8 +54,9 @@ const VerificationBody = () => {
                         progress: undefined,
                     }
                 )
+
                 setTimeout(() => {
-                    router.push("/")
+                    router.push("/panier/valider?commandeId=" + res.data?.commande?.idCommande)
                 }, 3000) 
 
                 viderPanier()
@@ -84,7 +82,7 @@ const VerificationBody = () => {
             <div className="w-2/3 flex flex-col items-center justify-start gap-4 max-xl:w-4/5 max-lg:w-full">
                 <div className={`z-50 fixed top-0 left-0 w-full bg-red-2 ${tab === 1 ? "hidden" : ""}`}>
                     <VerificationTopBar 
-                        title={tab === 1 ? "Info. Personnelle" : tab === 2 ? "Adresse Livraison" :tab === 3 ? "Mode paiement" :"Confirmation"}
+                        title={tab === 1 ? "Info. Personnelle" : tab === 2 ? "Adresse Livraison" :tab === 3 ? "Type de commande" :"Confirmation"}
                         setTab={setTab} 
                         tab={tab} 
                     />                
@@ -110,7 +108,7 @@ const VerificationBody = () => {
                         <div className={`w-full bg-red-4 p-[3px] rounded-full  transition-all duration-200 ease-in ${tab >= 2 ? "visible" : "invisible"}`} />
                     </div>
                     <div className={"flex flex-col gap-1"}>
-                        <span className={`text-sm  transition-all duration-200 ease-in max-md:text-xs ${tab >= 3 ? "text-red-8" : "text-gris-6"}`}>Mode paiement</span>
+                        <span className={`text-sm  transition-all duration-200 ease-in max-md:text-xs ${tab >= 3 ? "text-red-8" : "text-gris-6"}`}>Type de commande</span>
                         <div className={`w-full bg-red-4 p-[3px] rounded-full  transition-all duration-200 ease-in ${tab >= 3 ? "visible" : "invisible"}`} />
                     </div>
                     <div className={"flex flex-col gap-1"}>
@@ -121,13 +119,10 @@ const VerificationBody = () => {
                 
                 {tab === 1 && <InfoPersonnelle />}
                 {tab === 2 && <AdresseLivraison setAdresseId={setAdresseId} />}
-                {tab === 3 && <ModePaiement />}
+                {tab === 3 && <TypeCommande setLivreAujourdhui={setLivreAujourdhui} livreAujourdhui={livreAujourdhui} />}
                 { 
                     tab === 4 &&
-                    <Confirmation                         
-                        total={total}
-                        setTotal={setTotal}
-                        fraisLivraison={fraisLivraison}
+                    <Confirmation                        
                         setCodeValide={setCodeValide}
                     />
                 }

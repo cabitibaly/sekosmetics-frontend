@@ -19,7 +19,7 @@ const CommandeArticleCard = ({  ligne, setLigneId, isModalOpen, setIsModalOpen, 
 
         const dateLivraison = new Date(date)
         const dateLimite = new Date(dateLivraison)
-        dateLimite.setDate(dateLivraison.getDate() + 7)
+        dateLimite.setDate(dateLivraison.getDate() + 2)
 
         return new Date() <= dateLimite
     }

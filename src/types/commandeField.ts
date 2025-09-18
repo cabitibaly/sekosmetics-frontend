@@ -1,7 +1,9 @@
 export interface CommandeField {
     idCommande?: number,
     numeroCommande: string,
-    statutCommande: string
+    statutCommande: string,
+    sousTotal: number,
+    livreAujourdhui: boolean,
     montantTotal: number,
     fraisDeLivraison: number,
     reductionCommande: number,

@@ -1,4 +1,4 @@
-import { Check, ChevronRight } from "lucide-react"
+import { Check, ChevronRight, X } from "lucide-react"
 import CreerIcon from "../../../public/svg/creerIcon"
 import ExpedieIcon from "../../../public/svg/expedieIcon"
 import LivreIcon from "../../../public/svg/livreIcon"
@@ -30,6 +30,7 @@ const CommandeCard = ({id, numero, statut, date, setCommandeId}: Props) => {
                         {statut === "CONFIRMEE" && <Check className="stroke-gris-12 size-8 max-sm:size-6" />}
                         {statut === "EXPEDIEE" && <ExpedieIcon className="stroke-gris-12 size-8 max-sm:size-6" />}
                         {statut === "LIVREE" && <LivreIcon className="stroke-gris-12 size-8 max-sm:size-6" />}
+                        {statut === "ANNULEE" && <X strokeWidth={1.5} className="stroke-gris-12 size-8 max-sm:size-6" />}
                     </div>
                     <div className="flex flex-col items-start justify-center gap-2">
                         <span className="text-gris-12 text-lg font-semibold max-sm:text-sm max-[320px]:!text-xs">
@@ -37,6 +38,7 @@ const CommandeCard = ({id, numero, statut, date, setCommandeId}: Props) => {
                             {statut === "CONFIRMEE" && "Confirmée"}
                             {statut === "EXPEDIEE" && "Expédiée"}
                             {statut === "LIVREE" && "Livrée"}
+                            {statut === "ANNULEE" && "Annulée"}
                         </span>
                         <span className="text-gris-8 text-sm font-semibold max-[320px]:!text-xs">{date}</span>
                     </div>

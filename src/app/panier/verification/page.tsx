@@ -8,15 +8,15 @@ import React, { useEffect } from 'react'
 import { toast } from 'react-toastify'
 
 const Verification = () => {
-    const { isAuthenticated } = useAuth()  
+    const { isAuthenticated, isLoading } = useAuth()  
     const router = useRouter();
     
     useEffect(() => {
-        if (!isAuthenticated) {  
+        if (!isAuthenticated && !isLoading) {  
             toast.info("Vous devez être connecté pour accéder à cette page");               
             router.push("/connexion");
         }
-    }, [isAuthenticated, router]);
+    }, [isAuthenticated, router, isLoading]);
 
     return (
         <>
