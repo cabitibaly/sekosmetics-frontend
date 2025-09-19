@@ -23,6 +23,13 @@ const TypeCommande = ({setLivreAujourdhui, livreAujourdhui}: TypeCommandeProps) 
             <div className="w-full text-base text-gris-12 font-medium">
                 Les frais de livraison sont comprise entre 1500 FCFA et 2500 FCFA.
             </div>
+            {    
+                livreAujourdhui &&
+                <div className="w-full text-base text-red-10 font-medium">
+                    Un numéro de téléphone sera afficher lorsque vous aurez confirmé votre commande.
+                    Vous devez le contacter pour planifier la livraison.
+                </div>
+            }
         </div> 
     )
 }
