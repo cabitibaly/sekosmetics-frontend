@@ -13,6 +13,16 @@ const VarianteCard = ({id, intitule, image, prix, handleClick, estSelected = fal
 
     return (
         <div onClick={() => handleClick(id)} className={`border w-[100px] !h-[98%] relative rounded-2xl carousel-item flex-col items-start justify-center max-lg:!h-[170px] max-xs:!h-[150px] max-xs:w-[80px] transition duration-300 ease-in-out ${estSelected ? "border-red-8" : "border-red-4"}`}>
+            {
+                image ?
+                    <div className="w-full aspect-square relative rounded-2xl flex items-center justify-center">
+                        <Image src={image} fill alt='Beauty planet' className='rounded-2xl' />
+                    </div>
+                :
+                    <div className="w-full aspect-square bg-red-6 relative rounded-2xl flex items-center justify-center">
+                        <span className="text-base uppercase text-red-1 font-bold">{intitule.charAt(0)}</span>
+                    </div>
+            }
             <div className="w-full aspect-square relative rounded-2xl flex items-center justify-center">
                 <Image src={image} fill alt='Beauty planet' className='rounded-2xl' />
             </div>
