@@ -48,7 +48,7 @@ const Sidebar = () => {
                 </div>                
             </div>
             <div onClick={() => handleSidebarToglle()} className={`fixed z-50 h-screen w-screen bg-gris-12/60 transition-transform ease-in-out duration-300 hidden items-start justify-start max-[896px]:flex ${isClicked ? "translate-x-0" : "-translate-x-full"}`}>
-                <div className="bg-red-1 w-1/2 h-full flex flex-col items-start justify-start gap-4 p-4 max-sm:w-2/3 max-xs:w-full">
+                <div className="relative bg-red-1 w-1/2 h-full flex flex-col items-start justify-start gap-4 p-4 max-sm:w-2/3 max-xs:w-full">
                     <div className="w-full flex items-center justify-between">
                         <Link href={"/"} className="text-gris-12 text-2xl font-bold max-xl:text-lg">Sekosmetics</Link>
                         <div onClick={() => handleSidebarToglle()} className="cursor-pointer">
@@ -61,7 +61,15 @@ const Sidebar = () => {
                         <Link href={"/marques"} className="py-2 border-b border-gris-4 w-full text-gris-10 text-lg font-bold transition duration-200 ease-in hover:text-red-8 hover:border-red-8">Marques</Link>
                         <Link href={"/offre-promotionnelle"} className="py-2 border-b border-gris-4 w-full text-gris-10 text-lg font-bold transition duration-200 ease-in hover:text-red-8 hover:border-red-8">Offres Promo</Link>
                         <Link href={"/recherche"} className="py-2 border-b border-gris-4 w-full text-gris-10 text-lg font-bold transition duration-200 ease-in hover:text-red-8 hover:border-red-8">Recherche</Link>
-                    </div>                
+                    </div> 
+                    <div className="p-4 absolute left-0 bottom-4 w-full flex flex-col items-start justify-between gap-2">
+                        <Link href={"/politique-de-confidentialite"} className="w-full text-gris-10 text-lg font-bold transition duration-200 ease-in hover:text-red-8 hover:border-red-8">
+                            Politique de confidentialité
+                        </Link>
+                        <Link href={"/politique-de-retour"} className="w-full text-gris-10 text-lg font-bold transition duration-200 ease-in hover:text-red-8 hover:border-red-8">
+                            Politique de retour et remboursement
+                        </Link>
+                    </div>               
                 </div>
             </div>
             {

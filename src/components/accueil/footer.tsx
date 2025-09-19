@@ -26,10 +26,10 @@ const Footer = () => {
                     <div className='w-1/4 flex flex-col items-start justify-center gap-4 max-xl:w-1/3'>
                         <span className='text-left text-gris-12 text-2xl font-bold underline uppercase max-lg:text-lg'>Information</span>
                         <div className='w-full flex flex-col items-start justify-center gap-2'>
-                            <Link href={"/politique-confidentialite"} className="text-gris-10 text-lg font-bold transition duration-200 ease-in hover:text-red-8 max-lg:text-base">
+                            <Link href={"/politique-de-confidentialite"} className="text-gris-10 text-lg font-bold transition duration-200 ease-in hover:text-red-8 max-lg:text-base">
                                 Politique de confidentialité
                             </Link>
-                            <Link href={"/politique-retour"} className="text-gris-10 text-lg font-bold transition duration-200 ease-in hover:text-red-8 max-lg:text-base">
+                            <Link href={"/politique-de-retour"} className="text-gris-10 text-lg font-bold transition duration-200 ease-in hover:text-red-8 max-lg:text-base">
                                 Politique de retour et remboursement
                             </Link>
                         </div>

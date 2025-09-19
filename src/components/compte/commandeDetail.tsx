@@ -46,8 +46,16 @@ const CommandeDetail = ({ id, setCommandeId}: Props) => {
                             <span className="text-left text-base text-red-8 font-bold max-xs:text-sm">{new Date(commande?.dateCreationCommande || "").toLocaleDateString()}</span>
                         </div>
                         <div className="w-full flex items-center justify-between max-sm:w-full">
+                            <span className="text-left text-base text-gris-12 font-bold max-xs:text-sm">Sous total</span>
+                            <span className="text-left text-base text-red-8 font-bold max-xs:text-sm">{commande?.sousTotal.toLocaleString()} FCFA</span>
+                        </div>
+                        <div className="w-full flex items-center justify-between max-sm:w-full">
+                            <span className="text-left text-base text-gris-12 font-bold max-xs:text-sm">Frais de livraison</span>
+                            <span className="text-left text-base text-red-8 font-bold max-xs:text-sm">{commande?.fraisDeLivraison.toLocaleString()} FCFA</span>
+                        </div>
+                        <div className="w-full flex items-center justify-between max-sm:w-full">
                             <span className="text-left text-base text-gris-12 font-bold max-xs:text-sm">Total</span>
-                            <span className="text-left text-base text-red-8 font-bold max-xs:text-sm">{commande?.montantTotal} FCFA</span>
+                            <span className="text-left text-base text-red-8 font-bold max-xs:text-sm">{commande?.montantTotal.toLocaleString()} FCFA</span>
                         </div>
                     </div>
                     <hr className="w-full border border-gris-6" />

@@ -19,7 +19,16 @@ const jura = Jura({
 
 export const metadata: Metadata = {
   title: "Sekocosmetics",
-  description: "une application de e-commerce de cosmétiques",
+  description: "Un site de recherche de produits de beauté de qualité authentique, avec la possible de livrer et expédier partout en Côte d’Ivoire.",
+  keywords: ["produits de beauté", "makeup", "beauty", "maquillage", "soins visage", "cosmetics", "cométiques", "sekosmetics"],
+  openGraph: {
+    title: "Sekocosmetics",
+    description: "Un site de recherche de produits de beauté de qualité authentique, avec la possible de livrer et expédier partout en Côte d’Ivoire.",
+    url: "https://www.sekosmetics.com",
+    siteName: "Sekosmetics",
+    locale: "fr_FR",
+    type: "website",
+  }
 };
 
 export default function RootLayout({
