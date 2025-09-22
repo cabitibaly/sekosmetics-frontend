@@ -23,9 +23,6 @@ const VarianteCard = ({id, intitule, image, prix, handleClick, estSelected = fal
                         <span className="text-base uppercase text-red-1 font-bold">{intitule.charAt(0)}</span>
                     </div>
             }
-            <div className="w-full aspect-square relative rounded-2xl flex items-center justify-center">
-                <Image src={image} fill alt='Beauty planet' className='rounded-2xl' />
-            </div>
             <div className="px-2 py-2 w-full h-full flex flex-col items-start justify-center gap-1 max-xs:px-0.5">
                 <div className="w-full line-clamp-2 text-xs text-gris-12 font-semibold max-xs:text-center">
                     {intitule}
