@@ -21,8 +21,9 @@ interface ImagePreuve {
 }
 
 const RetourModal = ({isModalOpen, setIsModalOpen, ligneId, commandeId}: RetourModalProps) => {       
-    const [images, setImages] = useState<ImagePreuve[]>(Array(4).fill({urlPreuve: ""})); 
+    const [images, setImages] = useState<ImagePreuve[]>(Array(4).fill({urlPreuve: ""}));     
     const [raison, setRaison] = useState("")
+    const [isLoading, setIsLoading] = useState<boolean>(false)
     const { commande } = useGetUneCommande(commandeId)
     const ligne = commande?.lignesCommande.find(l => l.idLigne === ligneId)
  
@@ -73,6 +74,8 @@ const RetourModal = ({isModalOpen, setIsModalOpen, ligneId, commandeId}: RetourM
             return
         }
 
+        setIsLoading(true)
+
         axios.post(
             `${baseUrl}/retour/faire-un-retour`,
             {
@@ -112,7 +115,7 @@ const RetourModal = ({isModalOpen, setIsModalOpen, ligneId, commandeId}: RetourM
                     theme: "light"
                 }                
             )
-        })
+        }).finally(() => setIsLoading(false))
     }
 
     return (
@@ -164,7 +167,7 @@ const RetourModal = ({isModalOpen, setIsModalOpen, ligneId, commandeId}: RetourM
                         max-lg:text-base`}>
                         Annulé
                     </button>
-                    <button onClick={() => faireUnRetour()} className={`rounded-full font-bold bg-red-8 flex items-center justify-center text-gris-12 text-lg py-1.5 px-3 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
+                    <button disabled={isLoading} onClick={() => faireUnRetour()} className={`rounded-full font-bold bg-red-8 flex items-center justify-center text-gris-12 text-lg py-1.5 px-3 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
                         max-lg:text-base`}>
                         Valider
                     </button>

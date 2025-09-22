@@ -12,11 +12,13 @@ import { baseUrl } from '@/constant/baseUrl'
 const ModifierMotDePasse = () => {
     const [isVisibleOld, setIsVisibleOld] = useState<boolean>(false)
     const [isVisibleNew, setIsVisibleNew] = useState<boolean>(false)
+    const [isRequestLoading, setIsRequestLoading] = useState<boolean>(false)
     const {register, handleSubmit, reset, formState: {errors}} = useForm<MotDePasseField>({
         resolver: zodResolver(MotDePasseSchema)
     })
 
     const changerMotDePasse = (data: MotDePasseField) => {
+        setIsRequestLoading(true)
         axios.patch(
             `${baseUrl}/modifier-son-mot-de-passe`,
             data,
@@ -57,7 +59,7 @@ const ModifierMotDePasse = () => {
                     theme: "light"
                 }
             )
-        });        
+        }).finally(() => setIsRequestLoading(false));
     }
 
     const onError = () => {        
@@ -100,7 +102,7 @@ const ModifierMotDePasse = () => {
                                 </button>
                             </div>
                         </div>
-                        <button type='submit' className="bg-red-8 w-full rounded-full font-bold text-gris-12 text-2xl py-2 px-4 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
+                        <button disabled={isRequestLoading} type='submit' className="bg-red-8 w-full rounded-full font-bold text-gris-12 text-2xl py-2 px-4 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
                             max-lg:text-sm max-896:w-[96%] max-896:absolute max-896:bottom-4">
                             Modifier
                         </button>

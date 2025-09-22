@@ -18,7 +18,8 @@ const VerificationBody = () => {
     const [tab, setTab] = useState<number>(1)
     const [adresseId, setAdresseId] = useState<number | null>(null)
     const [codeValide, setCodeValide] = useState<Code | null>(null) 
-    const [livreAujourdhui, setLivreAujourdhui] = useState<boolean>(false)   
+    const [livreAujourdhui, setLivreAujourdhui] = useState<boolean>(false)
+    const [isLoading, setIsLoading] = useState<boolean>(false) 
     const router = useRouter();    
 
     const passerUneCommande = () => {
@@ -26,6 +27,8 @@ const VerificationBody = () => {
         if(tab !== 4) return;        
 
         if(adresseId === null) return;
+
+        setIsLoading(true)
 
         axios.post(
             `${baseUrl}/commande/passer`,
@@ -74,7 +77,7 @@ const VerificationBody = () => {
                     progress: undefined,
                 }
             )
-        })
+        }).finally(() => setIsLoading(false))
     }
 
     return (
@@ -92,7 +95,7 @@ const VerificationBody = () => {
                         max-lg:text-sm max-896:w-full ${tab === 4 ? "hidden" : "flex"}`}>
                         Suivant
                     </button>
-                    <button onClick={() => passerUneCommande()} className={`w-full rounded-full font-bold bg-red-8 items-center justify-center text-gris-12 text-lg py-1 px-4 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
+                    <button disabled={isLoading} onClick={() => passerUneCommande()} className={`w-full rounded-full font-bold bg-red-8 items-center justify-center text-gris-12 text-lg py-1 px-4 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
                         max-lg:text-sm ${tab === 4 ? "flex" : "hidden"}`}>
                         Terminer
                     </button>
@@ -135,7 +138,7 @@ const VerificationBody = () => {
                         max-lg:text-sm ${tab === 4 ? "hidden" : "flex"}`}>
                         Suivant
                     </button>
-                    <button onClick={() => passerUneCommande()} className={`rounded-full font-bold bg-red-8 items-center justify-center text-gris-12 text-lg py-1 px-4 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
+                    <button disabled={isLoading} onClick={() => passerUneCommande()} className={`rounded-full font-bold bg-red-8 items-center justify-center text-gris-12 text-lg py-1 px-4 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
                         max-lg:text-sm ${tab === 4 ? "flex" : "hidden"}`}>
                         Terminer
                     </button>

@@ -20,6 +20,7 @@ const AjouterUnAdresse = ({setIsModalOpen, isModalOpen, refetchAdresses}: Props)
     const [villeSelected, setVilleSelected] = useState<string>("") 
     const [commune, setCommune] = useState<string>("")
     const [quartier, setQuartier] = useState<string>("")  
+    const [isLoading, setIsLoading] = useState<boolean>(false)
     
     const handleSumbit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -39,6 +40,8 @@ const AjouterUnAdresse = ({setIsModalOpen, isModalOpen, refetchAdresses}: Props)
             )
             return
         }
+
+        setIsLoading(true)
 
         axios.post(
             `${baseUrl}/adresse/creer`,
@@ -84,7 +87,7 @@ const AjouterUnAdresse = ({setIsModalOpen, isModalOpen, refetchAdresses}: Props)
                     progress: undefined,
                 }
             )
-        })
+        }).finally(() => setIsLoading(false))
     }
     
     return (
@@ -118,7 +121,7 @@ const AjouterUnAdresse = ({setIsModalOpen, isModalOpen, refetchAdresses}: Props)
                     <button type="button" onClick={() => setIsModalOpen(!isModalOpen)} className="cursor-pointer text-lg text-red-8 font-bold hover:underline max-lg:text-sm">
                         Annuler
                     </button>
-                    <button type="submit" className="rounded-full font-bold bg-red-8 items-center justify-center text-gris-12 text-lg py-1 px-4 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
+                    <button disabled={isLoading} type="submit" className="rounded-full font-bold bg-red-8 items-center justify-center text-gris-12 text-lg py-1 px-4 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
                         max-lg:text-sm">
                         Enregistrer
                     </button>

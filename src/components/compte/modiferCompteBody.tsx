@@ -11,10 +11,10 @@ import axios from 'axios'
 import { baseUrl } from '@/constant/baseUrl'
 import { toast } from 'react-toastify'
 
-const ModiferCompteBody = () => { 
-    const { utilisateur } = useAuth();
+const ModiferCompteBody = () => {     
     const { register, handleSubmit, reset } = useForm<UtilisateurType>({})
-    const { isAuthenticated, isLoading, refetchUtilisateur } = useAuth()  
+    const { isAuthenticated, isLoading, refetchUtilisateur, utilisateur } = useAuth()  
+    const [isRequestLoading, setIsRequestLoading] = React.useState<boolean>(false);
     const router = useRouter();
     
     useEffect(() => {
@@ -53,7 +53,7 @@ const ModiferCompteBody = () => {
         }
 
         formData.append("upload_preset", uploadPreset);
-        formData.append("cloud_name", cloudName);
+        formData.append("cloud_name", cloudName);        
 
         axios.post(
             `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`,
@@ -71,6 +71,8 @@ const ModiferCompteBody = () => {
                     progress: undefined,
                     theme: "light"
                 });
+
+                setIsRequestLoading(true)
 
                 axios.patch(
                     `${baseUrl}/modifier`,
@@ -111,7 +113,7 @@ const ModiferCompteBody = () => {
                             theme: "light"
                         }
                     )
-                })
+                }).finally(() => setIsRequestLoading(false));
             }
         }).catch(() => {
             toast.error(
@@ -133,6 +135,7 @@ const ModiferCompteBody = () => {
     }
 
     const modifierCompte = (data: UtilisateurType) => {
+        setIsRequestLoading(true)
         axios.patch(
             `${baseUrl}/modifier`,
             data,
@@ -168,7 +171,7 @@ const ModiferCompteBody = () => {
                     theme: "light"
                 }
             )
-        });
+        }).finally(() => setIsRequestLoading(false));
     }
 
     return (
@@ -179,7 +182,7 @@ const ModiferCompteBody = () => {
                     {
                         utilisateur?.img ? 
                             <label htmlFor='img-change' className='cursor-pointer relative size-24 aspect-square flex items-center justify-center rounded-full group'>
-                                <input onChange={e => changerImage(e.target.files)} id='img-change' type="file" accept='image/*' className="sr-only" />
+                                <input disabled={isRequestLoading} onChange={e => changerImage(e.target.files)} id='img-change' type="file" accept='image/*' className="sr-only" />
                                 <Image src={utilisateur.img} fill alt="user-icon" className='object-cover rounded-full' />
                                 <div className='absolute bottom-0 right-0 rounded-full p-0.5 size-8 bg-gris-1 flex items-center justify-center transition duration-300 ease-in group-hover:scale-90'>
                                     <div className='relative rounded-full bg-red-4 size-full flex items-center justify-center'>
@@ -189,7 +192,7 @@ const ModiferCompteBody = () => {
                             </label>
                         :
                             <label htmlFor='img-change' className='cursor-pointer relative bg-red-7 size-24 aspect-square flex items-center justify-center rounded-full group'>
-                                <input onChange={e => changerImage(e.target.files)} id='img-change' type="file" accept='image/*' className="sr-only" />
+                                <input disabled={isRequestLoading} onChange={e => changerImage(e.target.files)} id='img-change' type="file" accept='image/*' className="sr-only" />
                                 <span className='text-bold text-red-1 text-xl'>{utilisateur?.nomClient?.charAt(0) || "U"}</span>
                                 <div className='absolute bottom-0 right-0 rounded-full p-0.5 size-8 bg-gris-1 flex items-center justify-center transition duration-300 ease-in group-hover:scale-90'>
                                     <div className='relative rounded-full bg-red-4 size-full flex items-center justify-center'>
@@ -221,7 +224,7 @@ const ModiferCompteBody = () => {
                                 <input {...register("telephone")} id="telephone" type="text" className="bg-gris-1 border border-red-4  block w-full text-gris-10 text-lg rounded-full outline-none focus:ring-red-7 focus:border-red-7 ps-4 p-1.5 placeholder:text-gris-6 max-896:text-sm" placeholder="Téléphone" />                                        
                             </div>
                         </div>
-                        <button type='submit' className="bg-red-8 w-full rounded-full font-bold text-gris-12 text-2xl py-2 px-4 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
+                        <button disabled={isRequestLoading} type='submit' className="bg-red-8 w-full rounded-full font-bold text-gris-12 text-2xl py-2 px-4 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
                             max-lg:text-sm max-896:w-[96%] max-896:absolute max-896:bottom-4">
                             Enregistrer
                         </button>   

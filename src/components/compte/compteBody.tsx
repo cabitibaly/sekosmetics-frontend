@@ -19,7 +19,7 @@ const CompteBody = () => {
                                     <Image src={utilisateur.img} fill alt="user-icon" className='object-cover rounded-full' />                        
                                 </div>
                             :
-                                <div className='relative size-24 aspect-square flex items-center justify-center rounded-full max-md:size-16'>
+                                <div className='relative size-24 bg-red-5 aspect-square flex items-center justify-center rounded-full max-md:size-16'>
                                     <span className="text-bold text-red-1 text-xl">{utilisateur?.nomClient.charAt(0)}</span>
                                 </div>
                         }
