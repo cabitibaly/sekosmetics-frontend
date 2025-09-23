@@ -9,7 +9,7 @@ import { useDebounce } from '@/hooks/useDebounce'
 const MarqueBody = () => {
     const [recherche, setRecherche] = useState<string>("");
     const debouceValue = useDebounce(recherche, 500);
-    const { marques, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage } = useGetLesMarques(8, debouceValue.trim() || "");
+    const { marques, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage } = useGetLesMarques(8, debouceValue.trim() || "");    
 
     return (
         <div className="overflow-x-hidden px-[150px] py-12 w-screen min-h-screen flex flex-col items-center justify-start gap-12 max-2xl:px-[100px] max-xl:px-[60px] max-lg:py-8 max-896:!px-4 max-896:!pt-20 max-896:!pb-36 max-md:gap-6">
@@ -37,17 +37,16 @@ const MarqueBody = () => {
                 (marques.length > 0 && !isLoading) &&
                     <div className="w-full grid grid-cols-6 items-start justify-center gap-16 max-lg:gap-12 max-896:!gap-8 max-md:grid-cols-4 max-md:!gap-16 max-sm:!gap-8 max-xs:!gap-4">
                         {
-                            marques.map((marque, index) => {
-                                if(index <= 8) {
-                                    return (
-                                        <MarqueCard 
-                                            key={marque.idMarque}
-                                            id={marque.idMarque}
-                                            intitule={marque.libelleMarque}
-                                            image={marque.imgMarque}
-                                        />
-                                    )
-                                }
+                            marques.map((marque) => {                                
+                                return (
+                                    <MarqueCard 
+                                        key={marque.idMarque}
+                                        id={marque.idMarque}
+                                        intitule={marque.libelleMarque}
+                                        image={marque.imgMarque}
+                                    />
+                                )
+                                
                             })
                         }
                     </div>

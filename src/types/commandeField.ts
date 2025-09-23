@@ -9,6 +9,14 @@ export interface CommandeField {
     reductionCommande: number,
     dateCreationCommande: string,
     dateModificationCommande: string,
+    clientNom?: string,
+    clientPrenom?: string,
+    clientTelephone?: string,
+    clientEmail?: string,
+    paysAdresse?: string,
+    villeAdresse?: string,
+    communeAdresse?: string,
+    quartierAdresse?: string,
     clientId: number,
     client: ClientCommande
 }

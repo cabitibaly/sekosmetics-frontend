@@ -1,5 +1,5 @@
 "use client"
-import { useGetUneCommande } from "@/hooks/commande-fetch/commandeFetch"
+import { useAuth } from "@/hooks/useAuth"
 import { Check } from "lucide-react"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
@@ -9,8 +9,8 @@ import { MoonLoader } from "react-spinners"
 
 const ValiderWrapper = () => {
     const searchParams = useSearchParams()
-    const commandeId = searchParams.get("commandeId")
-    const { commande } = useGetUneCommande(parseInt(commandeId || "0"))
+    const livreAujourdhui = searchParams.get("livreAujourdhui")   
+    const { isAuthenticated } = useAuth() 
   
     return (
         <section className='overflow-x-hidden px-[150px] pt-32 py-6 w-screen min-h-screen flex flex-col items-center justify-center gap-8 max-896:py-20  max-896:!px-4'>
@@ -23,15 +23,18 @@ const ValiderWrapper = () => {
                     Nous vous enverrons une confirmation d&apos;expédition par e-mail dès que votre commande sera expédiée.
                 </span>
                 {    
-                    commande?.livreAujourdhui &&
+                    livreAujourdhui === "true" &&
                     <span className="text-center text-xl text-gris-12 font-medium max-xl:text-lg">
                         Nous vous prions de contacter rapidement le numéro suivant pour la planification de votre commande : 
                         <span className="text-red-8 font-black"> +2250748861829</span>
                     </span>
                 }
-                <Link href={"/compte/mes-commandes"} className={`rounded-full font-bold bg-red-8 items-center justify-center text-gris-12 text-base py-2 px-4 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6`}>
-                    Voir vos commandes
-                </Link>
+                {    
+                    isAuthenticated &&
+                    <Link href={"/compte/mes-commandes"} className={`rounded-full font-bold bg-red-8 items-center justify-center text-gris-12 text-base py-2 px-4 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6`}>
+                        Voir vos commandes
+                    </Link>
+                }
             </div>
         </section>
     )

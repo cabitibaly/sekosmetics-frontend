@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react"
+import { useReducer, useState } from "react"
 import ResumerPanier from "../resumerPanier"
 import VerificationTopBar from "./verificationTopBar"
 import InfoPersonnelle from "./infoPersonnelle"
@@ -12,21 +12,65 @@ import { usePanier } from "@/hooks/usePanier"
 import { useRouter } from "next/navigation"
 import { baseUrl } from "@/constant/baseUrl"
 import TypeCommande from "./typeCommande"
+import { useAuth } from "@/hooks/useAuth"
+import { AdresseInvite, AdresseInviteAction, ClientInvite, ClientInviteAction } from "@/types/clientInvite"
+
+const clientReducer = (state: ClientInvite, action: ClientInviteAction): ClientInvite => {
+    switch (action.type) {
+        case "SET_NOM":
+            return { ...state, nom: action.payload };
+        case "SET_PRENOM":
+            return { ...state, prenom: action.payload };
+        case "SET_EMAIL":
+            return { ...state, email: action.payload };
+        case "SET_TELEPHONE":
+            return { ...state, telephone: action.payload };
+        default:
+            return state;
+    }
+};
+
+const adresseReducer = (state: AdresseInvite, action: AdresseInviteAction): AdresseInvite => {
+    switch (action.type) {
+        case "SET_PAYS": 
+            return { ...state, pays: action.payload}
+        case "SET_VILLE": 
+            return { ...state, ville: action.payload}
+        case "SET_COMMUNE": 
+            return { ...state, commune: action.payload}
+        case "SET_QUARTIER": 
+            return { ...state, quartier: action.payload}
+        default:
+            return state
+    }
+}
 
 const VerificationBody = () => {
     const { panier, viderPanier } = usePanier()
+    const { utilisateur } = useAuth();
     const [tab, setTab] = useState<number>(1)
     const [adresseId, setAdresseId] = useState<number | null>(null)
     const [codeValide, setCodeValide] = useState<Code | null>(null) 
     const [livreAujourdhui, setLivreAujourdhui] = useState<boolean>(false)
-    const [isLoading, setIsLoading] = useState<boolean>(false) 
+    const [isLoading, setIsLoading] = useState<boolean>(false)
     const router = useRouter();    
+    const [clientInfo, dispatch] = useReducer(clientReducer, {
+        nom: "",
+        prenom: "",
+        email: "",
+        telephone: ""
+    })
 
-    const passerUneCommande = () => {
+    const [adresseInfo, dispatchAdresse] = useReducer(adresseReducer, {
+        pays: "",
+        ville: "",
+        commune: "",
+        quartier: ""
+    })
+
+    const passerUneCommande = () => {        
 
         if(tab !== 4) return;        
-
-        if(adresseId === null) return;
 
         setIsLoading(true)
 
@@ -37,7 +81,16 @@ const VerificationBody = () => {
                     sousTotal: panier.reduce((acc, curr) => acc + curr.prixTotal, 0),                   
                     reductionCommande: codeValide ? codeValide.valeurReductionCode : 0,
                     adresseLivraisonId: adresseId,
-                    livreAujourdhui
+                    clientId: utilisateur?.idUtilisateur || null,
+                    livreAujourdhui,
+                    clientNom: clientInfo.nom ?? null,
+                    clientPrenom: clientInfo.prenom ?? null,
+                    clientTelephone: clientInfo.telephone ?? null,
+                    clientEmail: clientInfo.email ?? null,
+                    paysAdresse: adresseInfo.pays ?? null,
+                    villeAdresse: adresseInfo.ville ?? null,
+                    communeAdresse: adresseInfo.commune ?? null,
+                    quartierAdresse: adresseInfo.quartier ?? null,
                 },
                 codePromo: codeValide?.code,
                 lignesCommande: panier.map(({ image, nomArticle, ...rest }) => rest)
@@ -59,7 +112,7 @@ const VerificationBody = () => {
                 )
 
                 setTimeout(() => {
-                    router.push("/panier/valider?commandeId=" + res.data?.commande?.idCommande)
+                    router.push("/panier/valider?livreAujourdhui=" + livreAujourdhui)
                 }, 3000) 
 
                 viderPanier()
@@ -120,8 +173,8 @@ const VerificationBody = () => {
                     </div>
                 </div>                
                 
-                {tab === 1 && <InfoPersonnelle />}
-                {tab === 2 && <AdresseLivraison setAdresseId={setAdresseId} />}
+                {tab === 1 && <InfoPersonnelle clientInfo={clientInfo} dispatch={dispatch} />}
+                {tab === 2 && <AdresseLivraison setAdresseId={setAdresseId} adresseInvite={adresseInfo} dispatch={dispatchAdresse} />}
                 {tab === 3 && <TypeCommande setLivreAujourdhui={setLivreAujourdhui} livreAujourdhui={livreAujourdhui} />}
                 { 
                     tab === 4 &&

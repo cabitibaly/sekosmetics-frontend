@@ -10,6 +10,8 @@ import { useFavoris } from "@/hooks/useFavoris"
 import { appliquerReduction } from "@/utils/appliquerReduction"
 import { toast } from "react-toastify"
 import { MoonLoader } from "react-spinners"
+import Link from "next/link"
+import CartIcon from "../../../public/svg/cartIcon"
 
 interface Props {
     id: string,
@@ -20,7 +22,7 @@ const ArticleHeader = ({id}: Props) => {
     const [imageIndex, setImageIndex] = useState<number>(0)
     const [isFavoris, setIsFavoris] = useState<boolean>(false)
     const [varianteSelected, setVarianteSelected] = useState<VarianteResponseObject | null>(null)
-    const { ajouterLigne, supprimerLigne, modifierQuantiteLigne, articleExiste } = usePanier()    
+    const { ajouterLigne, supprimerLigne, modifierQuantiteLigne, articleExiste, estVide, panier } = usePanier()    
     const articleDansPanier = articleExiste(Number(id))
     const {article: articleFetch, isLoading, options} = useGetUnArticles(Number(id))
     const { favorisArticles, refetch } = useGetLesFavoris();
@@ -209,6 +211,14 @@ const ArticleHeader = ({id}: Props) => {
             </div>
 
             <div className={"fixed left-1/2 z-40 -translate-1/2 bottom-2 w-[91.96%] p-2 rounded-full border-[1.5px] border-red-6 bg-red-1 hidden items-center justify-between gap-4 max-lg:flex"}>
+                {                                        
+                    <Link href={"/panier"} className={`absolute -top-16 right-4 rounded-full size-10 flex items-center justify-center transition duration-200 ease-in-out hover:scale-110 ${estVide ? "bg-gris-4" : "bg-red-8"}`}>
+                        <CartIcon className="size-6" />
+                        <div className={`p-0.5 w-7 border border-red-8 bg-red-1 aspect-square absolute -top-3 -right-3 rounded-full items-center justify-center ${estVide ? "hidden" : "flex"}`}>
+                            <span className="text-xs text-red-8 font-bold" >{panier.reduce((acc, curr) => acc + curr.quantiteLigne, 0)}</span>
+                        </div>
+                    </Link>
+                }
                 <div className="border border-red-4 p-2 w-1/3 rounded-full flex items-center justify-between">
                     <button onClick={() => diminuerQuantite()} className="cursor-pointer">
                         <Minus strokeWidth={1.25} className="stroke-red-6 size-6 transition duration-300 ease-in-out hover:stroke-[2] hover:stroke-red-8" />

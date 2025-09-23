@@ -15,7 +15,7 @@ const ArticleDetail = async ({params}: Props) => {
 
     return (
         <>
-            <Topbar href="/" title="Détails Article" isArtcile />
+            <Topbar href="/" title="Détails Article" />
             <Navbar isSidebarVisible={false} inArticle={true} />
             <ArticleHeader id={id} />
             <ArticleBody id={id} />

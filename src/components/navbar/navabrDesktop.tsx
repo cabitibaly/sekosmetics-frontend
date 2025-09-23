@@ -1,16 +1,20 @@
 "use client";
 
+import { useAuth } from "@/hooks/useAuth";
 import { usePanier } from "@/hooks/usePanier";
 import { useHideOnScroll } from "@/utils/useHideOnScroll";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const NavbarDesktop = () => {
     const [dernierePosition, setDernierePosition] = useState<number>(0);
     const [visible, setVisible] = useState<boolean>(true);
     useHideOnScroll({ dernierePosition, setDernierePosition, setVisible});
-    const {estVide} = usePanier();    
+    const {estVide} = usePanier(); 
+    const { isAuthenticated } = useAuth(); 
+    const router = useRouter();  
 
     return (
         <>
@@ -31,7 +35,15 @@ const NavbarDesktop = () => {
                         <div className={`absolute z-50 top-0 -right-[2px] size-2 bg-red-8 rounded-full ${estVide ? "hidden" : ""}`}>
                         </div>
                     </Link>
-                    <Link href={"/compte/modifier-compte"}>
+                    <Link 
+                        onClick={e => {
+                            if (!isAuthenticated) {
+                                e.preventDefault();
+                                router.push("/connexion");
+                            }
+                        }} 
+                        href={"/compte/modifier-compte"}
+                    >
                         <Image src={"/user.svg"} width={18} height={20} alt={"search"} className="object-cover " />
                     </Link>
                 </div>

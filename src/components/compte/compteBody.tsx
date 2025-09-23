@@ -6,7 +6,7 @@ import LogoutIcon from "../../../public/svg/logoutIcon"
 import { useAuth } from "@/hooks/useAuth"
 
 const CompteBody = () => {
-    const { utilisateur } = useAuth()
+    const { utilisateur, logout } = useAuth()
 
     return (
         <div className={`overflow-x-hidden px-[100px] pt-32 py-6 w-screen h-screen flex items-center justify-center max-xl:px-[30px] max-896:flex-wrap max-896:!pb-16 max-896:!px-4 max-896:pt-20`}>
@@ -48,7 +48,7 @@ const CompteBody = () => {
                     title="Mes Favoris"
                     href="/compte/mes-favoris"
                 />
-                <button className="cursor-pointer pr-6 w-full flex items-center justify-between gap-4 group">
+                <button onClick={() => logout()} className="cursor-pointer pr-6 w-full flex items-center justify-between gap-4 group">
                     <div className="flex items-center justify-center gap-4 max-md:gap-2">
                         <div className="size-10 rounded-full bg-red-3/60 flex items-center justify-center max-md:size-10">
                             <LogoutIcon color="#FF7993" className="size-6" />

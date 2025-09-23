@@ -42,20 +42,20 @@ const Hero = () => {
             </section>
             <section className="pt-20 px-4 relative top-0 w-screen hidden items-center justify-center max-[896px]:flex">
                 <div className="rounded-3xl relative w-full aspect-video flex items-center justify-between">
-                    <Image src={"/hero-bg.jpg"} fill alt="hero-bg" className="object-cover rounded-3xl"/>
+                    <Image src={"/hero-bg-v2.jpg"} fill alt="hero-bg" className="object-cover rounded-3xl"/>
                 </div>
-                <div className="p-4 w-[90%] aspect-video rounded-3xl absolute flex items-center justify-between">
+                <div className="p-4 w-[90%] aspect-video rounded-3xl absolute flex items-center justify-between gap-2">
                     <div className="w-1/2 flex flex-col items-start justify-center gap-4">
                         <p className="hero-mobile-h1 font-bold text-left text-gris-12">
                             Choisis tes produits préférés, mélange-les à ta façon et compose un maquillage unique, rien qu’à toi.
                         </p>
-                        <Link href={"/creation-kit"} className="bg-red-8 rounded-full font-bold text-gris-12 hero-mobile-btn py-2 px-4 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
+                        <Link href={"/creation-kit"} className="w-full bg-red-8 rounded-full font-bold text-gris-12 hero-mobile-btn py-2 px-4 cursor-pointer flex items-center justify-center ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
                         max-lg:text-sm">
-                            Commencer
+                            Je fais mon kit
                         </Link>
                     </div>
-                    <div className="relative w-2/5 h-full flex items-center justify-center">
-                        <Image src={"/pencil.png"} fill alt="pencil"/>
+                    <div className="aspect-square relative w-1/2 flex items-center justify-center">
+                        <Image src={"/hero-img-mobile.png"} fill alt="pencil" className="aspect-square" />
                     </div>
                 </div>
             </section>
