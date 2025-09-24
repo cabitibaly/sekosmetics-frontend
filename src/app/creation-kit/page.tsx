@@ -4,12 +4,14 @@ import KitNavbar from '@/components/navbar/kitNavbar'
 import Topbar from '@/components/navbar/topbar'
 import { useKit } from '@/hooks/useKit'
 import { usePanier } from '@/hooks/usePanier'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 import { toast } from 'react-toastify'
 
 const CreationKit = () => {
     const { viderKit, kit } = useKit()
     const { ajouterLignesKit } = usePanier()
+    const router = useRouter();
 
     const ajouterAuPanier = () => {
         ajouterLignesKit(kit)
@@ -27,6 +29,7 @@ const CreationKit = () => {
                 progress: undefined,
             }
         )
+        router.push('/panier')
     }
 
     return (

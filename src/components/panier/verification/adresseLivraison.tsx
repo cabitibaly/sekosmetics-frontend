@@ -96,52 +96,56 @@ const AdresseLivraison = ({ setAdresseId, adresseInvite, dispatch }: AdresseLivr
                     }
                 </>
             }
-            <div className="w-full flex flex-col items-center justify-center gap-4">
-                <div className="w-full flex flex-col items-start justify-start gap-4 max-896:gap-2">
-                    <span className="text-base text-gris-12 font-normal max-lg:text-lg max-896:text-base">Pays</span>
-                    <input  
-                        id="pays" 
-                        value={adresseInvite.pays}
-                        onChange={e => dispatch({ type: "SET_PAYS", payload: e.target.value })}
-                        type="text" 
-                        className="bg-gris-1 border border-red-4  block w-full text-gris-10 text-lg rounded-full outline-none focus:ring-red-7 focus:border-red-7 ps-4 p-1.5 placeholder:text-gris-6 max-896:text-sm" 
-                        placeholder="Votre pays..." 
-                    />
+
+            {    
+                !isAuthenticated &&
+                <div className="w-full flex flex-col items-center justify-center gap-4">
+                    <div className="w-full flex flex-col items-start justify-start gap-4 max-896:gap-2">
+                        <span className="text-base text-gris-12 font-normal max-lg:text-lg max-896:text-base">Pays</span>
+                        <input  
+                            id="pays" 
+                            value={adresseInvite.pays}
+                            onChange={e => dispatch({ type: "SET_PAYS", payload: e.target.value })}
+                            type="text" 
+                            className="bg-gris-1 border border-red-4  block w-full text-gris-10 text-lg rounded-full outline-none focus:ring-red-7 focus:border-red-7 ps-4 p-1.5 placeholder:text-gris-6 max-896:text-sm" 
+                            placeholder="Votre pays..." 
+                        />
+                    </div>
+                    <div className="w-full flex flex-col items-start justify-start gap-4 max-896:gap-2">
+                        <label htmlFor="ville" className="text-base text-gris-12 font-normal max-lg:text-lg max-896:text-base">Ville</label>
+                        <input 
+                            id="ville" 
+                            value={adresseInvite.ville}
+                            onChange={e => dispatch({ type: "SET_VILLE", payload: e.target.value })}
+                            type="text" 
+                            className="bg-gris-1 border border-red-4  block w-full text-gris-10 text-lg rounded-full outline-none focus:ring-red-7 focus:border-red-7 ps-4 p-1.5 placeholder:text-gris-6 max-896:text-sm" 
+                            placeholder="Votre ville..." 
+                        />
+                    </div>
+                    <div className="w-full flex flex-col items-start justify-start gap-4 max-896:gap-2">
+                        <label htmlFor="commune" className="text-base text-gris-12 font-normal max-lg:text-lg max-896:text-base">Commune</label>
+                        <input 
+                            id="commune"
+                            value={adresseInvite.commune}
+                            onChange={e => dispatch({ type: "SET_COMMUNE", payload: e.target.value })} 
+                            type="text" 
+                            className="bg-gris-1 border border-red-4  block w-full text-gris-10 text-lg rounded-full outline-none focus:ring-red-7 focus:border-red-7 ps-4 p-1.5 placeholder:text-gris-6 max-896:text-sm" 
+                            placeholder="Votre commune..." 
+                        />
+                    </div>
+                    <div className="w-full flex flex-col items-start justify-start gap-4 max-896:gap-2">
+                        <label htmlFor="quartier" className="text-base text-gris-12 font-normal max-lg:text-lg max-896:text-base">Quartier</label>
+                        <input 
+                            id="quartier"
+                            value={adresseInvite.quartier}
+                            onChange={e => dispatch({ type: "SET_QUARTIER", payload: e.target.value })}
+                            type="text" 
+                            className="bg-gris-1 border border-red-4  block w-full text-gris-10 text-lg rounded-full outline-none focus:ring-red-7 focus:border-red-7 ps-4 p-1.5 placeholder:text-gris-6 max-896:text-sm" 
+                            placeholder="Votre quartier..." 
+                        />
+                    </div>
                 </div>
-                <div className="w-full flex flex-col items-start justify-start gap-4 max-896:gap-2">
-                    <label htmlFor="ville" className="text-base text-gris-12 font-normal max-lg:text-lg max-896:text-base">Ville</label>
-                    <input 
-                        id="ville" 
-                        value={adresseInvite.ville}
-                        onChange={e => dispatch({ type: "SET_VILLE", payload: e.target.value })}
-                        type="text" 
-                        className="bg-gris-1 border border-red-4  block w-full text-gris-10 text-lg rounded-full outline-none focus:ring-red-7 focus:border-red-7 ps-4 p-1.5 placeholder:text-gris-6 max-896:text-sm" 
-                        placeholder="Votre ville..." 
-                    />
-                </div>
-                <div className="w-full flex flex-col items-start justify-start gap-4 max-896:gap-2">
-                    <label htmlFor="commune" className="text-base text-gris-12 font-normal max-lg:text-lg max-896:text-base">Commune</label>
-                    <input 
-                        id="commune"
-                        value={adresseInvite.commune}
-                        onChange={e => dispatch({ type: "SET_COMMUNE", payload: e.target.value })} 
-                        type="text" 
-                        className="bg-gris-1 border border-red-4  block w-full text-gris-10 text-lg rounded-full outline-none focus:ring-red-7 focus:border-red-7 ps-4 p-1.5 placeholder:text-gris-6 max-896:text-sm" 
-                        placeholder="Votre commune..." 
-                    />
-                </div>
-                <div className="w-full flex flex-col items-start justify-start gap-4 max-896:gap-2">
-                    <label htmlFor="quartier" className="text-base text-gris-12 font-normal max-lg:text-lg max-896:text-base">Quartier</label>
-                    <input 
-                        id="quartier"
-                        value={adresseInvite.quartier}
-                        onChange={e => dispatch({ type: "SET_QUARTIER", payload: e.target.value })}
-                        type="text" 
-                        className="bg-gris-1 border border-red-4  block w-full text-gris-10 text-lg rounded-full outline-none focus:ring-red-7 focus:border-red-7 ps-4 p-1.5 placeholder:text-gris-6 max-896:text-sm" 
-                        placeholder="Votre quartier..." 
-                    />
-                </div>
-            </div>                           
+            }                           
         </div>
     )
 }

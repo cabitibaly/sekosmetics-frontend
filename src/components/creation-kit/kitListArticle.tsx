@@ -74,6 +74,7 @@ const KitListArticle = ({ categorie, setCategorie }: Props) => {
                 articleSelected !== null &&
                 <KitListVariante
                     articleId={articleSelected}
+                    imageArticle={articles.find(a => a.idArticle === articleSelected)?.imagesArticle[0].urlImage || ""}
                     nomArticle={articles.find(a => a.idArticle === articleSelected)?.nomArticle || ""}                    
                     setIdArticle={setArticleSelected}
                     typeReductionArticle={articles.find(a => a.idArticle === articleSelected)?.typeReductionArticle || ""}

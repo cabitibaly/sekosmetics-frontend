@@ -35,6 +35,7 @@ export const KitProvider = ({ children }: { children: ReactNode}) => {
             }
         
             return [
+                ...prev,
                 {                     
                     articleId: Number(ligne.articleId), 
                     quantiteLigne: 1, 
@@ -43,8 +44,7 @@ export const KitProvider = ({ children }: { children: ReactNode}) => {
                     image: ligne.image, 
                     nomArticle: ligne.nomArticle,
                     valeursOption: ligne.valeursOption
-                }, 
-                ...prev
+                },                
             ]
         })        
     }

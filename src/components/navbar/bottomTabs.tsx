@@ -19,7 +19,7 @@ interface Props {
 
 const BottomTabs = ({ inArticle = false }: Props) => {
     const pathname = usePathname()
-    const { estVide } = usePanier()
+    const { estVide, panier } = usePanier()
     const { isAuthenticated } = useAuth();
     const router = useRouter();
 
@@ -40,6 +40,9 @@ const BottomTabs = ({ inArticle = false }: Props) => {
             <Link href={"/panier"} className="p-0.5 absolute left-1/2 -translate-1/2 size-12 rounded-full bg-gris-1 flex items-center justify-center cursor-pointer max-xs:size-10">
                 <div className={`rounded-full size-full flex items-center justify-center ${estVide ? "bg-red-6" : "bg-red-8"}`}>
                     <CartIcon className="size-6" />
+                    <div className={`p-0.5 w-7 border border-red-8 bg-red-1 aspect-square absolute -top-2.5 -right-2.5 rounded-full items-center justify-center ${estVide ? "hidden" : "flex"}`}>
+                        <span className="text-xs text-red-8 font-bold" >{panier.reduce((acc, curr) => acc + curr.quantiteLigne, 0)}</span>
+                    </div>
                 </div>
             </Link>
             <div className="flex items-center justify-between w-[30%]">

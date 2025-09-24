@@ -12,7 +12,7 @@ const NavbarDesktop = () => {
     const [dernierePosition, setDernierePosition] = useState<number>(0);
     const [visible, setVisible] = useState<boolean>(true);
     useHideOnScroll({ dernierePosition, setDernierePosition, setVisible});
-    const {estVide} = usePanier(); 
+    const {estVide, panier} = usePanier(); 
     const { isAuthenticated } = useAuth(); 
     const router = useRouter();  
 
@@ -32,7 +32,8 @@ const NavbarDesktop = () => {
                     </Link>
                     <Link href={"/panier"} className="relative">
                         <Image src={"/bag.svg"} width={18} height={20} alt={"search"} className="object-cover" />
-                        <div className={`absolute z-50 top-0 -right-[2px] size-2 bg-red-8 rounded-full ${estVide ? "hidden" : ""}`}>
+                        <div className={` w-5 border border-red-8 bg-red-1 aspect-square absolute -top-3 -right-2.5 rounded-full items-center justify-center ${estVide ? "hidden" : "flex"}`}>
+                            <span className="text-xs text-red-8 font-bold" >{panier.reduce((acc, curr) => acc + curr.quantiteLigne, 0)}</span>
                         </div>
                     </Link>
                     <Link 

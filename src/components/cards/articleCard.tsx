@@ -37,7 +37,7 @@ const ArticleCard = ({id, nom, image, prix, notaion, estFavori = false, refechFa
                         <span className={`text-red-8 text-lg text-left font-bold max-md:text-sm ${reduction?.estActive ? "block" : "hidden"}`}>
                             {appliquerReduction(reduction?.type || "", reduction?.valeur || 0, prix, reduction?.estActive || false)?.toLocaleString("fr-FR")} FCFA                            
                         </span>
-                        <span className={`text-left font-bold ${reduction?.estActive ? "text-gris-8 text-sm line-through" : "text-red-8 text-lg max-md:text-sm"}`}>{prix.toLocaleString("fr-FR")} FCFA</span>
+                        <span className={`text-left font-bold ${reduction?.estActive ? "text-gris-8 text-sm line-through" : "text-red-8 text-lg max-md:text-sm"}`}>{prix?.toLocaleString("fr-FR")} FCFA</span>
                     </div>                    
                     <div className="flex justify-center gap-1">
                         <div className="relative size-4 aspect-square flex items-center justify-center max-md:size-3">

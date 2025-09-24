@@ -88,7 +88,7 @@ const Inscription = () => {
                 )
 
                 setTimeout(() => {
-                    router.push("/inscription/verification-compte?email=" + data.email)
+                    router.push("/connexion")
                 }, 3000)
             }
         }).catch((err) => {

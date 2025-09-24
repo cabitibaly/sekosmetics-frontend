@@ -52,7 +52,7 @@ const MarqueDetailBody = ({id}: {id: string}) => {
                                 id={article.idArticle}
                                 nom={article.nomArticle}
                                 image={article.imagesArticle[0].urlImage}
-                                prix={article.variantes[0].prixVente}
+                                prix={article?.variantes[0]?.prixVente}
                                 notaion={article.notationArticle}
                                 estFavori={favorisArticles.map(favoris => favoris.articleId).includes(article.idArticle)}
                                 refechFavoris={() => refetch()}

@@ -9,6 +9,7 @@ import { appliquerReduction } from "@/utils/appliquerReduction";
 
 interface Props {
     articleId: number,
+    imageArticle?: string,
     typeReductionArticle: string,
     reductionArticle: number,
     estReductionActive: boolean,
@@ -16,7 +17,7 @@ interface Props {
     setIdArticle: React.Dispatch<React.SetStateAction<number | null>>,
 }
 
-const KitListVariante = ({ articleId, setIdArticle, nomArticle, typeReductionArticle, reductionArticle, estReductionActive }: Props) => {
+const KitListVariante = ({ articleId, setIdArticle, nomArticle, imageArticle, typeReductionArticle, reductionArticle, estReductionActive }: Props) => {
     const [recherche, setRecherche] = useState<string>("")
     const debounceValue = useDebounce(recherche, 500);
     const { variantes, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetLesVariantes(8, articleId);
@@ -37,7 +38,7 @@ const KitListVariante = ({ articleId, setIdArticle, nomArticle, typeReductionArt
             quantiteLigne: 1,
             prixUnitaire: prixReel,
             prixTotal: prixReel,
-            image: variantes.find(v => v.idVariante === id)?.imageVariante || "",
+            image: imageArticle,
             nomArticle: nomArticle,
             valeursOption: variantes.find(v => v.idVariante === id)?.valeursOption.map(vo => ({valeurOption: vo.valeurOption}))
         })
