@@ -1,8 +1,7 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-@theme {
-  --font-jura: 'Jura', "sans-serif";
+@theme {  
   --font-comfortaa: 'Comfortaa', "cursive";
   --color-red-1: #FFFCFC;
   --color-red-2: #FFF6F7;
@@ -69,7 +68,7 @@ section {
 }
 
 .hero-mobile-btn {
-  font-size: 2.8vw;
+  font-size: 3vw;
 }
 
 .span-font-size {

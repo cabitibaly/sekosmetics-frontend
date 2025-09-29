@@ -12,6 +12,7 @@ import { toast } from "react-toastify"
 import { MoonLoader } from "react-spinners"
 import Link from "next/link"
 import CartIcon from "../../../public/svg/cartIcon"
+import { PhotoProvider, PhotoView } from 'react-photo-view';
 
 interface Props {
     id: string,
@@ -139,9 +140,22 @@ const ArticleHeader = ({id}: Props) => {
                     </div>
                     {
                         articleFetch?.imagesArticle ? 
-                            <div className="relative w-[85%] h-full aspect-square rounded-2xl transition-all duration-200">
-                                <Image src={articleFetch?.imagesArticle[imageIndex].urlImage} fill alt="article" className="object-cover rounded-2xl" />
-                            </div>
+                            <PhotoProvider
+                                toolbarRender={({ onScale, scale }) => {
+                                    return (
+                                    <>
+                                        <svg className="PhotoView-Slider__toolbarIcon" onClick={() => onScale(scale + 1)} />
+                                        <svg className="PhotoView-Slider__toolbarIcon" onClick={() => onScale(scale - 1)} />
+                                    </>
+                                    );
+                                }}
+                            >
+                                <div className="cursor-pointer relative w-[85%] h-full aspect-square rounded-2xl transition-all duration-200">
+                                    <PhotoView src={articleFetch?.imagesArticle[imageIndex].urlImage}>
+                                        <Image src={articleFetch?.imagesArticle[imageIndex].urlImage} fill alt="article" className="object-cover rounded-2xl" />
+                                    </PhotoView>
+                                </div>
+                            </PhotoProvider>
                         :
                             <div className="relative w-[85%] bg-red-6 h-full aspect-square rounded-2xl flex items-center justify-center">
                                 <span className="text-red-1 text-xl font-bold">Aucune image</span>
@@ -150,13 +164,28 @@ const ArticleHeader = ({id}: Props) => {
                 </div>
 
                 <div className="w-full h-full hidden justify-between gap-4 p-0.5 rounded-2xl carousel carousel-center items-start max-xl:flex max-lg:h-[33%]">                                       
-                    {
-                        articleFetch?.imagesArticle.map((image) => (
-                            <div key={image.idImage} className="relative w-full h-full aspect-square rounded-2xl carousel-item max-lg:w-1/2 max-md:w-3/5 max-xs:w-full">
-                                <Image src={image.urlImage} fill alt="article" className="object-cover rounded-2xl" />
-                            </div>
-                        ))
-                    }
+                    <PhotoProvider
+                        toolbarRender={({ onScale, scale }) => {
+                            return (
+                            <>
+                                <svg className="PhotoView-Slider__toolbarIcon" onClick={() => onScale(scale + 1)} />
+                                <svg className="PhotoView-Slider__toolbarIcon" onClick={() => onScale(scale - 1)} />
+                            </>
+                            );
+                        }}
+                    >
+                        {
+                            articleFetch?.imagesArticle.map((image) => (
+                                <PhotoView key={image.idImage} src={image.urlImage}>
+                                    <div                                         
+                                        className="cursor-pointer relative w-full h-full aspect-square rounded-2xl carousel-item max-lg:w-1/2 max-md:w-3/5 max-xs:w-full"
+                                    >
+                                        <Image src={image.urlImage} fill alt="article" className="rounded-2xl" />
+                                    </div>
+                                </PhotoView>
+                            ))
+                        }
+                    </PhotoProvider> 
                 </div>
 
                 <div className="w-full h-full flex flex-col items-start justify-start gap-3 max-lg:flex-col-reverse">

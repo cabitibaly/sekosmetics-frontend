@@ -49,8 +49,7 @@ const Hero = () => {
                         <p className="hero-mobile-h1 font-bold text-left text-gris-12">
                             Choisis tes produits préférés, mélange-les à ta façon et compose un maquillage unique, rien qu’à toi.
                         </p>
-                        <Link href={"/creation-kit"} className="w-full bg-red-8 rounded-full font-bold text-gris-12 hero-mobile-btn py-2 px-4 cursor-pointer flex items-center justify-center ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
-                        max-lg:text-sm">
+                        <Link href={"/creation-kit"} className="w-full bg-red-8 rounded-full font-bold text-gris-12 hero-mobile-btn py-2 px-4 cursor-pointer flex items-center justify-center ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6">
                             Je fais mon kit
                         </Link>
                     </div>

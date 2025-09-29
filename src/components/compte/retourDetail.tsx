@@ -29,7 +29,7 @@ const RetourDetail = ({ id, setRetourId}: Props) => {
                             <button className="cursor-pointer absolute -top-1 left-1 size-10 text-gris-12 text-2xl font-bold transition duration-200 ease-in-out hover:-translate-x-2 max-xl:text-lg max-896:left-4 max-896:top-3">
                                 <Image src={"/bouton-retour.svg"} fill alt="retour-btn"/>
                             </button>
-                            <div className="top-1 line-clamp-1 font-jura text-center text-gris-12 text-2xl font-bold">Détails Retour</div>
+                            <div className="top-1 line-clamp-1 text-center text-gris-12 text-2xl font-bold">Détails Retour</div>
                         </div>
                         <div className="mt-4 w-full flex flex-col items-center justify-center gap-4">
                             <div className="w-full flex items-center justify-between max-sm:w-full">
