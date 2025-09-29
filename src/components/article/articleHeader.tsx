@@ -1,7 +1,7 @@
 "use client"
 import Image from "next/image"
 import VarianteCard from "../cards/varianteCard"
-import { Minus, Plus } from "lucide-react"
+import { Minus, Plus, ZoomIn, ZoomOut } from "lucide-react"
 import { useEffect, useState } from "react"
 import { usePanier } from "@/hooks/usePanier"
 import { useGetLesFavoris, useGetUnArticles } from "@/hooks/article-fetch/articleFetch"
@@ -144,8 +144,8 @@ const ArticleHeader = ({id}: Props) => {
                                 toolbarRender={({ onScale, scale }) => {
                                     return (
                                     <>
-                                        <svg className="PhotoView-Slider__toolbarIcon" onClick={() => onScale(scale + 1)} />
-                                        <svg className="PhotoView-Slider__toolbarIcon" onClick={() => onScale(scale - 1)} />
+                                        <ZoomIn strokeWidth={1.25} className="size-5" onClick={() => onScale(scale + 1)} />
+                                        <ZoomOut strokeWidth={1.25} className="size-5" onClick={() => onScale(scale - 1)} />
                                     </>
                                     );
                                 }}
@@ -168,8 +168,8 @@ const ArticleHeader = ({id}: Props) => {
                         toolbarRender={({ onScale, scale }) => {
                             return (
                             <>
-                                <svg className="PhotoView-Slider__toolbarIcon" onClick={() => onScale(scale + 1)} />
-                                <svg className="PhotoView-Slider__toolbarIcon" onClick={() => onScale(scale - 1)} />
+                                <ZoomIn strokeWidth={1.25} className="size-5" onClick={() => onScale(scale + 1)} />
+                                <ZoomOut strokeWidth={1.25} className="size-5" onClick={() => onScale(scale - 1)} />
                             </>
                             );
                         }}
