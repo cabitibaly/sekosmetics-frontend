@@ -7,6 +7,9 @@ import AuthProvider from "@/contexts/authContext/authProvider";
 import { QueryProvider } from "@/contexts/tanstackQuery/queryProvider";
 import { ToastContainer } from "react-toastify";
 import "react-photo-view/dist/react-photo-view.css"
+import FacebookPixel from "@/components/meta-pixels/facebookPixel";
+import FacebookPixelEvents from "@/components/meta-pixels/facebookPixelEvents";
+
 
 const comfortaa = Comfortaa({
   subsets: ["latin"],
@@ -41,6 +44,8 @@ export default function RootLayout({
           <AuthProvider>
             <PanierProvider>
               <KitProvider>
+                <FacebookPixel />
+                <FacebookPixelEvents />
                 <ToastContainer />
                 {children}
               </KitProvider>
