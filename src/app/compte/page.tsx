@@ -1,9 +1,21 @@
+"use client"
 import CompteBody from '@/components/compte/compteBody'
 import Navbar from '@/components/navbar/navbar'
 import Topbar from '@/components/navbar/topbar'
-import React from 'react'
+import { useAuth } from '@/hooks/useAuth'
+import { useRouter } from 'next/navigation'
+import React, { useEffect } from 'react'
 
 const Compte = () => {
+    const { isAuthenticated, isLoading } = useAuth()  
+    const router = useRouter();
+    
+    useEffect(() => {
+        if (!isAuthenticated && !isLoading) {            
+            router.push("/connexion");
+        }
+    }, [isAuthenticated, isLoading, router]);
+
     return (
         <>
             <Navbar isSidebarVisible={false} />            

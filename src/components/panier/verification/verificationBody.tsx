@@ -1,21 +1,144 @@
 "use client"
-import { useState } from "react"
+import { useReducer, useState } from "react"
 import ResumerPanier from "../resumerPanier"
 import VerificationTopBar from "./verificationTopBar"
 import InfoPersonnelle from "./infoPersonnelle"
 import AdresseLivraison from "./adresseLivraison"
-import ModePaiement from "./modePaiement"
 import Confirmation from "./confirmation"
+import { toast } from "react-toastify"
+import { Code } from "@/types/codeField"
+import axios from "axios"
+import { usePanier } from "@/hooks/usePanier"
+import { useRouter } from "next/navigation"
+import { baseUrl } from "@/constant/baseUrl"
+import TypeCommande from "./typeCommande"
+import { useAuth } from "@/hooks/useAuth"
+import { AdresseInvite, AdresseInviteAction, ClientInvite, ClientInviteAction } from "@/types/clientInvite"
+
+const clientReducer = (state: ClientInvite, action: ClientInviteAction): ClientInvite => {
+    switch (action.type) {
+        case "SET_NOM":
+            return { ...state, nom: action.payload };
+        case "SET_PRENOM":
+            return { ...state, prenom: action.payload };
+        case "SET_EMAIL":
+            return { ...state, email: action.payload };
+        case "SET_TELEPHONE":
+            return { ...state, telephone: action.payload };
+        default:
+            return state;
+    }
+};
+
+const adresseReducer = (state: AdresseInvite, action: AdresseInviteAction): AdresseInvite => {
+    switch (action.type) {
+        case "SET_PAYS": 
+            return { ...state, pays: action.payload}
+        case "SET_VILLE": 
+            return { ...state, ville: action.payload}
+        case "SET_COMMUNE": 
+            return { ...state, commune: action.payload}
+        case "SET_QUARTIER": 
+            return { ...state, quartier: action.payload}
+        default:
+            return state
+    }
+}
 
 const VerificationBody = () => {
+    const { panier, viderPanier } = usePanier()
+    const { utilisateur } = useAuth();
     const [tab, setTab] = useState<number>(1)
+    const [adresseId, setAdresseId] = useState<number | null>(null)
+    const [codeValide, setCodeValide] = useState<Code | null>(null) 
+    const [livreAujourdhui, setLivreAujourdhui] = useState<boolean>(false)
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const router = useRouter();    
+    const [clientInfo, dispatch] = useReducer(clientReducer, {
+        nom: "",
+        prenom: "",
+        email: "",
+        telephone: ""
+    })
+
+    const [adresseInfo, dispatchAdresse] = useReducer(adresseReducer, {
+        pays: "",
+        ville: "",
+        commune: "",
+        quartier: ""
+    })
+
+    const passerUneCommande = () => {        
+
+        if(tab !== 4) return;        
+
+        setIsLoading(true)
+
+        axios.post(
+            `${baseUrl}/commande/passer`,
+            {
+                data: {                    
+                    sousTotal: panier.reduce((acc, curr) => acc + curr.prixTotal, 0),                   
+                    reductionCommande: codeValide ? codeValide.valeurReductionCode : 0,
+                    adresseLivraisonId: adresseId,
+                    clientId: utilisateur?.idUtilisateur || null,
+                    livreAujourdhui,
+                    clientNom: clientInfo.nom ?? null,
+                    clientPrenom: clientInfo.prenom ?? null,
+                    clientTelephone: clientInfo.telephone ?? null,
+                    clientEmail: clientInfo.email ?? null,
+                    paysAdresse: adresseInfo.pays ?? null,
+                    villeAdresse: adresseInfo.ville ?? null,
+                    communeAdresse: adresseInfo.commune ?? null,
+                    quartierAdresse: adresseInfo.quartier ?? null,
+                },
+                codePromo: codeValide?.code,
+                lignesCommande: panier.map(({ image, nomArticle, ...rest }) => rest)
+            },
+            { withCredentials: true }
+        ).then(res => {
+            if(res.status === 201) {
+                toast.success(
+                    "Votre commande a bien été passée",
+                    {
+                        position: "top-right",
+                        autoClose: 3000,
+                        hideProgressBar: true,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined,
+                    }
+                )
+
+                setTimeout(() => {
+                    router.push("/panier/valider?livreAujourdhui=" + livreAujourdhui)
+                }, 3000) 
+
+                viderPanier()
+            }
+        }).catch(err => {
+            toast.error(
+                err.response?.data?.message || "Une erreur est survenue",
+                {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                }
+            )
+        }).finally(() => setIsLoading(false))
+    }
 
     return (
-        <section className='overflow-x-hidden px-[150px] pt-32 py-6 w-screen min-h-screen flex flex-col items-center justify-start gap-8 max-896:py-20  max-896:!px-4'>
+        <section className='overflow-x-hidden px-[150px] pt-32 py-6 w-screen min-h-screen flex flex-col items-center justify-start gap-8 max-896:py-20  max-896:!px-4'>            
             <div className="w-2/3 flex flex-col items-center justify-start gap-4 max-xl:w-4/5 max-lg:w-full">
                 <div className={`z-50 fixed top-0 left-0 w-full bg-red-2 ${tab === 1 ? "hidden" : ""}`}>
                     <VerificationTopBar 
-                        title={tab === 1 ? "Info. Personnelle" : tab === 2 ? "Adresse Livraison" :tab === 3 ? "Mode paiement" :"Confirmation"}
+                        title={tab === 1 ? "Info. Personnelle" : tab === 2 ? "Adresse Livraison" :tab === 3 ? "Type de commande" :"Confirmation"}
                         setTab={setTab} 
                         tab={tab} 
                     />                
@@ -25,7 +148,7 @@ const VerificationBody = () => {
                         max-lg:text-sm max-896:w-full ${tab === 4 ? "hidden" : "flex"}`}>
                         Suivant
                     </button>
-                    <button className={`w-full rounded-full font-bold bg-red-8 items-center justify-center text-gris-12 text-lg py-1 px-4 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
+                    <button disabled={isLoading} onClick={() => passerUneCommande()} className={`w-full rounded-full font-bold bg-red-8 items-center justify-center text-gris-12 text-lg py-1 px-4 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
                         max-lg:text-sm ${tab === 4 ? "flex" : "hidden"}`}>
                         Terminer
                     </button>
@@ -41,7 +164,7 @@ const VerificationBody = () => {
                         <div className={`w-full bg-red-4 p-[3px] rounded-full  transition-all duration-200 ease-in ${tab >= 2 ? "visible" : "invisible"}`} />
                     </div>
                     <div className={"flex flex-col gap-1"}>
-                        <span className={`text-sm  transition-all duration-200 ease-in max-md:text-xs ${tab >= 3 ? "text-red-8" : "text-gris-6"}`}>Mode paiement</span>
+                        <span className={`text-sm  transition-all duration-200 ease-in max-md:text-xs ${tab >= 3 ? "text-red-8" : "text-gris-6"}`}>Type de commande</span>
                         <div className={`w-full bg-red-4 p-[3px] rounded-full  transition-all duration-200 ease-in ${tab >= 3 ? "visible" : "invisible"}`} />
                     </div>
                     <div className={"flex flex-col gap-1"}>
@@ -50,20 +173,25 @@ const VerificationBody = () => {
                     </div>
                 </div>                
                 
-                {tab === 1 && <InfoPersonnelle />}
-                {tab === 2 && <AdresseLivraison />}
-                {tab === 3 && <ModePaiement />}
-                {tab === 4 && <Confirmation />}
+                {tab === 1 && <InfoPersonnelle clientInfo={clientInfo} dispatch={dispatch} />}
+                {tab === 2 && <AdresseLivraison setAdresseId={setAdresseId} adresseInvite={adresseInfo} dispatch={dispatchAdresse} />}
+                {tab === 3 && <TypeCommande setLivreAujourdhui={setLivreAujourdhui} livreAujourdhui={livreAujourdhui} />}
+                { 
+                    tab === 4 &&
+                    <Confirmation                        
+                        setCodeValide={setCodeValide}
+                    />
+                }
 
                 <div className="w-full flex items-center justify-between max-896:hidden">
-                    <button disabled={tab === 1} onClick={() => setTab(tab - 1)} className={"cursor-pointer text-lg text-red-8 underline max-lg:text-sm max-896:hidden"}>
+                    <button disabled={tab === 1} onClick={() => setTab(tab - 1)} className={`cursor-pointer text-lg text-red-8 underline max-lg:text-sm max-896:hidden ${tab === 1 ? "hidden" : "block"}`}>
                         Précédent
                     </button>
                     <button disabled={tab === 4} onClick={() => setTab(tab + 1)} className={`rounded-full font-bold bg-red-8 items-center justify-center text-gris-12 text-lg py-1 px-4 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
                         max-lg:text-sm ${tab === 4 ? "hidden" : "flex"}`}>
                         Suivant
                     </button>
-                    <button className={`rounded-full font-bold bg-red-8 items-center justify-center text-gris-12 text-lg py-1 px-4 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
+                    <button disabled={isLoading} onClick={() => passerUneCommande()} className={`rounded-full font-bold bg-red-8 items-center justify-center text-gris-12 text-lg py-1 px-4 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
                         max-lg:text-sm ${tab === 4 ? "flex" : "hidden"}`}>
                         Terminer
                     </button>

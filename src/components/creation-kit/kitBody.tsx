@@ -1,28 +1,32 @@
 "use client"
 import { Search } from "lucide-react"
 import KitCategorieCard from "../cards/kitCategorieCard"
-import { categories } from "@/data/categorie"
 import { useState } from "react"
 import KitCard from "../cards/kitCard"
 import KitListArticle from "./kitListArticle"
 import { useKit } from "@/hooks/useKit"
+import { useGetLesCategoriesPagine } from "@/hooks/categorie-fetch/categorieFetch"
+import { MoonLoader } from "react-spinners"
+import { useDebounce } from "@/hooks/useDebounce"
 
 const KitBody = () => {
-    const [categorie, setCategorie] = useState<number>(0)
-    const [prevCategorie, setPrevCategorie] = useState<number>(0)
-    const { kit } = useKit()
+    const [categorie, setCategorie] = useState<number | null>(null)    
+    const [recherche, setRecherche] = useState<string>("")
+    const debouceValue = useDebounce(recherche, 500);
+    const { kit } = useKit()    
+    const { categories, isLoading, hasNextPage, fetchNextPage, isFetchingNextPage } = useGetLesCategoriesPagine(8 ,debouceValue.trim() || "");
     const nbArticle = kit.reduce((acc, curr) => acc + curr.quantiteLigne, 0)
     const sousTotal = kit.reduce((acc, curr) => acc + curr.prixTotal, 0)
 
     return (
-        <section className='overflow-x-hidden relative px-[100px] pt-32 py-6 w-screen h-screen flex items-center justify-center gap-4 max-xl:px-[60px] max-896:flex-wrap max-896:pt-20 max-896:pb-0 max-896:!px-4'>
+        <section className='overflow-hidden relative px-[100px] pt-32 py-6 w-screen h-screen flex items-center justify-center gap-4 max-xl:px-[60px] max-896:flex-wrap max-896:pt-16 max-896:pb-0 max-896:!px-4'>
             <div className="w-1/4 h-full flex flex-col items-center justify-start gap-4 max-xl:w-1/3 max-896:!w-full max-896:h-auto">
                 <div className="pt-4 pr-4 w-full carousel space-x-4 rounded-3xl">
                     {
                         kit.length > 0 ?
                             kit.map(item => <KitCard key={item.articleId} id={item.articleId} />)
                         :
-                            <div className="w-full h-40 flex items-center justify-center gap-4">
+                            <div className="w-full h-28 flex items-center justify-center gap-4">
                                 <div className="line-clamp-2 text-lg text-gris-12 font-bold ">Aucun article</div>
                             </div>
                     }
@@ -39,39 +43,55 @@ const KitBody = () => {
                     </div>
                 </div>
             </div>
-            <div className="border border-red-3 rounded-3xl bg-red-1 p-4 w-3/4 h-full flex flex-col items-center justify-start gap-4 max-xl:w-2/3 max-896:rounded-b-none max-896:!w-full max-896:h-3/4">
+            <div className="overflow-auto border border-red-3 rounded-3xl bg-red-1 px-4 py-4 w-3/4 h-full flex flex-col items-center justify-start gap-3 max-xl:w-2/3 max-896:rounded-b-none max-896:!w-full max-896:h-3/5">
+                {
+                    isLoading &&
+                    <div className="w-full h-[93%] overflow-auto flex items-center justify-center gap-4 max-xl:grid-cols-4 max-lg:grid-cols-3 max-896:!grid-cols-4 max-md:!grid-cols-3 max-xs:!grid-cols-2">
+                        <MoonLoader 
+                            color="#FF7993"
+                            size={24}
+                        />
+                    </div>
+                }
+                
                 {   
-                    categorie === 0 &&
+                    categorie === null && !isLoading &&
                     <>
                         <div className="w-4/5 flex items-center gap-0 max-sm:w-full">   
                             <label htmlFor="recherche-cqtegorie" className="sr-only">Recherche</label>
                             <div className="relative w-full flex items-center justify-center">
                                 <Search strokeWidth={1.25} className="stroke-gris-11 size-6 absolute left-10 max-[1545px]:left-7 max-md:left-5 max-md:size-5" />
-                                <input id="recherche-cqtegorie" type="text" className="bg-gris-1 border border-red-4  block w-[95%] text-gris-10 text-lg rounded-full outline-none focus:ring-red-7 focus:border-red-7 pl-12 p-1.5 placeholder:text-gris-6 max-896:text-sm max-[1545px]:pl-12 max-md:pl-9" placeholder="Rechercher une categorie..." />
+                                <input value={recherche} onChange={e => setRecherche(e.target.value)} id="recherche-cqtegorie" type="text" className="bg-gris-1 border border-red-4  block w-[95%] text-gris-10 text-lg rounded-full outline-none focus:ring-red-7 focus:border-red-7 pl-12 p-1.5 placeholder:text-gris-6 max-896:text-sm max-[1545px]:pl-12 max-md:pl-9" placeholder="Rechercher une categorie..." />
                             </div>
                         </div>
-                        <div className="w-full max-h-[93%] overflow-auto grid grid-cols-5 items-start justify-start gap-4 max-xl:grid-cols-4 max-lg:grid-cols-3 max-896:!grid-cols-4 max-md:!grid-cols-3 max-xs:!grid-cols-2">
+                        <div className="w-full  grid grid-cols-5 items-start justify-start gap-4 max-xl:grid-cols-4 max-lg:grid-cols-3 max-896:!grid-cols-4 max-md:!grid-cols-3 max-xs:!grid-cols-2">
                             {
                                 categories.map(item => (
                                     <KitCategorieCard
-                                        key={item.id}
-                                        id={item.id}
-                                        intitule={item.intitule}
-                                        image={item.image}
-                                        setCategory={() => setCategorie(item.id)}
-                                        categoriy={categorie}
-                                        setPrevCategorie={setPrevCategorie}
+                                        key={item.idCategorie}
+                                        id={item.idCategorie}
+                                        intitule={item.libelleCategorie}
+                                        image={item.imgCategorie}
+                                        setCategory={() => setCategorie(item.idCategorie)}                                                                            
                                     />
                                 ))
                             }
                         </div>
+                        {    
+                            hasNextPage &&
+                            <div className="w-full flex items-center justify-center">
+                                <button onClick={() => fetchNextPage()} disabled={isFetchingNextPage} className={`rounded-full font-bold bg-red-8 flex items-center justify-center text-gris-12 text-lg py-1.5 px-3 cursor-pointer ease-in-out transition duration-300 border border-transparent hover:text-red-8 hover:bg-red-1 hover:border-red-6
+                                    max-lg:text-base`}>
+                                    Charger plus
+                                </button>
+                            </div>
+                        }
                     </>
                 }
                 {
-                    categorie !== 0 && categorie !== prevCategorie &&
+                    categorie !== null &&
                     <KitListArticle 
-                        categorie={categorie} 
-                        setPrevCategorie={setPrevCategorie} 
+                        categorie={categorie}                                                 
                         setCategorie={setCategorie}
                     />
                 }

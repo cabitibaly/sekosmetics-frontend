@@ -1,4 +1,4 @@
-import { Check, ChevronRight } from "lucide-react"
+import { Check, ChevronRight, X } from "lucide-react"
 import CreerIcon from "../../../public/svg/creerIcon"
 import ExpedieIcon from "../../../public/svg/expedieIcon"
 import LivreIcon from "../../../public/svg/livreIcon"
@@ -8,15 +8,12 @@ interface Props {
     numero: string,
     statut: string,
     date: string,
-    commandeId: number,
     setCommandeId: (id: number) => void,
-    setPrevCommandeId: (id: number) => void,
 }
 
-const CommandeCard = ({id, numero, statut, date, commandeId, setCommandeId, setPrevCommandeId}: Props) => {
+const CommandeCard = ({id, numero, statut, date, setCommandeId}: Props) => {
 
-    const handleClick = () => {
-        setPrevCommandeId(commandeId)
+    const handleClick = () => {        
         setCommandeId(id)
     }
 
@@ -24,7 +21,7 @@ const CommandeCard = ({id, numero, statut, date, commandeId, setCommandeId, setP
         <div onClick={() => handleClick()} className="cursor-pointer border border-red-3 p-3 rounded-2xl bg-red-2/20 w-full flex flex-col items-start justify-start gap-2 group transition duration-200 ease-in hover:bg-red-2/60 hover:border-red-4">
             <div className="w-full flex items-center justify-between gap-4">
                 <span className="text-gris-8 text-lg font-semibold max-sm:text-sm max-[320px]:!text-xs">Numero de commande</span>
-                <span className="text-gris-12 text-lg font-semibold max-sm:text-sm max-[320px]:!text-xs">{numero}</span>
+                <span className="text-gris-12 text-lg font-semibold max-sm:text-sm max-xs:!text-xs">{numero}</span>
             </div>
             <div className="w-full flex items-center justify-between gap-4">
                 <div className="flex items-center justify-center gap-4">
@@ -33,6 +30,7 @@ const CommandeCard = ({id, numero, statut, date, commandeId, setCommandeId, setP
                         {statut === "CONFIRMEE" && <Check className="stroke-gris-12 size-8 max-sm:size-6" />}
                         {statut === "EXPEDIEE" && <ExpedieIcon className="stroke-gris-12 size-8 max-sm:size-6" />}
                         {statut === "LIVREE" && <LivreIcon className="stroke-gris-12 size-8 max-sm:size-6" />}
+                        {statut === "ANNULEE" && <X strokeWidth={1.5} className="stroke-gris-12 size-8 max-sm:size-6" />}
                     </div>
                     <div className="flex flex-col items-start justify-center gap-2">
                         <span className="text-gris-12 text-lg font-semibold max-sm:text-sm max-[320px]:!text-xs">
@@ -40,6 +38,7 @@ const CommandeCard = ({id, numero, statut, date, commandeId, setCommandeId, setP
                             {statut === "CONFIRMEE" && "Confirmée"}
                             {statut === "EXPEDIEE" && "Expédiée"}
                             {statut === "LIVREE" && "Livrée"}
+                            {statut === "ANNULEE" && "Annulée"}
                         </span>
                         <span className="text-gris-8 text-sm font-semibold max-[320px]:!text-xs">{date}</span>
                     </div>

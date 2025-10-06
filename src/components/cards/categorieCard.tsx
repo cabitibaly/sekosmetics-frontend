@@ -13,9 +13,16 @@ const CategorieCard = ({id, intitule, image, inCarrousel = false}: CommonType) =
                 }
             `}
         >
-            <div className="w-full aspect-square relative rounded-3xl flex items-center justify-center max-md:rounded-2xl">
-                <Image src={image} fill alt='Zaron' className='rounded-3xl max-md:rounded-2xl' />
-            </div>
+            {
+                image ? 
+                    <div className="w-full aspect-square relative rounded-3xl flex items-center justify-center max-md:rounded-2xl">
+                        <Image src={image} fill alt='Zaron' className='rounded-3xl max-md:rounded-2xl' />
+                    </div>
+                :
+                    <div className='z-0 bg-red-6 relative w-full h-full flex items-center justify-center rounded-3xl max-md:rounded-2xl'>
+                        <span className='text-white text-xl font-bold'>{intitule.charAt(0).toUpperCase()}</span>
+                    </div>
+            }                        
             <div className={`px-2 py-4 w-full h-full flex items-center justify-center ${inCarrousel ? "max-md:py-2": "max-md:py-6"}`}>
                 <p className={`line-clamp-2 text-2xl text-gris-12 font-bold text-center max-lg:text-xl ${inCarrousel ? "max-896:!text-sm max-xs:!text-xs" : "max-md:!text-base"}`}>{intitule}</p>
             </div>

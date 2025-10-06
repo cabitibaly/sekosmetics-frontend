@@ -1,6 +1,6 @@
 "use client"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import HomeActive from "../../../public/svg/homeActive"
 import { HomeIcon } from "../../../public/svg/homeIcon"
 import LoupeActive from "../../../public/svg/loupeActive"
@@ -11,6 +11,7 @@ import CompteActiveIcon from "../../../public/svg/compteActive"
 import CompteIcon from "../../../public/svg/compteIcon"
 import CartIcon from "../../../public/svg/cartIcon"
 import { usePanier } from "@/hooks/usePanier"
+import { useAuth } from "@/hooks/useAuth"
 
 interface Props {
     inArticle?: boolean
@@ -18,7 +19,9 @@ interface Props {
 
 const BottomTabs = ({ inArticle = false }: Props) => {
     const pathname = usePathname()
-    const { estVide } = usePanier()
+    const { estVide, panier } = usePanier()
+    const { isAuthenticated } = useAuth();
+    const router = useRouter();
 
     return (
         <div className={`fixed left-1/2 z-40 -translate-1/2 bottom-2 w-[91.96%] py-3 px-8 rounded-full border border-red-3 bg-red-1 hidden items-center justify-between gap-16 max-xs:px-4 ${inArticle ? "hidden" : "max-[896px]:flex"}`}>
@@ -37,6 +40,9 @@ const BottomTabs = ({ inArticle = false }: Props) => {
             <Link href={"/panier"} className="p-0.5 absolute left-1/2 -translate-1/2 size-12 rounded-full bg-gris-1 flex items-center justify-center cursor-pointer max-xs:size-10">
                 <div className={`rounded-full size-full flex items-center justify-center ${estVide ? "bg-red-6" : "bg-red-8"}`}>
                     <CartIcon className="size-6" />
+                    <div className={`p-0.5 w-7 border border-red-8 bg-red-1 aspect-square absolute -top-2.5 -right-2.5 rounded-full items-center justify-center ${estVide ? "hidden" : "flex"}`}>
+                        <span className="text-xs text-red-8 font-bold" >{panier.reduce((acc, curr) => acc + curr.quantiteLigne, 0)}</span>
+                    </div>
                 </div>
             </Link>
             <div className="flex items-center justify-between w-[30%]">
@@ -45,7 +51,16 @@ const BottomTabs = ({ inArticle = false }: Props) => {
                         pathname === "/compte/mes-favoris" ? <HeartActive className="size-full" color="#FF7993" /> : <HeartIcon className="size-full" color="#1E1F24" />                        
                     }
                 </Link>
-                <Link href={"/compte"} className="size-8 flex items-center justify-center cursor-pointer max-xs:size-6">
+                <Link 
+                    href={"/compte"} 
+                    className="size-8 flex items-center justify-center cursor-pointer max-xs:size-6"
+                    onClick={e => {
+                        if (!isAuthenticated) {
+                            e.preventDefault();
+                            router.push("/connexion");
+                        }
+                    }}
+                >
                     {   
                         pathname === "/compte" ? <CompteActiveIcon className="size-full" color="#FF7993" /> : <CompteIcon className="size-full" color="#1E1F24" />                        
                     }

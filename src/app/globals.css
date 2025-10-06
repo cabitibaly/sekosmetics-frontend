@@ -1,9 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Jura:wght@300..700&display=swap');
 @import "tailwindcss";
 @plugin "daisyui";
 
-@theme {
-  --font-jura: 'Jura', "sans-serif";
+@theme {  
   --font-comfortaa: 'Comfortaa', "cursive";
   --color-red-1: #FFFCFC;
   --color-red-2: #FFF6F7;
@@ -29,6 +27,10 @@
   --color-gris-10: #80828D;
   --color-gris-11: #62636C;
   --color-gris-12: #1E1F24;
+  --color-rouge-4: #FFDAE1;  
+  --color-rouge-9: #FF1474;
+  --color-bleu-4: #C7F1FF;
+  --color-bleu-9: #42C6FF;
   --color-vert: #64E2B7;
   --color-jaune: #FFD63A;
   --breakpoint-xs: 30rem;
@@ -53,10 +55,6 @@ section {
   overflow-x: hidden;
 }
 
-.hero-h1 {
-  font-size: 5vw;
-}
-
 .categorie-hero-h1 {
   font-size: 6vw;
 }
@@ -66,11 +64,11 @@ section {
 }
 
 .hero-mobile-h1 {
-  font-size: 3.1vw;
+  font-size: 3.3vw;
 }
 
 .hero-mobile-btn {
-  font-size: 2.8vw;
+  font-size: 3vw;
 }
 
 .span-font-size {
@@ -92,6 +90,41 @@ section {
   background-position: center;
 }
 
+@utility connexion {
+  background: linear-gradient(180deg, rgba(255, 232, 235, 0.5), rgba(255, 180, 192, 0.8)), url("../../public/login.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+@utility inscription {
+  background: linear-gradient(180deg, rgba(255, 232, 235, 0.5), rgba(255, 180, 192, 0.8)), url("../../public/inscription.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+@utility otp {
+  background: linear-gradient(180deg, rgba(255, 232, 235, 0.5), rgba(255, 180, 192, 0.8)), url("../../public/otp.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+@utility forgot {
+  background: linear-gradient(180deg, rgba(255, 232, 235, 0.5), rgba(255, 180, 192, 0.8)), url("../../public/mdp-forgot.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+@utility reset {
+  background: linear-gradient(180deg, rgba(255, 232, 235, 0.5), rgba(255, 180, 192, 0.8)), url("../../public/mdp-reset.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
 .categorie-hero {
   background: linear-gradient(rgba(30, 31, 36, 0.4), rgba(30, 31, 36, 0.4)), url("../../public/categorie-bg.jpg");
   background-repeat: no-repeat;
@@ -104,4 +137,16 @@ section {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+}
+
+.tiptap {
+  @apply px-2 overflow-auto caret-red-8 h-full outline-0 ring-0 focus:ring-0 focus:border-none;
+
+  ul {
+    @apply list-disc list-outside pl-6 space-y-1;
+  }
+  
+  ol {
+    @apply list-decimal list-outside pl-6 space-y-1;
+  }
 }

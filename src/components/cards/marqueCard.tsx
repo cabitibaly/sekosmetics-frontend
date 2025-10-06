@@ -13,9 +13,16 @@ const MarqueCard = ({id, intitule, image, inCarrousel = false}: CommonType) => {
             `}
         >
             <div className='border-2 border-red-6 rounded-full p-1 w-full aspect-square'>
-                <div className='z-0 relative w-full h-full flex items-center justify-center rounded-full'>
-                    <Image src={image} fill alt='Zaron' className='rounded-full' />
-                </div>
+                {
+                    image ? 
+                        <div className='z-0 relative w-full h-full flex items-center justify-center rounded-full'>
+                            <Image src={image} fill alt='Zaron' className='rounded-full' />
+                        </div>
+                    :
+                        <div className='z-0 bg-red-6 relative w-full h-full flex items-center justify-center rounded-full'>
+                            <span className='text-white text-xl font-bold'>{intitule.charAt(0).toUpperCase()}</span>
+                        </div>
+                }
             </div>
             <p className={`line-clamp-2 text-2xl text-gris-12 font-bold text-center ${inCarrousel ? "max-lg:text-xl max-896:!text-sm" : "max-xl:text-xl max-lg:text-base max-xs:text-xs"}`}>
                 {intitule}

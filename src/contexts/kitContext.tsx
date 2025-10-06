@@ -1,11 +1,10 @@
 "use client"
-import { articles } from "@/data/articles"
 import { LigneCommande } from "@/types/ligneCommande"
 import { useState, useEffect, createContext, ReactNode } from "react"
 
 type KitContextType = {
     kit: LigneCommande[],
-    ajouterLigneKit: (id: number) => void,
+    ajouterLigneKit: (ligne: LigneCommande) => void,
     supprimerLigneKit: (id: number) => void,
     viderKit: () => void,
 }
@@ -28,19 +27,26 @@ export const KitProvider = ({ children }: { children: ReactNode}) => {
         localStorage.setItem("kit", JSON.stringify(kit))
     }, [kit]) 
 
-    const ajouterLigneKit = (id: number) => {
-        const existe = articles.find(a => a.id === Number(id))
-    
-        if(existe) {
-            setKit(prev => {
-                const kitExiste = prev.find(k => k?.articleId === Number(id))
-                if(kitExiste) {
-                    return prev?.filter(k => k?.articleId !== Number(id))
-                }
-    
-                return [{ articleId: Number(id), quantiteLigne: 1, prixUnitaire: existe.prix, prixTotal: existe.prix, image: existe.image }, ...prev]
-            })
-        }
+    const ajouterLigneKit = (ligne: LigneCommande) => {                
+        setKit(prev => {
+            const kitExiste = prev.find(k => k?.articleId === Number(ligne.articleId))
+            if(kitExiste) {
+                return prev?.filter(k => k?.articleId !== Number(ligne.articleId))
+            }
+        
+            return [
+                ...prev,
+                {                     
+                    articleId: Number(ligne.articleId), 
+                    quantiteLigne: 1, 
+                    prixUnitaire: ligne.prixUnitaire, 
+                    prixTotal: ligne.prixUnitaire, 
+                    image: ligne.image, 
+                    nomArticle: ligne.nomArticle,
+                    valeursOption: ligne.valeursOption
+                },                
+            ]
+        })        
     }
 
     const supprimerLigneKit = (id: number) => {

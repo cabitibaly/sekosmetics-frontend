@@ -1,19 +1,17 @@
 "use client"
-import { Minus, Plus } from "lucide-react"
+import { Dot, Minus, Plus } from "lucide-react"
 import Image from "next/image"
 import TrashIcon from "../../../public/svg/trash"
 import { usePanier } from "@/hooks/usePanier"
-import { articles } from "@/data/articles"
 import { useEffect, useState } from "react"
 
 interface Props {
     id: number        
 }
 
-const PanierCard = ({ id }: Props) => {
-    const [quantite, setQuantite] = useState<number>(1)
-    const { supprimerLigne, articleExiste, modifierQuantiteLigne } = usePanier()
-    const article = articles.find(a => a.id === Number(id))
+const PanierCard = ({ id }: Props) => { 
+    const [quantite, setQuantite] = useState<number>(1)    
+    const { supprimerLigne, articleExiste, modifierQuantiteLigne } = usePanier()    
     const articleDansPanier = articleExiste(Number(id))
 
     useEffect(() => {
@@ -46,8 +44,12 @@ const PanierCard = ({ id }: Props) => {
                     <Image src={articleDansPanier?.image as string} fill alt="panier" className="rounded-3xl max-896:rounded-2xl max-sm:rounded-xl" />
                 </div>
                 <div className="flex flex-col items-start justify-center gap-2">
-                    <div className="w-[90%] line-clamp-2 text-xl text-gris-12 font-bold max-896:text-base max-sm:text-xs">{article?.nom}</div>
-                    <div className="line-clamp-2 text-xl text-red-8 font-bold max-896:text-base max-sm:text-xs">{articleDansPanier?.prixUnitaire.toLocaleString()} FCFA</div>
+                    <div className="w-[90%] line-clamp-2 text-base text-gris-12 font-bold max-896:text-base max-sm:text-xs">{articleDansPanier?.nomArticle}</div>
+                    <div className="flex items-center justify-center gap-1">
+                        <div className="line-clamp-2 text-base text-red-8 font-bold max-896:text-base max-sm:text-xs">{articleDansPanier?.prixUnitaire.toLocaleString()} FCFA</div>                        
+                        <Dot className="stroke-gris-8 size-6 max-sm:size-4" />
+                        <span className="text-gris-8 text-sm font-semibold max-sm:!text-xs">{articleDansPanier?.valeursOption?.map(vo => vo.valeurOption).join(", ")}</span>
+                    </div>                    
                 </div>
             </div>
             <div className="self-end flex items-center justify-center gap-4 max-896:gap-2">

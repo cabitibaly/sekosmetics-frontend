@@ -5,9 +5,9 @@ import Navbar from "@/components/navbar/navbar"
 import Topbar from "@/components/navbar/topbar"
 
 interface Props {
-    params: {
+    params: Promise<{
         id: string
-    }
+    }>
 }
 
 const ArticleDetail = async ({params}: Props) => {
@@ -15,10 +15,10 @@ const ArticleDetail = async ({params}: Props) => {
 
     return (
         <>
-            <Topbar href="/" title="Marques" isArtcile />
+            <Topbar href="/" title="Détails Article" />
             <Navbar isSidebarVisible={false} inArticle={true} />
             <ArticleHeader id={id} />
-            <ArticleBody />
+            <ArticleBody id={id} />
             <Footer />
         </>
     )
